@@ -9,7 +9,8 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 import tqdm
 import traceback
-import multiprocessing as mp
+import torch.multiprocessing as mp
+ctx = mp.get_context('spawn')
 
 from gymnasium import Env, spaces
 import genesis as gs
@@ -30,7 +31,7 @@ from ViCo.tools.constants import LIGHTS, ENV_OTHER_METADATA
 from ViCo.tools.utils import *
 from ViCo.modules import *
 
-from agents import Agent, AgentLogger
+from agents import Agent, AgentLogger, get_agent_cls
 
 class VicoEnv:
 	def __init__(self,
@@ -45,14 +46,17 @@ class VicoEnv:
 				 config_path='',
 				 scene='NY',
 				 enable_indoor_scene=False,
+				 enable_indoor_objects=False,
 				 enable_outdoor_objects=False,
 				 outdoor_objects_max_num=10,
 				 enable_collision=False,
+				 enable_decompose=False,
 				 skip_avatar_animation=False,
 				 enable_gt_segmentation=False,
 				 no_load_scene=False,
 				 output_dir='output',
 				 enable_third_person_cameras=True,
+				 enable_demo_camera=False,
 				 no_traffic_manager=False,
 				 tm_vehicle_num=0,
 				 tm_avatar_num=0,
@@ -60,7 +64,7 @@ class VicoEnv:
 				 save_per_seconds=10,
 				 defer_chat=False,
 				 debug=False,
-				 enable_indoor_objects=False):
+				 dt_sim=0.01):
 		if not gs._initialized:
 			gs.init(seed=seed, precision=precision, logging_level=logging_level, backend=backend)
 		fh = logging.FileHandler(os.path.join(output_dir, 'raw.log'))
@@ -71,6 +75,7 @@ class VicoEnv:
 		self.num_agents = num_agents
 		self.output_dir = output_dir
 		self.enable_third_person_cameras = enable_third_person_cameras
+		self.enable_demo_camera = enable_demo_camera
 		self.save_per_seconds = save_per_seconds
 		self.seed = seed
 		self.skip_avatar_animation = skip_avatar_animation
@@ -85,6 +90,7 @@ class VicoEnv:
 		self.enable_indoor_objects = enable_indoor_objects
 		self.outdoor_objects_max_num = outdoor_objects_max_num
 		self.enable_collision = enable_collision
+		self.enable_decompose = enable_decompose
 		self.enable_gt_segmentation = enable_gt_segmentation
 		self.scene_name = scene
 		self.entity_idx_to_info = defaultdict(dict)
@@ -95,8 +101,18 @@ class VicoEnv:
 		self.config = json.load(open(os.path.join(self.config_path, 'config.json'), 'r'))
 		if "dt_agent" not in self.config:
 			self.config["dt_agent"] = 0
-		if "dt_sim" not in self.config:
-			self.config["dt_sim"] = 0
+		if "dt_control" not in self.config:
+			self.config["dt_control"] = [1.0] * self.num_agents
+		if "dt_rgb_obs" not in self.config:
+			self.config["dt_rgb_obs"] = [1.0] * self.num_agents
+		self.robot_only_simulation = False
+		robot_agent_id_list = self.config.get("robot_agent_id_list")
+		self.enable_robots = bool(robot_agent_id_list)
+		self.robot_agent_id_list = robot_agent_id_list or []
+		self.agent_control_freq = [int(dt_control / dt_sim) for dt_control in self.config["dt_control"]]
+		self.agent_visual_obs_freq = [int(dt_visual_obs / dt_sim) for dt_visual_obs in self.config["dt_visual_obs"]]
+		self.dt_sim = dt_sim
+		self.config["dt_sim"] = dt_sim
 		if "dt_chat" not in self.config:
 			self.config["dt_chat"] = 0
 
@@ -106,6 +122,7 @@ class VicoEnv:
 
 		self.curr_time: datetime = datetime.strptime(self.config['curr_time'], "%B %d, %Y, %H:%M:%S")
 		self.steps = self.config['step']
+		self.genesis_steps = int(self.config['step'] * (1 / dt_sim))
 		self.sec_per_step = self.config['sec_per_step']
 		self.seconds = self.steps * self.sec_per_step
 		self.building_metadata = json.load(open(os.path.join(config_path, "building_metadata.json"), 'r'))
@@ -114,7 +131,8 @@ class VicoEnv:
 		self.env_other_meta = ENV_OTHER_METADATA
 		self.agent_names_to_group_name = {agent_name: group_name for group_name, group in self.config['groups'].items() for agent_name in group['members']} if 'groups' in self.config else {}
 		self.events = EventSystem()
-		self.obs = None
+		self.obs = {i: {} for i in range(self.num_agents)}
+		self.obs['agent_list_to_update'] = [i for i in range(self.num_agents)]
 
 		self.scene_assets_dir = f"ViCo/scene/v1/{scene}"
 		self.vehicles = []
@@ -129,9 +147,10 @@ class VicoEnv:
 				camera_fov=60,
 			),
 			rigid_options=gs.options.RigidOptions(
-				gravity=(0.0, 0.0, -9.8),
+				gravity=(0.0, 0.0, -9.8) if self.enable_robots else (0.0, 0.0, 0.0),
 				enable_collision=self.enable_collision,
-				max_collision_pairs=400
+				max_collision_pairs=400,
+				dt=dt_sim
 			),
 			avatar_options=gs.options.AvatarOptions(
 				enable_collision=self.enable_collision,
@@ -155,46 +174,85 @@ class VicoEnv:
                 fov = 90,
                 GUI=False,
             )
-		terrain = self.load_city_scene(self.scene_assets_dir, no_load_scene)
+		if self.enable_demo_camera:
+			self.demo_camera = self.scene.add_camera(
+				res=(1024, 1024),
+				pos=self.config['demo_camera_pos'],
+				lookat=self.config['demo_camera_lookat'],
+				fov=90,
+				GUI=False,
+			)
+			os.makedirs(os.path.join(self.output_dir, 'demo'), exist_ok=True)
+		self.terrain = self.load_city_scene(self.scene_assets_dir, no_load_scene)
+		self.height_field = load_height_field(
+			os.path.join(gs.utils.get_assets_dir(), f"{self.scene_assets_dir}/height_field.npz"))
 		gs.logger.info(f"loading city scene took {time.time() - start_time:.2f}s")
 
-		if no_load_scene:
-			no_collision_entities = []
+		if not no_load_scene and self.terrain is not None:
+			no_collision_entities = [self.terrain]
 		else:
-			no_collision_entities = [terrain]
+			no_collision_entities = []
 
 		### Load avatars
-		self.agents: list[AvatarController] = []
+		self.agents = []
 		self.agent_names: list[str] = self.config['agent_names']
 		self.agent_infos: list[dict] = self.config['agent_infos']
 		start_time = time.time()
 		frame_ratio = 0.0 if skip_avatar_animation else 5.0
+
+		# robot parameters
+		self.robots = []
+		self.robot_names = []
+		self.robot_obs = {}
+		self.robots_types = []
+		self.robot_actions = []
+		self.robot_control_freq = []
+		self.robot_step_id = 0
 		for i in range(self.num_agents):
-			self.agents.append(self.add_avatar(name=self.agent_names[i],
-											   motion_data_path='Genesis/genesis/assets/ViCo/avatars/motions/motion.pkl',
-											   skin_options={
-												   'glb_path': self.config['agent_skins'][i],
-												   'euler': (-90, 0, 90),
-												   'pos': (0.0, 0.0, -0.959008030)
-											   },
-											   ego_view_options={
-													"res": (self.resolution, self.resolution),
-													"fov": 90,
-													"GUI": False,
-												},
-											   frame_ratio=frame_ratio,
-											   terrain_height_path=os.path.join(gs.utils.get_assets_dir(), self.scene_assets_dir, "height_field.npz"),
-											   third_person_camera_resolution=128 if self.enable_third_person_cameras else None,
-											   enable_collision=enable_collision))
-			no_collision_entities += [self.agents[i].robot.box]
+			if i in self.robot_agent_id_list:
+				# initialize agent as robot
+				robot_idx = len(self.robots)
+				robot_type = self.config['robot_types'][robot_idx]
+				self.config['agent_poses'][i][2] += ROBOT_POSITION_OFFSETS[robot_type][2] # only count z-axis offset
+				self.agents.append(self.add_robot(name=self.agent_names[i],
+												  robot_type=robot_type,
+												  position=np.array(self.config['agent_poses'][i][:3],
+																	dtype=np.float64),
+												  config_path=os.path.join(current_directory,
+																		   ROBOT_CONFIGS[robot_type]),
+												  terrain_height_path=f"{self.scene_assets_dir}/height_field.npz",
+												  third_person_camera_resolution=128 if self.enable_third_person_cameras else None))
+				self.robot_obs[robot_idx] = self.robots[robot_idx].get_observations()
+				self.robot_control_freq.append(self.robots[robot_idx].env_cfg['control_freq'])
+			else:
+				# initialize agent as avatar
+				self.agents.append(self.add_avatar(name=self.agent_names[i],
+												   motion_data_path='Genesis/genesis/assets/ViCo/avatars/motions/motion.pkl',
+												   skin_options={
+													   'glb_path': self.config['agent_skins'][i],
+													   'euler': (-90, 0, 90),
+													   'pos': (0.0, 0.0, -0.959008030)
+												   },
+												   ego_view_options={
+													   "res": (self.resolution, self.resolution),
+													   "fov": 90,
+													   "GUI": False,
+												   },
+												   frame_ratio=frame_ratio,
+												   terrain_height_path=os.path.join(gs.utils.get_assets_dir(),
+																					self.scene_assets_dir, "height_field.npz"),
+												   third_person_camera_resolution=128 if self.enable_third_person_cameras else None,
+												   enable_collision=enable_collision))
+				no_collision_entities += [self.agents[i].robot.box]
 
 			if self.enable_third_person_cameras:
 				os.makedirs(os.path.join(self.output_dir, 'tp', self.agent_names[i]), exist_ok=True)
 			os.makedirs(os.path.join(self.output_dir, 'ego', self.agent_names[i]), exist_ok=True)
 			os.makedirs(os.path.join(self.output_dir, 'steps', self.agent_names[i]), exist_ok=True)
 
-		for agent in self.agents:
-			agent.initialize_no_collision(no_collision_entities)
+		for i, agent in enumerate(self.agents):
+			if i not in self.robot_agent_id_list:
+				agent.initialize_no_collision(no_collision_entities)
 		gs.logger.info(f"loading {self.num_agents} avatars took {time.time() - start_time:.2f}s")
 		### Load indoor scenes
 		if self.enable_indoor_scene:
@@ -242,7 +300,8 @@ class VicoEnv:
 		self.traffic_manager.reset()
 
 		for i, agent in enumerate(self.agents):
-			agent.reset(np.array(self.config['agent_poses'][i][:3], dtype=np.float64), geom_utils.euler_to_R(np.degrees(np.array(self.config['agent_poses'][i][3:], dtype=np.float64))))
+			agent.reset(np.array(self.config['agent_poses'][i][:3], dtype=np.float64),
+						geom_utils.euler_to_R(np.degrees(np.array(self.config['agent_poses'][i][3:], dtype=np.float64))))
 			if self.config['agent_infos'][i]['current_vehicle'] == 'bus':
 				agent.enter_bus(self.traffic_manager.bus.bus)
 				gs.logger.info(f"In initialization, Agent {self.agent_names[i]} at {agent.get_global_pose().tolist()} enters bus at {self.traffic_manager.bus.bus.get_global_pose().tolist()}")
@@ -331,13 +390,25 @@ class VicoEnv:
 	def scene_step(self):
 		self.scene.step()
 
+		if self.enable_demo_camera:
+			rgb, _, _, _ = self.demo_camera.render(depth=False)
+			Image.fromarray(rgb).save(os.path.join(self.output_dir, 'demo', f"{self.genesis_steps:06d}.png"))
+
+		if self.enable_robots:
+			for robot in self.robots:
+				robot.step(actions=None, perform_physics_step=True)
+			if self.robot_only_simulation:
+				return
+
 		if self.vehicles:
 			for vehicle in self.vehicles:
 				vehicle.step()
 			self.log_step_vehicle_info()
 
 		if self.agents:
-			for avatar in self.agents:
+			for agent_id, avatar in enumerate(self.agents):
+				if agent_id in self.robot_agent_id_list:
+					continue
 				avatar.step(self.skip_avatar_animation)
 
 		if self.traffic_manager is not None:
@@ -346,7 +417,9 @@ class VicoEnv:
 
 		if self.agents and self.enable_collision:
 			collision_pairs = self.scene.rigid_solver.detect_collision()
-			for avatar in self.agents:
+			for i, avatar in enumerate(self.agents):
+				if i in self.robot_agent_id_list:
+					continue
 				avatar.post_step(collision_pairs)
 
 	def add_avatar(
@@ -402,10 +475,61 @@ class VicoEnv:
 		self.vehicles.append(vehicle)
 		return vehicle
 
+	def add_robot(
+			self,
+			name: str,
+			robot_type: str,
+			config_path: str,
+			position=np.zeros(3, dtype=np.float64),
+			terrain_height_path="height_field.npz",
+			third_person_camera_resolution=None,
+	):
+		self.robots_types.append(robot_type)
+		controller = ROBOT_CONTROLLERS[robot_type]
+		robot = controller(
+			env=self,
+			scene=self.scene,
+			name=name,
+			terrain_height_path=terrain_height_path,
+			ego_view_options={
+				"res": (self.resolution, self.resolution),
+				"fov": 90,
+				"GUI": False,
+			},
+			device=gs.backend.name,
+			dt=self.config["dt_sim"],
+			config_path=config_path,
+			position=position,
+			third_person_camera_resolution=third_person_camera_resolution,
+			debug=False
+		)
+		robot.robot.action_status = ActionStatus.INIT
+		self.robots.append(robot)
+		return robot
+
 	def load_city_scene(self, scene_assets_dir, no_load_scene):
+		height_field = load_height_field(
+			os.path.join(gs.utils.get_assets_dir(), f"{scene_assets_dir}/height_field.npz"))
+		ratio = 5
+		X = np.arange(-500, 501, ratio)
+		Y = np.arange(-500, 501, ratio)
+		X, Y = np.meshgrid(X, Y)
+		terrain = None
+		if self.enable_collision:
+			terrain = self.add_entity(
+				type="structure",
+				name="terrain",
+				morph=gs.morphs.Terrain(
+					pos=(-500, -500, 0),
+					vertical_scale=1.0,
+					horizontal_scale=ratio,
+					height_field=height_field(Y, X) + 0.2,
+					visualization=False
+				),
+			)
 		if no_load_scene:
-			return None
-		terrain = self.add_entity(
+			return terrain
+		self.add_entity(
 			type = "structure",
 			name = "terrain",
 			material=gs.materials.Rigid(
@@ -416,7 +540,7 @@ class VicoEnv:
 				file=os.path.join(scene_assets_dir, 'terrain.glb'),
 				euler=(90.0, 0, 0),
 				fixed=True,
-				collision=self.enable_collision,
+				collision=False,
 				merge_submeshes_for_collision=False,
 				group_by_material=True,
 			),
@@ -444,6 +568,7 @@ class VicoEnv:
 								collision=self.enable_collision,
 								merge_submeshes_for_collision=False,
 								group_by_material=True,
+								decompose_nonconvex=self.enable_decompose,
 								convexify=self.enable_collision,
 								coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 							),
@@ -463,6 +588,7 @@ class VicoEnv:
 								collision=self.enable_collision,
 								merge_submeshes_for_collision=False,
 								group_by_material=True,
+								decompose_nonconvex=self.enable_decompose,
 								convexify=self.enable_collision,
 								coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 							),
@@ -482,6 +608,7 @@ class VicoEnv:
 					collision=self.enable_collision,
 					merge_submeshes_for_collision=False,  # Buildings are constructed separately
 					group_by_material=True,
+					decompose_nonconvex=self.enable_decompose,
 					convexify=self.enable_collision,
 					coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 				),
@@ -536,216 +663,309 @@ class VicoEnv:
 		self.agents[agent_idx].exit_bike(0)
 		return True
 
-	def step(self, agent_actions):
-		for i, agent in enumerate(self.agents):
-			gs.logger.debug(f"Agent {self.agent_names[i]} with state {agent.robot.base_state}.")
-			action = agent_actions[i]
-			if action is None:
-				continue
-			agent.robot.action_status = ActionStatus.SUCCEED
-			if action['type'] == 'move_forward':
-				agent.move_forward(action['arg1'], self.sec_per_step * 1.0)
-			elif action['type'] == 'teleport':
-				agent.reset_with_global_xy(np.array(action['arg1']))
-			elif action['type'] == 'turn_left':
-				agent.turn_left(action['arg1'], turn_sec_limit=self.sec_per_step * 1500)
-			elif action['type'] == 'turn_right':
-				agent.turn_right(action['arg1'], turn_sec_limit=self.sec_per_step * 1500)
-			elif action['type'] == 'look_at':
-				target_pos = action['arg1']
-				## make avatar look at target_pos by turn_left or turn_right
-				agent_pos = agent.robot.global_trans
-				agent_rot = agent.robot.global_rot
-				agent_dir = agent_rot[:, 0]
-				target_dir = target_pos - agent_pos	
-				agent_dir[2] = 0
-				target_dir[2] = 0
-				agent_dir = agent_dir / np.linalg.norm(agent_dir)
-				target_dir = target_dir / np.linalg.norm(target_dir)
-				cross = np.cross(agent_dir, target_dir)
-				dot = np.dot(agent_dir, target_dir)
-				angle = np.arccos(dot)
-				if cross[2] > 0:
-					agent.turn_left(angle, turn_sec_limit=self.sec_per_step * 1500)
-				else:
-					agent.turn_right(angle, turn_sec_limit=self.sec_per_step * 1500)
+	def perform_action(self, agent_id, action, is_robot=False):
+		if action is None:
+			return
+		agent = self.agents[agent_id]
+		agent.robot.action_status = ActionStatus.SUCCEED
 
-			elif action['type'] == 'sleep':
-				agent.sleep()
-			elif action['type'] == 'wake':
-				agent.wake()
-			elif action['type'] == 'enter' or action['type'] == 'force_enter':
-				if action['type'] == 'force_enter' or action['arg1'] in self.obs[i]['accessible_places']:
-					if action['arg1'] == 'open space':
-						if self.agent_infos[i]["current_place"] in self.active_places_agents:
-							try:
-								self.active_places_agents[self.agent_infos[i]["current_place"]].remove(self.agent_names[i])
-							except ValueError:
-								gs.logger.warning(f"Agent {self.agent_names[i]} is not among the names that are in place {self.agent_infos[i]['current_place']}.")
-						agent.reset(np.array(self.agent_infos[i]["outdoor_pose"][:3]), geom_utils.euler_to_R(np.degrees(np.array(self.agent_infos[i]["outdoor_pose"][3:], dtype=np.float64))))
-						self.agent_infos[i]["current_building"] = 'open space'
-						self.agent_infos[i]["current_place"] = None
+		# converse and enter actions work for both robot and avatars
+		if action['type'] == 'converse':
+			if agent.robot.base_state == AvatarState.SLEEPING:
+				agent.robot.base_state = AvatarState.STANDING
+			agent_pos = self.config['agent_poses'][i][:3]
+			converse_range = action['arg2'] if 'arg2' in action else 10
+			priority = random.randint(0, 100)
+			if converse_range > 10:
+				gs.logger.warning(
+					f"Agent {self.agent_names[i]} attempted to converse with range {converse_range} which is larger than 10. Ignored.")
+				self.agents[i].robot.action_status = ActionStatus.FAIL
+				return
+			deleted_subjects = self.events.add(type="speech", pos=agent_pos, r=converse_range, content=action['arg1'],
+											   priority=priority, subject=self.agent_names[i], predicate="is",
+											   object="talk")
+			# if interleaved with other speech events, keep only the highest priority one, drop others and give it fail
+			for deleted_subject in deleted_subjects:
+				self.agents[self.agent_names.index(deleted_subject)].robot.action_status = ActionStatus.FAIL
+			return
+		elif action['type'] == 'enter' or action['type'] == 'force_enter':
+			if action['type'] == 'force_enter' or action['arg1'] in self.obs[agent_id]['accessible_places']:
+				if action['arg1'] == 'open space':
+					if self.agent_infos[agent_id]["current_place"] in self.active_places_agents:
+						try:
+							self.active_places_agents[self.agent_infos[agent_id]["current_place"]].remove(self.agent_names[agent_id])
+						except ValueError:
+							gs.logger.warning(
+								f"Agent {self.agent_names[agent_id]} is not among the names that are in place {self.agent_infos[agent_id]['current_place']}.")
+					if is_robot:
+						pos = np.array(self.agent_infos[agent_id]["outdoor_pose"][:3])
+						robot_type = self.robots_types[self.robot_agent_id_list.index(agent_id)]
+						pos[2] += ROBOT_POSITION_OFFSETS[robot_type][2]
+						agent.reset(pos, geom_utils.euler_to_R(np.degrees(np.array(self.agent_infos[agent_id]["outdoor_pose"][3:], dtype=np.float64))))
 					else:
-						if self.place_metadata[action['arg1']]['building'] == 'open space':
-							continue
-						if self.agent_infos[i]["current_building"] == 'open space':
-							self.agent_infos[i]["outdoor_pose"] = self.config['agent_poses'][i]
-						self.load_indoor_scene(action['arg1']) # load new scenes should be wrong now
-						if "init_avatar_poses" in self.active_places_info[action['arg1']]:
-							pos = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["pos"]
-							euler = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["euler"]
-							x, y, z = self.place_metadata[action['arg1']]['location']
-							pos = np.array([pos[0] + x, pos[1] + y, z])
-							agent.reset(pos, geom_utils.euler_to_R(np.degrees(np.array(euler, dtype=np.float64))))
-						else:
-							offset = len(self.active_places_agents[action['arg1']]) * 0.2
-							self.active_places_agents[action['arg1']].append(self.agent_names[i])
-							x, y, z = self.place_metadata[action['arg1']]['location']
-							agent.reset(np.array([x + offset, y + offset, z]), geom_utils.euler_to_R(np.degrees(np.array([0, 0, 0])))) # elevator entrance
-						self.agent_infos[i]["current_building"] = self.place_metadata[action['arg1']]['building']
-						self.agent_infos[i]["current_place"] = action['arg1']
-
+						agent.reset(np.array(self.agent_infos[agent_id]["outdoor_pose"][:3]), geom_utils.euler_to_R(
+							np.degrees(np.array(self.agent_infos[agent_id]["outdoor_pose"][3:], dtype=np.float64))))
+					self.agent_infos[agent_id]["current_building"] = 'open space'
+					self.agent_infos[agent_id]["current_place"] = None
 				else:
-					gs.logger.warning(f"Agent {self.agent_names[i]} cannot enter {action['arg1']} because it is not in accessible places.")
-					agent.robot.action_status = ActionStatus.FAIL
-			elif action['type'] == 'enter_bus':
-				if "bus" not in self.obs[i]['accessible_places']:
-					gs.logger.warning(f"Agent {self.agent_names[i]} cannot enter bus because bus at {self.traffic_manager.bus.bus.get_global_pose().tolist()} is not in accessible places.")
-					agent.robot.action_status = ActionStatus.FAIL
-				agent.enter_bus(self.traffic_manager.bus.bus)
-				self.agent_infos[i]["current_vehicle"] = "bus"
-			elif action['type'] == 'exit_bus':
-				if self.agent_infos[i]["current_vehicle"] != "bus":
-					gs.logger.warning(f"Agent {self.agent_names[i]} cannot exit bus because current vehicle is not bus.")
-					agent.robot.action_status = ActionStatus.FAIL
-				agent.exit_bus()
-				self.agent_infos[i]["current_vehicle"] = None
-			elif action['type'] == 'enter_bike':
-				if not self.enter_bike(i):
-					agent.robot.action_status = ActionStatus.FAIL
-			elif action['type'] == 'exit_bike':
-				if not self.exit_bike(i):
-					agent.robot.action_status = ActionStatus.FAIL
-			elif action['type'] == 'pick': # arg1: hand id [0,1], arg2: position
-				pos = np.array(action['arg2'])
-				min_volume, entity_idx = 1e10, None
-				for j, e in self.entity_idx_to_info.items():
-					if "bbox" in e:
-						bbox = e["bbox"]
-						rigid: RigidEntity = self.entities[j]
-						rel_pos = pos - rigid.get_pos().cpu().numpy()
-						if np.all(rel_pos > bbox[0] - 0.02) and np.all(rel_pos < bbox[1] + 0.02):
-							volume = np.prod(bbox[1] - bbox[0])
-							if volume < min_volume:
-								min_volume, entity_idx = volume, j
-
-				if entity_idx is None:
-					gs.logger.warning(f"Agent {self.agent_names[i]} cannot pick at {pos} because no entity is found.")
-					agent.robot.action_status = ActionStatus.FAIL
-					continue
-				self.agent_infos[i]["held_objects"][action['arg1']] = self.entities[entity_idx]["name"]
-				agent.pick(action['arg1'], self.entities[entity_idx])
-			elif action['type'] == 'put': # arg1: hand id [0,1]
-				hand_id = action['arg1']
-				entity = agent.robot.attached_object[hand_id]
-				agent.put(action['arg1'], action.get('arg2', None))
-			elif action['type'] == 'stand':
-				agent.stand_up()
-			elif action['type'] == 'sit':
-				agent.sit(position=np.array(action['arg1'][0]))
-			elif action['type'] == 'drink':
-				agent.drink(action['arg1'])
-			elif action['type'] == 'eat':
-				agent.eat(action['arg1'])
-			elif action['type'] == 'exchange': # arg1: target agent name, arg2: amount
-				if agent.robot.base_state == AvatarState.SLEEPING:
-					agent.robot.base_state = AvatarState.STANDING
-				if action['arg2'] > self.agent_infos[i]["cash"]:
-					gs.logger.warning(f"Agent {self.agent_names[i]} cannot exchange {action['arg2']} cash with {action['arg1']} because it does not have enough cash.")
-					agent.robot.action_status = ActionStatus.FAIL
-					continue
-				target_agent_idx = self.agent_names.index(action['arg1'])
-				self.agent_infos[i]["cash"] -= action['arg2']
-				self.agent_infos[target_agent_idx]["cash"] += action['arg2']
-			elif action['type'] == 'converse':
-				if agent.robot.base_state == AvatarState.SLEEPING:
-					agent.robot.base_state = AvatarState.STANDING
-				agent_pos = self.config['agent_poses'][i][:3]
-				converse_range = action['arg2'] if 'arg2' in action else 10
-				priority = random.randint(0, 100)
-				if converse_range > 10:
-					gs.logger.warning(f"Agent {self.agent_names[i]} attempted to converse with range {converse_range} which is larger than 10. Ignored.")
-					self.agents[i].robot.action_status = ActionStatus.FAIL
-					continue
-				deleted_subjects = self.events.add(type="speech", pos=agent_pos, r=converse_range, content=action['arg1'], priority=priority, subject=self.agent_names[i], predicate="is", object="talk")
-				# if interleaved with other speech events, keep only the highest priority one, drop others and give it fail
-				for deleted_subject in deleted_subjects:
-					self.agents[self.agent_names.index(deleted_subject)].robot.action_status = ActionStatus.FAIL
-			elif action['type'] == 'wait':
-				continue
+					if self.place_metadata[action['arg1']]['building'] == 'open space':
+						return
+					if self.agent_infos[agent_id]["current_building"] == 'open space':
+						self.agent_infos[agent_id]["outdoor_pose"] = self.config['agent_poses'][agent_id]
+					self.load_indoor_scene(action['arg1'])  # load new scenes should be wrong now
+					if "init_avatar_poses" in self.active_places_info[action['arg1']]:
+						pos = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["pos"]
+						euler = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["euler"]
+						x, y, z = self.place_metadata[action['arg1']]['location']
+						pos = np.array([pos[0] + x, pos[1] + y, z])
+						agent.reset(pos, geom_utils.euler_to_R(np.degrees(np.array(euler, dtype=np.float64))))
+					else:
+						offset = len(self.active_places_agents[action['arg1']]) * 0.2
+						self.active_places_agents[action['arg1']].append(self.agent_names[agent_id])
+						x, y, z = self.place_metadata[action['arg1']]['location']
+						agent.reset(np.array([x + offset, y + offset, z]),
+									geom_utils.euler_to_R(np.degrees(np.array([0, 0, 0]))))  # elevator entrance
+					self.agent_infos[agent_id]["current_building"] = self.place_metadata[action['arg1']]['building']
+					self.agent_infos[agent_id]["current_place"] = action['arg1']
 			else:
-				raise NotImplementedError(f"agent action type {action['type']} is not supported")
+				gs.logger.warning(
+					f"Agent {self.agent_names[agent_id]} cannot enter {action['arg1']} because it is not in accessible places.")
+				agent.robot.action_status = ActionStatus.FAIL
+			return
 
-		if self.defer_chat:
-			# post-generate utterances for remained speech events
-			start_time = time.perf_counter()
-			for idx, event in self.events.events.items():
-				if event["type"] == "speech":
-					agent_id = self.agent_names.index(event["subject"])
-					agent_actions[agent_id]['request_chat_func'](event["content"])
-			to_delete_id = []
-			for idx, event in self.events.events.items():
-				if event["type"] == "speech":
-					agent_id = self.agent_names.index(event["subject"])
-					event["content"] = agent_actions[agent_id]['get_utterance_func'](self.steps)
-					if event["content"] is None:
-						to_delete_id.append(idx)
-			self.events.delete(to_delete_id)
+		# robot actions
+		if is_robot:
+			assert action['type'] == 'control', f"Robot action {action['type']} is not supported."
+			agent.perform_control(action)
+			return
 
-			dt_chat = time.perf_counter() - start_time
-			self.config["dt_chat"] = (self.config["dt_chat"] * self.steps + dt_chat) / (self.steps + 1)
+		# avatar actions
+		if action['type'] == 'move_forward':
+			agent.move_forward(action['arg1'], self.sec_per_step * 1.0)
+		elif action['type'] == 'teleport':
+			agent.reset_with_global_xy(np.array(action['arg1']))
+		elif action['type'] == 'turn_left':
+			agent.turn_left(action['arg1'], turn_sec_limit=self.sec_per_step * 1500)
+		elif action['type'] == 'turn_right':
+			agent.turn_right(action['arg1'], turn_sec_limit=self.sec_per_step * 1500)
+		elif action['type'] == 'look_at':
+			target_pos = action['arg1']
+			## make avatar look at target_pos by turn_left or turn_right
+			agent_pos = agent.robot.global_trans
+			agent_rot = agent.robot.global_rot
+			agent_dir = agent_rot[:, 0]
+			target_dir = target_pos - agent_pos
+			agent_dir[2] = 0
+			target_dir[2] = 0
+			agent_dir = agent_dir / np.linalg.norm(agent_dir)
+			target_dir = target_dir / np.linalg.norm(target_dir)
+			cross = np.cross(agent_dir, target_dir)
+			dot = np.dot(agent_dir, target_dir)
+			angle = np.arccos(dot)
+			if cross[2] > 0:
+				agent.turn_left(angle, turn_sec_limit=self.sec_per_step * 1500)
+			else:
+				agent.turn_right(angle, turn_sec_limit=self.sec_per_step * 1500)
 
-		if self.traffic_manager is not None:
-			self.traffic_manager.step()
+		elif action['type'] == 'sleep':
+			agent.sleep()
+		elif action['type'] == 'wake':
+			agent.wake()
+		elif action['type'] == 'enter' or action['type'] == 'force_enter':
+			if action['type'] == 'force_enter' or action['arg1'] in self.obs[agent_id]['accessible_places']:
+				if action['arg1'] == 'open space':
+					if self.agent_infos[agent_id]["current_place"] in self.active_places_agents:
+						try:
+							self.active_places_agents[self.agent_infos[agent_id]["current_place"]].remove(self.agent_names[agent_id])
+						except ValueError:
+							gs.logger.warning(
+								f"Agent {self.agent_names[agent_id]} is not among the names that are in place {self.agent_infos[agent_id]['current_place']}.")
+					agent.reset(np.array(self.agent_infos[agent_id]["outdoor_pose"][:3]), geom_utils.euler_to_R(
+						np.degrees(np.array(self.agent_infos[agent_id]["outdoor_pose"][3:], dtype=np.float64))))
+					self.agent_infos[agent_id]["current_building"] = 'open space'
+					self.agent_infos[agent_id]["current_place"] = None
+				else:
+					if self.place_metadata[action['arg1']]['building'] == 'open space':
+						return
+					if self.agent_infos[agent_id]["current_building"] == 'open space':
+						self.agent_infos[agent_id]["outdoor_pose"] = self.config['agent_poses'][agent_id]
+					self.load_indoor_scene(action['arg1'])  # load new scenes should be wrong now
+					if "init_avatar_poses" in self.active_places_info[action['arg1']]:
+						pos = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["pos"]
+						euler = self.active_places_info[action['arg1']]["init_avatar_poses"][0]["euler"]
+						x, y, z = self.place_metadata[action['arg1']]['location']
+						pos = np.array([pos[0] + x, pos[1] + y, z])
+						agent.reset(pos, geom_utils.euler_to_R(np.degrees(np.array(euler, dtype=np.float64))))
+					else:
+						offset = len(self.active_places_agents[action['arg1']]) * 0.2
+						self.active_places_agents[action['arg1']].append(self.agent_names[agent_id])
+						x, y, z = self.place_metadata[action['arg1']]['location']
+						agent.reset(np.array([x + offset, y + offset, z]),
+									geom_utils.euler_to_R(np.degrees(np.array([0, 0, 0]))))  # elevator entrance
+					self.agent_infos[agent_id]["current_building"] = self.place_metadata[action['arg1']]['building']
+					self.agent_infos[agent_id]["current_place"] = action['arg1']
 
-		if self.skip_avatar_animation:
-			sim_early_end = True
-			self.scene_step()
+			else:
+				gs.logger.warning(
+					f"Agent {self.agent_names[agent_id]} cannot enter {action['arg1']} because it is not in accessible places.")
+				agent.robot.action_status = ActionStatus.FAIL
+		elif action['type'] == 'enter_bus':
+			if "bus" not in self.obs[agent_id]['accessible_places']:
+				gs.logger.warning(
+					f"Agent {self.agent_names[agent_id]} cannot enter bus because bus at {self.traffic_manager.bus.bus.get_global_pose().tolist()} is not in accessible places.")
+				agent.robot.action_status = ActionStatus.FAIL
+			agent.enter_bus(self.traffic_manager.bus.bus)
+			self.agent_infos[agent_id]["current_vehicle"] = "bus"
+		# self.agent_infos[agent_id]["cash"] -= self.traffic_manager.transit_system_info["bus"][0]["price"]
+		elif action['type'] == 'exit_bus':
+			if self.agent_infos[agent_id]["current_vehicle"] != "bus":
+				gs.logger.warning(f"Agent {self.agent_names[agent_id]} cannot exit bus because current vehicle is not bus.")
+				agent.robot.action_status = ActionStatus.FAIL
+			agent.exit_bus()
+			self.agent_infos[agent_id]["current_vehicle"] = None
+		elif action['type'] == 'enter_bike':
+			if not self.enter_bike(i):
+				agent.robot.action_status = ActionStatus.FAIL
+		elif action['type'] == 'exit_bike':
+			if not self.exit_bike(i):
+				agent.robot.action_status = ActionStatus.FAIL
+		elif action['type'] == 'pick':  # arg1: hand id [0,1], arg2: position
+			pos = np.array(action['arg2'])
+			min_volume, entity_idx = 1e10, None
+			for j, e in self.entity_idx_to_info.items():
+				if "bbox" in e:
+					bbox = e["bbox"]
+					rigid: RigidEntity = self.entities[j]
+					rel_pos = pos - rigid.get_pos().cpu().numpy()
+					if np.all(rel_pos > bbox[0] - 0.02) and np.all(rel_pos < bbox[1] + 0.02):
+						volume = np.prod(bbox[1] - bbox[0])
+						if volume < min_volume:
+							min_volume, entity_idx = volume, j
+
+			if entity_idx is None:
+				gs.logger.warning(f"Agent {self.agent_names[agent_id]} cannot pick at {pos} because no entity is found.")
+				agent.robot.action_status = ActionStatus.FAIL
+				return
+			self.agent_infos[agent_id]["held_objects"][action['arg1']] = self.entities[entity_idx]["name"]
+			agent.pick(action['arg1'], self.entities[entity_idx])
+		elif action['type'] == 'put':  # arg1: hand id [0,1]
+			agent.put(action['arg1'], action.get('arg2', None))
+		elif action['type'] == 'stand':
+			agent.stand_up()
+		elif action['type'] == 'sit':
+			agent.sit(position=np.array(action['arg1'][0]))
+		elif action['type'] == 'drink':
+			agent.drink(action['arg1'])
+		elif action['type'] == 'eat':
+			agent.eat(action['arg1'])
+		elif action['type'] == 'exchange':  # arg1: target agent name, arg2: amount
+			if agent.robot.base_state == AvatarState.SLEEPING:
+				agent.robot.base_state = AvatarState.STANDING
+			if action['arg2'] > self.agent_infos[agent_id]["cash"]:
+				gs.logger.warning(
+					f"Agent {self.agent_names[agent_id]} cannot exchange {action['arg2']} cash with {action['arg1']} because it does not have enough cash.")
+				agent.robot.action_status = ActionStatus.FAIL
+				return
+			target_agent_idx = self.agent_names.index(action['arg1'])
+			self.agent_infos[agent_id]["cash"] -= action['arg2']
+			self.agent_infos[target_agent_idx]["cash"] += action['arg2']
+		elif action['type'] == 'wait':
+			return
 		else:
-			sim_early_end = False
-			frames = 0
-			for _ in tqdm.tqdm(range(self.sim_frames_per_step), desc="simulating", ):
-				# need to advance at least one frame to update agent position in the case of reset
-				self.scene_step()
-				frames += 1
-				if all([agent.spare() for agent in self.agents]) and self.traffic_manager.spare():
-					sim_early_end = True
-					gs.logger.info(f"After {frames} frames, all agents finished action, end simulation early.")
-					break
-		self.traffic_manager.bus.step(self.curr_time)
-		self.steps += 1
-		self.seconds += self.sec_per_step
-		self.curr_time += timedelta(seconds=self.sec_per_step)
+			raise NotImplementedError(f"agent action type {action['type']} is not supported")
 
-		if sim_early_end and not self.traffic_manager.bus.stop_at_this_step:
-			bus_next_pose = self.traffic_manager.bus.update_at_time(self.curr_time)
-			self.traffic_manager.bus.reset(np.array(bus_next_pose[:3], dtype=np.float64), geom_utils.euler_to_R(np.degrees(np.array(bus_next_pose[3:], dtype=np.float64))))
-			# to update the position of agents in bus
-			self.scene_step()
+	def post_generate_chat(self):
+		# post-generate utterances for remained speech events
+		start_time = time.perf_counter()
+		for idx, event in self.events.events.items():
+			if event["type"] == "speech":
+				agent_id = self.agent_names.index(event["subject"])
+				agent_actions[agent_id]['request_chat_func'](event["content"])
+		to_delete_id = []
+		for idx, event in self.events.events.items():
+			if event["type"] == "speech":
+				agent_id = self.agent_names.index(event["subject"])
+				event["content"] = agent_actions[agent_id]['get_utterance_func'](self.steps)
+				if event["content"] is None:
+					to_delete_id.append(idx)
+		self.events.delete(to_delete_id)
 
+		dt_chat = time.perf_counter() - start_time
+		self.config["dt_chat"] = (self.config["dt_chat"] * self.steps + dt_chat) / (self.steps + 1)
+
+	def check_sim_early_end(self):
+		if self.skip_avatar_animation:
+			return True
+		if all([agent.spare() for agent in self.agents]) and \
+				(self.traffic_manager is None or self.traffic_manager.spare()):
+			return True
+		return False
+
+	def update_config(self):
 		self.config['step'] = self.steps
 		self.config['curr_time'] = self.curr_time.strftime("%B %d, %Y, %H:%M:%S")
 		self.config['agent_poses'] = []
-
 		for i, agent in enumerate(self.agents):
 			self.config['agent_poses'].append(agent.get_global_pose().tolist())
 		self.config['agent_infos'] = self.agent_infos
 		for i in range(0, len(self.config["bicycle_poses"])):
-			self.config["bicycle_poses"][i] = self.traffic_manager.shared_bicycles.bicycles[i].get_global_pose().tolist()
-		atomic_save(os.path.join(self.config_path, 'config.json'), json.dumps(self.config, indent=4, default=json_converter))
-		start_time = time.perf_counter()
-		self.obs = self.get_obs()
-		dt_obs = time.perf_counter() - start_time
+			self.config["bicycle_poses"][i] = self.traffic_manager.shared_bicycles.bicycles[
+				i].get_global_pose().tolist()
+		atomic_save(os.path.join(self.config_path, 'config.json'),
+					json.dumps(self.config, indent=4, default=json_converter))
+
+	def calculate_simulation_step(self):
+		simulate_to_genesis_step = self.genesis_steps
+		return_obs_with_agent_idx = []
+		while len(return_obs_with_agent_idx) == 0:
+			simulate_to_genesis_step += 1
+			for idx, freq in enumerate(self.agent_control_freq):
+				if simulate_to_genesis_step % freq == 0:
+					return_obs_with_agent_idx.append(idx)
+		return simulate_to_genesis_step, return_obs_with_agent_idx
+
+	def step(self, agent_actions):
+		simulate_to_genesis_step, agent_idx_to_return = self.calculate_simulation_step()
+		step_increase = int(self.genesis_steps // (1 / self.dt_sim) - self.steps)
+		agent_list_to_update = agent_actions.pop('agent_list_to_update')
+		for i, agent in enumerate(self.agents):
+			if i not in agent_list_to_update:
+				continue
+			action = agent_actions[i]
+			self.perform_action(i, action, is_robot=i in self.robot_agent_id_list)
+		if self.defer_chat:
+			self.post_generate_chat()
+		sim_early_end = False
+		self.robot_only_simulation = False
+		for _ in tqdm.tqdm(range(simulate_to_genesis_step - self.genesis_steps), desc="simulating", ):
+			self.scene_step()
+			for i, agent in enumerate(self.agents):
+				if i in self.robot_agent_id_list:
+					print(i, agent.get_global_pose().tolist())
+			self.genesis_steps += 1
+			if not sim_early_end and self.check_sim_early_end():
+				sim_early_end = True
+				gs.logger.info(f"At {self.genesis_steps} frames, all agents finished action, end simulation early.")
+			self.robot_only_simulation = sim_early_end
+
+		self.steps += step_increase
+		self.seconds += self.sec_per_step * step_increase
+		self.curr_time += timedelta(seconds=self.sec_per_step) * step_increase
+
+		self.update_config()
+		self.get_obs(agent_idx_to_return)
+
+		if step_increase > 0:
+			if self.traffic_manager is not None:
+				self.traffic_manager.step()
+			self.traffic_manager.bus.step(self.curr_time)
+			if sim_early_end and not self.traffic_manager.bus.stop_at_this_step:
+				bus_next_pose = self.traffic_manager.bus.update_at_time(self.curr_time)
+				self.traffic_manager.bus.reset(np.array(bus_next_pose[:3], dtype=np.float64), geom_utils.euler_to_R(
+					np.degrees(np.array(bus_next_pose[3:], dtype=np.float64))))
+				# to update the position of agents in bus
+				self.scene_step()
+			self.events.clear()
 		self.fps_tracker.step()
 		return self.obs, 0, False, {}
 
@@ -768,7 +988,7 @@ class VicoEnv:
 		self.steps = self.config['step']
 		self.seconds = self.steps * self.sec_per_step
 		self.curr_time = datetime.strptime(self.config['curr_time'], "%B %d, %Y, %H:%M:%S")
-		self.obs = self.get_obs()
+		self.get_obs()
 		self.fps_tracker = FPSTracker(0)
 		return self.obs
 
@@ -780,17 +1000,14 @@ class VicoEnv:
 		# bus_next_pose = self.traffic_manager.bus.update_at_time(self.curr_time)
 		# self.traffic_manager.bus.reset(np.array(bus_next_pose[:3], dtype=np.float64), geom_utils.euler_to_R(np.degrees(np.array(bus_next_pose[3:], dtype=np.float64))))
 		self.scene_step()
-		self.obs = self.get_obs()
+		self.get_obs()
 		return self.obs
 
-	def get_obs(self):
-		if self.enable_third_person_cameras and self.seconds % self.save_per_seconds == 0:
-			for i, agent in enumerate(self.agents):
-				indoor = self.agent_infos[i]['current_building'] != 'open space'
-				third_person_rgb = agent.get_third_person_camera_rgb(indoor)
-				if third_person_rgb is not None:
-					Image.fromarray(third_person_rgb).save(os.path.join(self.output_dir, 'tp', self.agent_names[i], f"rgb_{self.steps:06d}.png"))
-
+	def get_obs(self, agent_idx_list=None):
+		if agent_idx_list is not None:
+			self.obs['agent_list_to_update'] = agent_idx_list
+		else:
+			self.obs['agent_list_to_update'] = [i for i in range(self.num_agents)]
 		if self.traffic_manager is not None and self.enable_tm_debug and self.seconds % self.save_per_seconds == 0:
 			for i, avatar in enumerate(self.traffic_manager.avatars):
 				if avatar.avatar.ego_view is not None:
@@ -801,53 +1018,79 @@ class VicoEnv:
 					rgb, _, _, _, _ = vehicle.vehicle.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
 					Image.fromarray(rgb).save(os.path.join(self.output_dir, 'traffic_ego', vehicle.vehicle.name, f"rgb_vehicle{str(i)}_{vehicle.vehicle.name}_{self.steps:06d}.png"))
 
-		obs = {i: {} for i in range(self.num_agents)}
 		for i, agent in enumerate(self.agents):
-			obs[i]['rgb'], obs[i]['depth'], obs[i]['segmentation'], obs[i]['fov'], obs[i]['extrinsics'] = agent.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
-			obs[i]['pose'] = self.config['agent_poses'][i]
-			if self.seconds % self.save_per_seconds == 0:
-				if obs[i]['rgb'] is not None:
-					Image.fromarray(obs[i]['rgb']).save(os.path.join(self.output_dir, 'ego', self.agent_names[i], f"rgb_{self.steps:06d}.png"))
-				if self.debug:
-					# if obs[i]['depth'] is not None:
-					# 	Image.fromarray(100 / obs[i]['depth']).convert('RGB').save(os.path.join(self.output_dir, 'ego', self.agent_names[i], f"depth_{self.steps:06d}.png"))
-					if obs[i]['segmentation'] is not None:
-						Image.fromarray(self.entity_idx_to_color[obs[i]['segmentation'] + 1]).save(os.path.join(self.output_dir, 'ego', self.agent_names[i], f"seg_{self.steps:06d}.png"))
-			obs[i]['events'] = self.events.get(ref_pos=(obs[i]['pose'][:3])) if self.challenge != 'commute' else []
+			self.obs[i]['rgb'] = None
+			if agent_idx_list is not None and i not in agent_idx_list:
+				continue
+			if self.enable_third_person_cameras and self.seconds % self.save_per_seconds == 0:
+				indoor = self.agent_infos[i]['current_building'] != 'open space'
+				third_person_rgb = agent.get_third_person_camera_rgb(indoor)
+				if third_person_rgb is not None:
+					Image.fromarray(third_person_rgb).save(
+						os.path.join(self.output_dir, 'tp', self.agent_names[i], f"rgb_{self.steps:06d}.png"))
+			self.obs[i]['pose'] = self.config['agent_poses'][i]
 
-			if not self.enable_gt_segmentation:
-				for event in obs[i]['events']:
-					event['subject'] = None
-					event['predicate'] = None
-					event['object'] = None
-			obs[i]['curr_time'] = self.curr_time
-			obs[i]['steps'] = self.steps
-			obs[i]['accessible_places'] = get_accessible_places(self.building_metadata, self.place_metadata, agent.get_global_pose(), self.agent_infos[i]["current_building"], self.agent_infos[i]["current_place"])
-			obs[i]['action_status'] = agent.action_status().value
-			obs[i]['current_building'] = self.agent_infos[i]["current_building"]
-			obs[i]['current_place'] = self.agent_infos[i]["current_place"]
-			obs[i]['cash'] = self.agent_infos[i]["cash"]
-			obs[i]['held_objects'] = self.agent_infos[i]["held_objects"] if "held_objects" in self.agent_infos[i] else [None, None]
-			obs[i]['current_vehicle'] = self.agent_infos[i]["current_vehicle"]
+			if self.genesis_steps % self.agent_visual_obs_freq[i] == 0:
+				self.obs[i]['rgb'], self.obs[i]['depth'], self.obs[i]['segmentation'], self.obs[i]['fov'], self.obs[i]['extrinsics'] = agent.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
+				if self.seconds % self.save_per_seconds == 0:
+					if self.obs[i]['rgb'] is not None:
+						Image.fromarray(self.obs[i]['rgb']).save(
+							os.path.join(self.output_dir, 'ego', self.agent_names[i], f"rgb_{self.steps:06d}.png"))
+					if self.debug:
+						if self.obs[i]['segmentation'] is not None:
+							Image.fromarray(self.entity_idx_to_color[self.obs[i]['segmentation'] + 1]).save(
+								os.path.join(self.output_dir, 'ego', self.agent_names[i], f"seg_{self.steps:06d}.png"))
+				if self.enable_gt_segmentation:
+					self.obs[i]["gt_seg_entity_idx_to_info"] = self.entity_idx_to_info
 
-			if obs[i]['current_vehicle'] == 'bus':
-				if self.traffic_manager.bus.stop_at_this_step:
-					obs[i]['accessible_places'] = [self.traffic_manager.bus.current_stop_name]
+				self.obs[i]['events'] = self.events.get(
+					ref_pos=(self.obs[i]['pose'][:3])) if self.challenge != 'commute' else []
+
+				if not self.enable_gt_segmentation:
+					for event in self.obs[i]['events']:
+						event['subject'] = None
+						event['predicate'] = None
+						event['object'] = None
+				self.obs[i]['curr_time'] = self.curr_time
+				self.obs[i]['steps'] = self.steps
+				self.obs[i]['accessible_places'] = get_accessible_places(self.building_metadata, self.place_metadata,
+																		 agent.get_global_pose(),
+																		 self.agent_infos[i]["current_building"],
+																		 self.agent_infos[i]["current_place"])
+				self.obs[i]['action_status'] = agent.action_status().value
+				self.obs[i]['current_building'] = self.agent_infos[i]["current_building"]
+				self.obs[i]['current_place'] = self.agent_infos[i]["current_place"]
+				self.obs[i]['cash'] = self.agent_infos[i]["cash"]
+				self.obs[i]['held_objects'] = self.agent_infos[i]["held_objects"] if "held_objects" in self.agent_infos[
+					i] else [None, None]
+				self.obs[i]['current_vehicle'] = self.agent_infos[i]["current_vehicle"]
+
+				if self.obs[i]['current_vehicle'] == 'bus':
+					if self.traffic_manager.bus.stop_at_this_step:
+						self.obs[i]['accessible_places'] = [self.traffic_manager.bus.current_stop_name]
+					else:
+						self.obs[i]['accessible_places'] = []
+				elif self.obs[i]['current_vehicle'] == 'bicycle':
+					# remove the indoor places from accessible places
+					self.obs[i]['accessible_places'] = [place for place in self.obs[i]['accessible_places'] if
+														self.place_metadata[place]['building'] == 'open space']
 				else:
-					obs[i]['accessible_places'] = []
-			elif obs[i]['current_vehicle'] == 'bicycle':
-				#remove the indoor places from accessible places
-				obs[i]['accessible_places'] = [place for place in obs[i]['accessible_places'] if self.place_metadata[place]['building'] == 'open space']
-			else:
-				if self.traffic_manager.bus.stop_at_this_step and is_near_goal(obs[i]['pose'][0], obs[i]['pose'][1], None, self.traffic_manager.bus.bus.get_global_pose().tolist()[:2], threshold=8):
-					obs[i]['accessible_places'].append('bus')
-				nearest_bicycle, nearest_bicycle_idx = self.traffic_manager.shared_bicycles.get_nearest_bicycle(agent.get_global_xy())
-				if nearest_bicycle is not None:
-					obs[i]['accessible_places'].append('bicycle')
-			if self.enable_gt_segmentation:
-				obs[i]["gt_seg_entity_idx_to_info"] = self.entity_idx_to_info
+					if self.traffic_manager.bus.stop_at_this_step and is_near_goal(self.obs[i]['pose'][0],
+																				   self.obs[i]['pose'][1], None,
+																				   self.traffic_manager.bus.bus.get_global_pose().tolist()[
+																				   :2], threshold=8):
+						self.obs[i]['accessible_places'].append('bus')
+					nearest_bicycle, nearest_bicycle_idx = self.traffic_manager.shared_bicycles.get_nearest_bicycle(
+						agent.get_global_xy())
+					if nearest_bicycle is not None:
+						self.obs[i]['accessible_places'].append('bicycle')
+				if self.enable_gt_segmentation:
+					self.obs[i]["gt_seg_entity_idx_to_info"] = self.entity_idx_to_info
+
+			if i in self.robot_agent_id_list:
+				self.obs[i]['robot_t'] = self.genesis_steps * self.config["dt_sim"]
+				self.obs[i]['robot_obs'], self.obs[i]['robot_additional_obs'] = self.agents[i].get_observations()
 		self.events.clear()
-		return obs
 
 	def close(self):
 		gs.logger.warning("Close ViCo environment")
@@ -888,7 +1131,7 @@ class VicoEnv:
 		"""All the entities in the scene."""
 		return self.scene.entities
 
-class AgentProcess(mp.Process):
+class AgentProcess(ctx.Process):
 	def __init__(self, agent_cls: type[Agent], name: str, **kwargs: dict):
 		super().__init__(daemon=True)
 		self.agent_cls = agent_cls
@@ -1024,11 +1267,13 @@ if __name__ == '__main__':
 	### Simulation configurations
 	parser.add_argument("--resolution", type=int, default=512)
 	parser.add_argument("--enable_collision", action='store_true')
+	parser.add_argument("--enable_decompose", action='store_true')
 	parser.add_argument("--skip_avatar_animation", action='store_true')
 	parser.add_argument("--enable_gt_segmentation", action='store_true')
 	parser.add_argument("--max_seconds", type=int, default=86400) # 24 hours
 	parser.add_argument("--save_per_seconds", type=int, default=10)
 	parser.add_argument("--enable_third_person_cameras", action='store_true')
+	parser.add_argument("--enable_demo_camera", action='store_true')
 	parser.add_argument("--curr_time", type=str)
 
 	### Scene configurations
@@ -1073,10 +1318,10 @@ if __name__ == '__main__':
 	else:
 		print(f"Continue simulation from config: {config_path}")
 
+	config = json.load(open(os.path.join(config_path, 'config.json'), 'r'))
 	if args.debug:
 		args.enable_third_person_cameras = True
 		if args.curr_time is not None:
-			config = json.load(open(os.path.join(config_path, 'config.json'), 'r'))
 			config['curr_time'] = args.curr_time
 			atomic_save(os.path.join(config_path, 'config.json'), json.dumps(config, indent=4, default=json_converter))
 
@@ -1094,14 +1339,17 @@ if __name__ == '__main__':
 		config_path=config_path,
 		scene=args.scene,
 		enable_indoor_scene=not args.no_load_indoor_scene,
+		enable_indoor_objects=not args.no_load_indoor_objects,
 		enable_outdoor_objects=not args.no_load_outdoor_objects,
 		outdoor_objects_max_num=args.outdoor_objects_max_num,
 		enable_collision=args.enable_collision,
+		enable_decompose=args.enable_decompose,
 		skip_avatar_animation=args.skip_avatar_animation,
 		enable_gt_segmentation=args.enable_gt_segmentation,
 		no_load_scene=args.no_load_scene,
 		output_dir=args.output_dir,
 		enable_third_person_cameras=args.enable_third_person_cameras,
+		enable_demo_camera=args.enable_demo_camera,
 		no_traffic_manager=args.no_traffic_manager,
 		enable_tm_debug=args.enable_tm_debug,
 		tm_vehicle_num=args.tm_vehicle_num,
@@ -1109,7 +1357,6 @@ if __name__ == '__main__':
 		save_per_seconds=args.save_per_seconds,
 		defer_chat=True,
 		debug=args.debug,
-		enable_indoor_objects=not args.no_load_indoor_objects,
 	)
 
 	agents = []
@@ -1123,11 +1370,12 @@ if __name__ == '__main__':
 			logging_level = args.logging_level,
 			multi_process = args.multi_process
 		)
-		if args.agent_type == 'tour_agent':
-			from agents import TourAgent
-			agents.append(AgentProcess(TourAgent, **basic_kwargs, tour_spatial_memory=env.building_metadata))
+		if 'robot_agent_id_list' in config and i in config['robot_agent_id_list']:
+			robot_type = config['robot_types'][config['robot_agent_id_list'].index(i)]
 		else:
-			raise NotImplementedError(f"agent type {args.agent_type} is not supported")
+			robot_type = None
+		agent_cls = get_agent_cls(agent_type=args.agent_type, robot_type=robot_type)
+		agents.append(AgentProcess(agent_cls, **basic_kwargs, tour_spatial_memory=env.building_metadata))
 
 	if args.multi_process:
 		gs.logger.info("Start agent processes")
@@ -1137,31 +1385,34 @@ if __name__ == '__main__':
 
 	# Simulation loop
 	obs = env.reset()
+	agent_list_to_update = obs.pop('agent_list_to_update')
 	agent_actions = {}
 	agent_actions_to_print = {}
 	args.max_steps = args.max_seconds // env.sec_per_step
 	while True:
 		lst_time = time.perf_counter()
 		for i, agent in enumerate(agents):
-			agent.update(obs[i])
+			if i in agent_list_to_update:
+				agent.update(obs[i])
 		for i, agent in enumerate(agents):
-			agent_actions[i] = agent.act()
-			agent_actions_to_print[agent.name] = agent_actions[i]['type'] if agent_actions[i] is not None else None
-			if agent_actions[i] is not None and agent_actions[i]['type'] == 'converse':
-				agent_actions[i]['request_chat_func'] = agent.request_chat
-				agent_actions[i]['get_utterance_func'] = agent.get_utterance
+			if i in agent_list_to_update:
+				agent_actions[i] = agent.act()
+				agent_actions_to_print[agent.name] = agent_actions[i]['type'] if agent_actions[i] is not None else None
+				if agent_actions[i] is not None and agent_actions[i]['type'] == 'converse':
+					agent_actions[i]['request_chat_func'] = agent.request_chat
+					agent_actions[i]['get_utterance_func'] = agent.get_utterance
+		agent_actions['agent_list_to_update'] = agent_list_to_update
 
 		gs.logger.info(f"current time: {env.curr_time}, ViCo steps: {env.steps}, agents actions: {agent_actions_to_print}")
 		dt_agent = time.perf_counter() - lst_time
 		env.config["dt_agent"] = (env.config["dt_agent"] * env.steps + dt_agent) / (env.steps + 1)
 		lst_time = time.perf_counter()
 		obs, _, done, info = env.step(agent_actions)
+		agent_list_to_update = obs.pop('agent_list_to_update')
 
 		dt_sim = time.perf_counter() - lst_time
-		env.config["dt_sim"] = (env.config["dt_sim"] * (env.steps - 1) + dt_sim) / env.steps
 		gs.logger.info(f"Time used: {dt_agent:.2f}s for agents, {dt_sim:.2f}s for simulation, "
 					   f"average {env.config['dt_agent']:.2f}s for agents, "
-					   f"{env.config['dt_sim']:.2f}s for simulation, "
 					   f"{env.config['dt_chat']:.2f}s for post-chatting over {env.steps} steps.")
 		if env.steps > args.max_steps:
 			break

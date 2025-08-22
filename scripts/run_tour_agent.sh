@@ -1,6 +1,5 @@
 python ViCo/env.py --head_less \
 --backend gpu \
---multi_process \
 --skip_avatar_animation \
 --scene NY \
 --no_load_indoor_scene \
