@@ -173,9 +173,13 @@ With many more not listed here, we are grateful for the contributions of the ope
 ## Citation
 If you find this work useful, please consider citing:
 ```bibtex
-@article{zhou2025virtual,
-  title={Virtual Community: An Open World for Humans, Robots, and Society},
-  author={Zhou, Qinhong and Zhang, Hongxin and Lin, Xiangye and Zhang, Zheyuan and Chen, Yutian and Liu, Wenjun and Zhang, Zunzhe and Chen, Sunli and Fang, Lixing and Lyu, Qiushi and Sun, Xinyu and Yang, Jincheng and Wang, Zeyuan and Dang, Bao Chi and Chen, Zhehuan and Ladia, Daksha and Liu, Jiageng and Gan, Chuang},
-  year={2025}
+@misc{zhou2025virtualcommunityopenworld,
+      title={Virtual Community: An Open World for Humans, Robots, and Society}, 
+      author={Qinhong Zhou and Hongxin Zhang and Xiangye Lin and Zheyuan Zhang and Yutian Chen and Wenjun Liu and Zunzhe Zhang and Sunli Chen and Lixing Fang and Qiushi Lyu and Xinyu Sun and Jincheng Yang and Zeyuan Wang and Bao Chi Dang and Zhehuan Chen and Daksha Ladia and Jiageng Liu and Chuang Gan},
+      year={2025},
+      eprint={2508.14893},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2508.14893}, 
 }
 ```
