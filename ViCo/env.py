@@ -568,7 +568,7 @@ class VicoEnv:
 								collision=self.enable_collision,
 								merge_submeshes_for_collision=False,
 								group_by_material=True,
-								decompose_nonconvex=self.enable_decompose,
+								decompose_object_error_threshold=float("inf") if not self.enable_decompose else 0.15,
 								convexify=self.enable_collision,
 								coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 							),
@@ -588,7 +588,7 @@ class VicoEnv:
 								collision=self.enable_collision,
 								merge_submeshes_for_collision=False,
 								group_by_material=True,
-								decompose_nonconvex=self.enable_decompose,
+								decompose_object_error_threshold=float("inf") if not self.enable_decompose else 0.15,
 								convexify=self.enable_collision,
 								coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 							),
@@ -608,8 +608,8 @@ class VicoEnv:
 					collision=self.enable_collision,
 					merge_submeshes_for_collision=False,  # Buildings are constructed separately
 					group_by_material=True,
-					decompose_nonconvex=self.enable_decompose,
 					convexify=self.enable_collision,
+					decompose_object_error_threshold=float("inf") if not self.enable_decompose else 0.15,
 					coacd_options=CoacdOptions(threshold=0.05,preprocess_resolution=200)
 				),
 			)
