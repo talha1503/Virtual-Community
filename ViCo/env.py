@@ -767,7 +767,6 @@ class VicoEnv:
 				agent.turn_left(angle, turn_sec_limit=self.sec_per_step * 1500)
 			else:
 				agent.turn_right(angle, turn_sec_limit=self.sec_per_step * 1500)
-
 		elif action['type'] == 'sleep':
 			agent.sleep()
 		elif action['type'] == 'wake':
@@ -870,6 +869,8 @@ class VicoEnv:
 			target_agent_idx = self.agent_names.index(action['arg1'])
 			self.agent_infos[agent_id]["cash"] -= action['arg2']
 			self.agent_infos[target_agent_idx]["cash"] += action['arg2']
+		elif action['type'] == 'play_animation':
+			agent.play_animation(name=action['arg1'])
 		elif action['type'] == 'wait':
 			return
 		else:
@@ -940,9 +941,6 @@ class VicoEnv:
 		self.robot_only_simulation = False
 		for _ in tqdm.tqdm(range(simulate_to_genesis_step - self.genesis_steps), desc="simulating", ):
 			self.scene_step()
-			for i, agent in enumerate(self.agents):
-				if i in self.robot_agent_id_list:
-					print(i, agent.get_global_pose().tolist())
 			self.genesis_steps += 1
 			if not sim_early_end and self.check_sim_early_end():
 				sim_early_end = True
