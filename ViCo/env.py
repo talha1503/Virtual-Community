@@ -180,6 +180,7 @@ class VicoEnv:
 				pos=self.config['demo_camera_pos'],
 				lookat=self.config['demo_camera_lookat'],
 				fov=90,
+				far=16000.0,
 				GUI=False,
 			)
 			os.makedirs(os.path.join(self.output_dir, 'demo'), exist_ok=True)

@@ -168,6 +168,7 @@ class AvatarController():
                 lookat=(1.0, 0.0, 0.0),
                 fov=ego_view_options["fov"],
                 GUI=ego_view_options["GUI"],
+                far=16000.0,
             )
         else:
             self.ego_view = None

@@ -49,7 +49,8 @@ class RobotBaseController(ABC):
                 pos=(0.0, 0.0, 0.0),
                 lookat=(1.0, 0.0, 0.0),
                 fov=ego_view_options["fov"],
-                GUI=ego_view_options["GUI"]
+                GUI=ego_view_options["GUI"],
+                far=16000.0,
             )
         else:
             self.ego_view = None
@@ -59,7 +60,8 @@ class RobotBaseController(ABC):
                 pos=(0.0, 0.0, 0.0),
                 lookat=(0.0, 0.0, 0.0),
                 fov=90,
-                GUI=False
+                GUI=False,
+                far=16000.0,
             )
         self.obs_history_buf = None
         self.robot = None
