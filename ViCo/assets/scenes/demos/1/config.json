@@ -2,7 +2,6 @@
     "sim_name": "Simple_agent_num_2",
     "scene": "ViCo/scene/demo/DETROIT_ok/DETROIT_stage2_cut_with_objects_basic.glb",
     "scene_offset": [0.0, 0.0, 26.3],
-    "height_field": "ViCo/scene/demo/DETROIT_ok/height_field.npz",
     "agent_names": [
         "Alex Jefferson",
         "Brian Carter"

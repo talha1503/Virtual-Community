@@ -1,4 +1,4 @@
-CONFIG_PATH=ViCo/assets/scenes/demos/2/
+CONFIG_PATH=ViCo/assets/scenes/demos/1/
 # there is an outdoor demo example: CONFIG_PATH=ViCo/assets/scenes/demos/1/
 OUTPUT_DIR=output_simple/
 STEP_LIMIT=5
