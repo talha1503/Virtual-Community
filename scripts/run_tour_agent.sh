@@ -1,7 +1,7 @@
 python ViCo/env.py --head_less \
 --backend gpu \
 --skip_avatar_animation \
---scene NY \
+--scene DETROIT \
 --no_load_indoor_scene \
 --resolution 512 \
 --num_agents 15 \

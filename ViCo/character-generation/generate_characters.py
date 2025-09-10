@@ -192,7 +192,7 @@ class CharacterGen:
         if args.scene not in self.scene_to_name:
             self.scene_to_name[args.scene] = args.scene.lower().capitalize()
         print("Scene Name:", self.scene_to_name[args.scene])
-        if os.path.exists(os.path.join(args.output_dir, "place_metadata.json")):
+        if False: # os.path.exists(os.path.join(args.output_dir, "place_metadata.json")):
             self.place_metadata = json.load(open(os.path.join(args.output_dir, "place_metadata.json"), 'r'))
             self.building_metadata = update_buildings(self.building_metadata, self.place_metadata)
             self.assign_scene_to_place_metadata()
@@ -405,134 +405,15 @@ class CharacterGen:
         return bool(re.search(r'\\u[0-9a-fA-F]{4}', s))
 
     def execute(self):
-        mixamo_names = [name for name in self.character_name_to_skin_info.keys() if self.character_name_to_skin_info[name]["skin_file"][:6] == "mixamo"]
-        print("# Total Available Mixamo Characters:", len(mixamo_names))
-        random.shuffle(mixamo_names)
-        if args.event:
-            character_names = mixamo_names[:13] + ["Donald Trump", "Kamala Harris"]
-        elif args.num_characters == 1:
-            character_names = ["James Thompson"]
-        else:
-            predefined_celebrity_names = {
-                "NY": ["Justin Bieber", "Kamala Harris", "Feifei Li", "Bill Gates", "Steve Jobs"],
-                "DETROIT": ["Taylor Swift", "Elon Musk", "Mr Beast", "Jensen Huang", "Albert Einstein"],
-                "LONDON": ["Emma Watson", "Mark Zuckerberg", "Andrew Ng", "LeBron James", "Bruce Lee"]
-            } # Only use this for 15-characters generation because celebrity names will be exactly 5
-            num_celebrity = args.num_characters // 3
-            num_mixamo = args.num_characters - num_celebrity
-            random.shuffle(mixamo_names)
-            selected_mixamo_names = mixamo_names[:num_mixamo]
-            celebrity_names = [name for name in self.character_name_to_skin_info.keys() if name not in mixamo_names]
-            if args.famous:
-                celebrity_names = ["Elon Musk", "Justin Bieber", "Donald Trump", "Kamala Harris", "Feifei Li", "Taylor Swift", "Marie Curie", "Mr Beast", "Andrew Ng", "Joe Biden", "Jeff Bezos", "Jensen Huang", "Emma Watson", "Albert Einstein", "Steve Jobs", "Bruce Lee", "Mark Zuckerberg", "Bill Gates", "LeBron James", "Selena Gomez"]
-            if args.predefined_famous and args.scene in predefined_celebrity_names:
-                celebrity_names = predefined_celebrity_names[args.scene]
-            random.shuffle(celebrity_names)
-            selected_celebrity_names = celebrity_names[:num_celebrity]
-            character_names = selected_mixamo_names + selected_celebrity_names
-
-        character_names = sorted(character_names)
-        print("Selected Characters:", character_names)
-
         # Step 1: Generate groups and characters using LLM
-
-        characters_initial_information = {}
-        characters_initial_information_verbalized = "Characters: \n"
-        
-        for character_name in character_names:
-            # characters_initial_information.append(f"Character Name: {character_name}, Character Age: {self.character_name_to_skin_info[character_name]}")
-            characters_initial_information[character_name] = {} 
-            characters_initial_information[character_name]["age"] = self.character_name_to_skin_info[character_name]["age"]
-            if character_name in mixamo_names:
-                characters_initial_information[character_name]["famous"] = False
-            else:
-                characters_initial_information[character_name]["famous"] = True
-        # characters_initial_information_verbalized += "; ".join(characters_initial_information)
-        characters_initial_information_verbalized += repr(characters_initial_information)
-
-        places_information_verbalized = "Places: \n"
-        if args.use_max_120:
-            required_places_per_type = {}
-            for coarse_type, count in self.place_type_stats.items():
-                required_places_per_type[coarse_type] = min(20, count)
-            places_by_type = {}
-            for building in self.building_metadata:
-                building_places = self.building_metadata[building]["places"]
-                for building_place in building_places:
-                    if building_place['coarse_type'] != 'transit':
-                        coarse_type = building_place["coarse_type"]
-                        places_by_type.setdefault(coarse_type, []).append(building_place)
-            places_information = {}
-            num_places = 0
-            for coarse_type, required_num in required_places_per_type.items():
-                places_list = places_by_type.get(coarse_type, [])
-                selected_places = places_list[:required_num]
-                for building_place in selected_places:
-                    if num_places < 120:
-                        places_information[building_place["name"]] = {
-                            "coarse_type": building_place["coarse_type"],
-                            "fine_types": building_place["fine_types"],
-                        }
-                        num_places += 1
-                    else:
-                        break
-            if num_places < 120:
-                for building in self.building_metadata:
-                    building_places = self.building_metadata[building]["places"]
-                    for building_place in building_places:
-                        if building_place['coarse_type'] != 'transit':
-                            name = building_place["name"]
-                            if name not in places_information:
-                                if num_places < 120:
-                                    places_information[name] = {
-                                        "coarse_type": building_place["coarse_type"],
-                                        "fine_types": building_place["fine_types"],
-                                    }
-                                    num_places += 1
-        else:
-            places_information = {}
-            num_places = 0
-            for building in self.building_metadata:
-                building_places = self.building_metadata[building]["places"]
-                for building_place in building_places:
-                    if building_place['coarse_type'] != 'transit':
-                        places_information[building_place["name"]] = {}
-                        places_information[building_place["name"]]["coarse_type"] = building_place["coarse_type"]
-                        places_information[building_place["name"]]["fine_types"] = building_place["fine_types"]
-                        num_places += 1
-        places_information_verbalized += repr(places_information)
-        print("Number of places:", num_places)
-
-        grounding_success = False
-        chat_history = []
-        prompt_template_generate_instructions = open('ViCo/assets/prompt_character_gen_generate_instructions.txt', 'r').read()
-        generate_instructions = prompt_template_generate_instructions.replace("$places_information_verbalized$", places_information_verbalized)
-        generate_instructions = generate_instructions.replace("$characters_initial_information_verbalized$", characters_initial_information_verbalized)
-        generate_instructions = generate_instructions.replace("$num_groups$", str(args.num_groups))
-        generate_instructions = generate_instructions.replace("$num_characters$", str(args.num_characters))
-        generate_instructions = generate_instructions.replace("$scene_name$", self.scene_to_name[args.scene])
-        generate_instructions = generate_instructions.replace("$group_least_members$", str(args.num_characters // args.num_groups))
-
-        if not args.event:
-            middle_path = f"{args.scene}"
-            prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
-        else:
-            middle_path = os.path.join(f"{args.scene}", "events", args.event)
-            event_description = "United States presidential election between nominees Donald Trump and Kamala Harris"
-            prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and {event_description} is happening in this scene, and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
-        
-        if args.only_copy_prompt:
-            import pyperclip
-            pyperclip.copy(prompt)
-            print("Prompt copied to clipboard. Exiting...")
-            exit()
-
         groups = None
         characters = None
 
         if not args.event:
+            middle_path = f"{args.scene}"
             base_path = f"ViCo/assets/scenes/{args.scene}/gpt_cache/g{args.num_groups}c{args.num_characters}"
         else:
+            middle_path = os.path.join(f"{args.scene}", "events", args.event)
             base_path = os.path.join(f"ViCo/assets/scenes/{args.scene}", "gpt_cache", "events", f"{args.event}", f"g{args.num_groups}c{args.num_characters}")
         
         groups_json_path = os.path.join(base_path, "groups.json")
@@ -547,6 +428,124 @@ class CharacterGen:
             character_names = list(characters.keys())
             grounding_success = True
         else:
+            mixamo_names = [name for name in self.character_name_to_skin_info.keys() if self.character_name_to_skin_info[name]["skin_file"][:6] == "mixamo"]
+            print("# Total Available Mixamo Characters:", len(mixamo_names))
+            random.shuffle(mixamo_names)
+            if args.event:
+                character_names = mixamo_names[:13] + ["Donald Trump", "Kamala Harris"]
+            elif args.num_characters == 1:
+                character_names = ["James Thompson"]
+            else:
+                predefined_celebrity_names = {
+                    "NY": ["Justin Bieber", "Kamala Harris", "Feifei Li", "Bill Gates", "Steve Jobs"],
+                    "DETROIT": ["Taylor Swift", "Elon Musk", "Mr Beast", "Jensen Huang", "Albert Einstein"],
+                    "LONDON": ["Emma Watson", "Mark Zuckerberg", "Andrew Ng", "LeBron James", "Bruce Lee"]
+                } # Only use this for 15-characters generation because celebrity names will be exactly 5
+                num_celebrity = args.num_characters // 3
+                num_mixamo = args.num_characters - num_celebrity
+                random.shuffle(mixamo_names)
+                selected_mixamo_names = mixamo_names[:num_mixamo]
+                celebrity_names = [name for name in self.character_name_to_skin_info.keys() if name not in mixamo_names]
+                if args.famous:
+                    celebrity_names = ["Elon Musk", "Justin Bieber", "Donald Trump", "Kamala Harris", "Feifei Li", "Taylor Swift", "Marie Curie", "Mr Beast", "Andrew Ng", "Joe Biden", "Jeff Bezos", "Jensen Huang", "Emma Watson", "Albert Einstein", "Steve Jobs", "Bruce Lee", "Mark Zuckerberg", "Bill Gates", "LeBron James", "Selena Gomez"]
+                if args.predefined_famous and args.scene in predefined_celebrity_names:
+                    celebrity_names = predefined_celebrity_names[args.scene]
+                random.shuffle(celebrity_names)
+                selected_celebrity_names = celebrity_names[:num_celebrity]
+                character_names = selected_mixamo_names + selected_celebrity_names
+
+            character_names = sorted(character_names)
+            print("Selected Characters:", character_names)
+
+            characters_initial_information = {}
+            characters_initial_information_verbalized = "Characters: \n"
+            
+            for character_name in character_names:
+                # characters_initial_information.append(f"Character Name: {character_name}, Character Age: {self.character_name_to_skin_info[character_name]}")
+                characters_initial_information[character_name] = {} 
+                characters_initial_information[character_name]["age"] = self.character_name_to_skin_info[character_name]["age"]
+                if character_name in mixamo_names:
+                    characters_initial_information[character_name]["famous"] = False
+                else:
+                    characters_initial_information[character_name]["famous"] = True
+            # characters_initial_information_verbalized += "; ".join(characters_initial_information)
+            characters_initial_information_verbalized += repr(characters_initial_information)
+
+            places_information_verbalized = "Places: \n"
+            if args.use_max_120:
+                required_places_per_type = {}
+                for coarse_type, count in self.place_type_stats.items():
+                    required_places_per_type[coarse_type] = min(20, count)
+                places_by_type = {}
+                for building in self.building_metadata:
+                    building_places = self.building_metadata[building]["places"]
+                    for building_place in building_places:
+                        if building_place['coarse_type'] != 'transit':
+                            coarse_type = building_place["coarse_type"]
+                            places_by_type.setdefault(coarse_type, []).append(building_place)
+                places_information = {}
+                num_places = 0
+                for coarse_type, required_num in required_places_per_type.items():
+                    places_list = places_by_type.get(coarse_type, [])
+                    selected_places = places_list[:required_num]
+                    for building_place in selected_places:
+                        if num_places < 120:
+                            places_information[building_place["name"]] = {
+                                "coarse_type": building_place["coarse_type"],
+                                "fine_types": building_place["fine_types"],
+                            }
+                            num_places += 1
+                        else:
+                            break
+                if num_places < 120:
+                    for building in self.building_metadata:
+                        building_places = self.building_metadata[building]["places"]
+                        for building_place in building_places:
+                            if building_place['coarse_type'] != 'transit':
+                                name = building_place["name"]
+                                if name not in places_information:
+                                    if num_places < 120:
+                                        places_information[name] = {
+                                            "coarse_type": building_place["coarse_type"],
+                                            "fine_types": building_place["fine_types"],
+                                        }
+                                        num_places += 1
+            else:
+                places_information = {}
+                num_places = 0
+                for building in self.building_metadata:
+                    building_places = self.building_metadata[building]["places"]
+                    for building_place in building_places:
+                        if building_place['coarse_type'] != 'transit':
+                            places_information[building_place["name"]] = {}
+                            places_information[building_place["name"]]["coarse_type"] = building_place["coarse_type"]
+                            places_information[building_place["name"]]["fine_types"] = building_place["fine_types"]
+                            num_places += 1
+            places_information_verbalized += repr(places_information)
+            print("Number of places:", num_places)
+
+            grounding_success = False
+            chat_history = []
+            prompt_template_generate_instructions = open('ViCo/assets/prompt_character_gen_generate_instructions.txt', 'r').read()
+            generate_instructions = prompt_template_generate_instructions.replace("$places_information_verbalized$", places_information_verbalized)
+            generate_instructions = generate_instructions.replace("$characters_initial_information_verbalized$", characters_initial_information_verbalized)
+            generate_instructions = generate_instructions.replace("$num_groups$", str(args.num_groups))
+            generate_instructions = generate_instructions.replace("$num_characters$", str(args.num_characters))
+            generate_instructions = generate_instructions.replace("$scene_name$", self.scene_to_name[args.scene])
+            generate_instructions = generate_instructions.replace("$group_least_members$", str(args.num_characters // args.num_groups))
+
+            if not args.event:
+                prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
+            else:
+                event_description = "United States presidential election between nominees Donald Trump and Kamala Harris"
+                prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and {event_description} is happening in this scene, and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
+            
+            if args.only_copy_prompt:
+                import pyperclip
+                pyperclip.copy(prompt)
+                print("Prompt copied to clipboard. Exiting...")
+                exit()
+
             if args.force_check_grounding:
                 print("force_check_grounding option is not allowed when gpt_cache does not exist. Exiting...")
                 exit()
@@ -560,132 +559,130 @@ class CharacterGen:
             groups = dicts_returned[1]
             # json.dump(characters, open(characters_json_path, 'w'), indent=4)
             # json.dump(groups, open(groups_json_path, 'w'), indent=4)
+            for group in groups:
+                groups[group]["members"] = sorted(groups[group]["members"])
+                
+            max_allowable_retries = 15
+            num_retries = 0
+            # Step 1.5: Validate whether the generated jsons are consistent and grounded to the scene
+            while not grounding_success or args.force_check_grounding:
 
-        for group in groups:
-            groups[group]["members"] = sorted(groups[group]["members"])
-            
-        max_allowable_retries = 15
-        num_retries = 0
+                if num_retries > max_allowable_retries:
+                    print("Number of retries exceeds max allowable retries. Exiting...")
+                    exit()
+                
+                # sort characters according to names
+                characters = dict(sorted(characters.items()))
 
-        while not grounding_success or args.force_check_grounding:
-
-            if num_retries > max_allowable_retries:
-                print("Number of retries exceeds max allowable retries. Exiting...")
-                exit()
-            
-            # sort characters according to names
-            characters = dict(sorted(characters.items()))
-
-            # Step 2: Validate whether the generated jsons are consistent and grounded to the scene
-            error_messages = []
-            for group_name in groups.keys():
-                # print(groups[group_name])
-                if groups[group_name]["place"] not in places_information.keys():
-                    error_messages.append(f"Group {group_name}: place {groups[group_name]['place']} not exists in the scene's places.")
-            # Groups validation completes
-            # Add groups into character
-            for group_name in groups.keys():
-                group = groups[group_name]
-                for member_name in group["members"]:
-                    if "groups" not in characters[member_name]:
-                        characters[member_name]["groups"] = []
-                    if group_name not in characters[member_name]["groups"]:
-                        characters[member_name]["groups"].append(group_name)
-            every_character_has_group = True
-            for character_name in characters.keys():
-                if "groups" not in characters[character_name]:
-                    every_character_has_group = False
-                    error_messages.append(f"{character_name} does not have any group. Every character should have only one group.")
-            if every_character_has_group:
-                for character_name in characters.keys():
-                    if len(characters[character_name]["groups"]) > 1:
-                        error_messages.append(f"{character_name} has more than one group. Every character should have only one group.")
-                    for group_in_character in characters[character_name]["groups"]:
-                        # if group_in_character not in groups.keys():
-                        #     error_messages.append(f"Character {character_name}: group {group_in_character} not exists in the groups.")
-                        if groups[group_in_character]["place"] not in characters[character_name]["known_places"]:
-                            characters[character_name]["known_places"].append(groups[group_in_character]["place"])
-                    if characters[character_name]["living_place"] not in places_information.keys():
-                        error_messages.append(f"Character {character_name}: living_place {characters[character_name]['living_place']} not exists in the scene's places.")
-                    elif places_information[characters[character_name]["living_place"]]["coarse_type"] != "accommodation":
-                        error_messages.append(f"Character {character_name}: living_place {characters[character_name]['living_place']} is not accommodation.")
-                    for other_place in characters[character_name]["known_places"]:
-                        if other_place not in places_information.keys():
-                            error_messages.append(f"Character {character_name}: known_place {other_place} not exists in the scene's places.")
-                    if characters[character_name]["working_place"] is not None and characters[character_name]["working_place"] not in places_information.keys():
-                        error_messages.append(f"working_place {characters[character_name]['working_place']} not exists in the scene's places.")
-                    working_place_candidates = []
-                    for place in places_information.keys():
-                        if place in characters[character_name]["learned"]:
-                            working_place_candidates.append(place)
-                    found_one_valid_working_place = False
-                    if len(working_place_candidates) > 0:
-                        for working_place in working_place_candidates:
-                            if working_place == characters[character_name]["working_place"]:
-                                found_one_valid_working_place = True
-                    if found_one_valid_working_place:
-                        if characters[character_name]["working_place"] not in characters[character_name]["known_places"]:
-                            characters[character_name]["known_places"].append(characters[character_name]["working_place"])
-                    if len(working_place_candidates) > 0 and found_one_valid_working_place == False:
-                        error_messages.append(f"Character {character_name}: the working_place does not match any working place in [{', '.join(working_place_candidates)}] generated from the learned information.")
-                    if len(working_place_candidates) == 0:
-                        if characters[character_name]["working_place"] is not None and characters[character_name]["working_place"] not in characters[character_name]["known_places"]:
-                            characters[character_name]["known_places"].append(characters[character_name]["working_place"])
-                # Check # group members >= 2
+                error_messages = []
                 for group_name in groups.keys():
-                    # groups_info.append(f"{group_name}:{groups[group_name]['description']}")
-                    group_member_names = groups[group_name]["members"]
-                    if len(group_member_names) < (args.num_characters // args.num_groups):
-                        error_messages.append(f"Group {group_name}: only has {len(group_member_names)} member: [{', '.join(group_member_names)}]. Every group must have at least {args.num_characters // args.num_groups} members. Consider regenerate groups and assign characters more evenly.")
-                # Check # groups
-                if len(groups.keys()) != args.num_groups:
-                    error_messages.append(f"Number of groups generated is {len(groups.keys())}, not equal to the expected number of groups {args.num_groups}. Consider regenerate groups.")
-            # Characters validation completes
-            if len(error_messages) > 0:
-                if args.force_check_grounding:
-                    print("You used force_check_grounding option, and your error messages for the config are:")
-                    print("Error messages:", error_messages)
-                    print("Exiting...")
-                    exit()        
-                num_retries += 1
-                if raw_gpt_response is not None:
-                    chat_history.append({
-                        "role": "user",
-                        "content": [{
-                            "type": "text",
-                            "text": prompt
-                        }]
-                    })
-                    chat_history.append({
-                        "role": "system",
-                        "content": [{
-                            "type": "text",
-                            "text": raw_gpt_response
-                        }]
-                    })
-                    error_messages_verbalize = "Validation fails because of these error messages: \n" + '\n'.join(error_messages) + '\n' + \
-                                            f"Instruction: revise the output. Only return 2 JSON objects (both are dictionary of dictionaries). The first JSON contains {args.num_characters} characters (don't wrap it in a 'characters' key, the keys of the first JSON are character names) and the second JSON contains {args.num_groups} groups (don't wrap it in a 'groups' key, the keys of the second JSON are group names)."
-                    prompt = error_messages_verbalize
-                    print("Retrying...prompt:", prompt)
-                    # print("chat_history:", chat_history)
-                    raw_gpt_response = self.generator.generate(prompt, chat_history=chat_history)
+                    # print(groups[group_name])
+                    if groups[group_name]["place"] not in places_information.keys():
+                        error_messages.append(f"Group {group_name}: place {groups[group_name]['place']} not exists in the scene's places.")
+                # Groups validation completes
+                # Add groups into character
+                for group_name in groups.keys():
+                    group = groups[group_name]
+                    for member_name in group["members"]:
+                        if "groups" not in characters[member_name]:
+                            characters[member_name]["groups"] = []
+                        if group_name not in characters[member_name]["groups"]:
+                            characters[member_name]["groups"].append(group_name)
+                every_character_has_group = True
+                for character_name in characters.keys():
+                    if "groups" not in characters[character_name]:
+                        every_character_has_group = False
+                        error_messages.append(f"{character_name} does not have any group. Every character should have only one group.")
+                if every_character_has_group:
+                    for character_name in characters.keys():
+                        if len(characters[character_name]["groups"]) > 1:
+                            error_messages.append(f"{character_name} has more than one group. Every character should have only one group.")
+                        for group_in_character in characters[character_name]["groups"]:
+                            # if group_in_character not in groups.keys():
+                            #     error_messages.append(f"Character {character_name}: group {group_in_character} not exists in the groups.")
+                            if groups[group_in_character]["place"] not in characters[character_name]["known_places"]:
+                                characters[character_name]["known_places"].append(groups[group_in_character]["place"])
+                        if characters[character_name]["living_place"] not in places_information.keys():
+                            error_messages.append(f"Character {character_name}: living_place {characters[character_name]['living_place']} not exists in the scene's places.")
+                        elif places_information[characters[character_name]["living_place"]]["coarse_type"] != "accommodation":
+                            error_messages.append(f"Character {character_name}: living_place {characters[character_name]['living_place']} is not accommodation.")
+                        for other_place in characters[character_name]["known_places"]:
+                            if other_place not in places_information.keys():
+                                error_messages.append(f"Character {character_name}: known_place {other_place} not exists in the scene's places.")
+                        if characters[character_name]["working_place"] is not None and characters[character_name]["working_place"] not in places_information.keys():
+                            error_messages.append(f"working_place {characters[character_name]['working_place']} not exists in the scene's places.")
+                        working_place_candidates = []
+                        for place in places_information.keys():
+                            if place in characters[character_name]["learned"]:
+                                working_place_candidates.append(place)
+                        found_one_valid_working_place = False
+                        if len(working_place_candidates) > 0:
+                            for working_place in working_place_candidates:
+                                if working_place == characters[character_name]["working_place"]:
+                                    found_one_valid_working_place = True
+                        if found_one_valid_working_place:
+                            if characters[character_name]["working_place"] not in characters[character_name]["known_places"]:
+                                characters[character_name]["known_places"].append(characters[character_name]["working_place"])
+                        if len(working_place_candidates) > 0 and found_one_valid_working_place == False:
+                            error_messages.append(f"Character {character_name}: the working_place does not match any working place in [{', '.join(working_place_candidates)}] generated from the learned information.")
+                        if len(working_place_candidates) == 0:
+                            if characters[character_name]["working_place"] is not None and characters[character_name]["working_place"] not in characters[character_name]["known_places"]:
+                                characters[character_name]["known_places"].append(characters[character_name]["working_place"])
+                    # Check # group members >= 2
+                    for group_name in groups.keys():
+                        # groups_info.append(f"{group_name}:{groups[group_name]['description']}")
+                        group_member_names = groups[group_name]["members"]
+                        if len(group_member_names) < (args.num_characters // args.num_groups):
+                            error_messages.append(f"Group {group_name}: only has {len(group_member_names)} member: [{', '.join(group_member_names)}]. Every group must have at least {args.num_characters // args.num_groups} members. Consider regenerate groups and assign characters more evenly.")
+                    # Check # groups
+                    if len(groups.keys()) != args.num_groups:
+                        error_messages.append(f"Number of groups generated is {len(groups.keys())}, not equal to the expected number of groups {args.num_groups}. Consider regenerate groups.")
+                # Characters validation completes
+                if len(error_messages) > 0:
+                    if args.force_check_grounding:
+                        print("You used force_check_grounding option, and your error messages for the config are:")
+                        print("Error messages:", error_messages)
+                        print("Exiting...")
+                        exit()        
+                    num_retries += 1
+                    if raw_gpt_response is not None:
+                        chat_history.append({
+                            "role": "user",
+                            "content": [{
+                                "type": "text",
+                                "text": prompt
+                            }]
+                        })
+                        chat_history.append({
+                            "role": "system",
+                            "content": [{
+                                "type": "text",
+                                "text": raw_gpt_response
+                            }]
+                        })
+                        error_messages_verbalize = "Validation fails because of these error messages: \n" + '\n'.join(error_messages) + '\n' + \
+                                                f"Instruction: revise the output. Only return 2 JSON objects (both are dictionary of dictionaries). The first JSON contains {args.num_characters} characters (don't wrap it in a 'characters' key, the keys of the first JSON are character names) and the second JSON contains {args.num_groups} groups (don't wrap it in a 'groups' key, the keys of the second JSON are group names)."
+                        prompt = error_messages_verbalize
+                        print("Retrying...prompt:", prompt)
+                        # print("chat_history:", chat_history)
+                        raw_gpt_response = self.generator.generate(prompt, chat_history=chat_history)
+                    else:
+                        raw_gpt_response = self.generator.generate(prompt)
+                    # print("Debug: raw_gpt_response:", raw_gpt_response)
+                    dicts_returned = self.extract_json_blocks(raw_gpt_response)
+                    characters = dicts_returned[0]
+                    groups = dicts_returned[1]
                 else:
-                    raw_gpt_response = self.generator.generate(prompt)
-                # print("Debug: raw_gpt_response:", raw_gpt_response)
-                dicts_returned = self.extract_json_blocks(raw_gpt_response)
-                characters = dicts_returned[0]
-                groups = dicts_returned[1]
-            else:
-                print("Passed grounding validator!")
-                if args.force_check_grounding:
-                    print("You used force_check_grounding option, grounding is successful.")
-                    args.force_check_grounding = False
-                json.dump(characters, open(characters_json_path, 'w'), indent=4)
-                json.dump(groups, open(groups_json_path, 'w'), indent=4)
-                print("Saved characters.json with groups.")
-                grounding_success = True
-
-        # Step 3: Initiate dining places to characters
+                    print("Passed grounding validator!")
+                    if args.force_check_grounding:
+                        print("You used force_check_grounding option, grounding is successful.")
+                        args.force_check_grounding = False
+                    json.dump(characters, open(characters_json_path, 'w'), indent=4)
+                    json.dump(groups, open(groups_json_path, 'w'), indent=4)
+                    print("Saved characters.json with groups.")
+                    grounding_success = True
+        
+        # Step 2: Initiate dining places to characters
         if not args.regenerate and "entertainment_places" in characters[character_names[0]]:
             print("dining, store, and entertainment places already exist, no resample.")
         else:
@@ -696,7 +693,7 @@ class CharacterGen:
             json.dump(characters, open(characters_json_path, 'w'), indent=4)
             print("Saved characters.json with dining, store, and entertainment places.")
 
-        # Step 3.5: Modify stores names
+        # Step 3: Modify stores names
         store_new_name_mapping = {
             "Beverages-Snacks": "Beverages and Snacks Store",
             "Fresh-DM": "Fresh and DM Store",
@@ -715,6 +712,8 @@ class CharacterGen:
         for place in place_metadata_copy:
             if place_metadata_copy[place]["coarse_type"] == "stores":
                 store_new_name = store_new_name_mapping[place_metadata_copy[place]["scene"].split('/store-')[-1].split(".json")[0]]
+                if place == store_new_name:
+                    continue
                 replaced_stores.append((place, store_new_name))
                 self.place_metadata[store_new_name] = place_metadata_copy[place]
                 del self.place_metadata[place]
@@ -789,6 +788,8 @@ class CharacterGen:
                         "sec_per_step": 1,
                         "agent_skins": [],
                         "stores": stores,
+                        "dt_control": [1.0] * num_agents,
+                        "dt_visual_obs": [1.0] * num_agents,
                        }
         # for group_name in characters[character_name]["groups"]:
         #     groups[group_name]["daily_activity"] = f"Group member should go to {groups[group_name]['place']} for {groups[group_name]['daily_activity']} in {group_name}."
@@ -894,11 +895,10 @@ class CharacterGen:
                         spatial_memory[place]["bounding_box"] = self.building_metadata[spatial_memory[place]["building"]]["bounding_box"]
                         all_known_places_set.add(place)
                         seed_knowledge[place] = spatial_memory[place]
-                    except KeyError:
+                    except KeyError as e:
+                        print(f"{e.__class__.__name__}: {e} {traceback.format_exc()}")
                         print(f"KeyError: {place} not in place_metadata. Have tried the latin1 encoding/decoding fix but failed.")
-                        print("If you see this, it means the place is not matched correctly in the self.place_metadata. This is likely due to the encoding problem. You can try replacing the correct place in the self.place_metadata (see below) to the characters.json and groups.json.")
-                        print("place metadata keys:", self.place_metadata.keys())
-                        exit()
+                        raise
             # add transit places to seed_knowledge
             for bus_stop, bus_stop_info in self.transit["bus"]["stops"].items():
                 location = bus_stop_info["position"]
