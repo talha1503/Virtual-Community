@@ -15,6 +15,7 @@ ctx = mp.get_context('spawn')
 from gymnasium import Env, spaces
 import genesis as gs
 from genesis.utils.tools import FPSTracker
+from genesis.utils.misc import tensor_to_array
 import genesis.utils.geom as geom_utils
 from genesis.options import CoacdOptions
 from genesis.engine.entities.rigid_entity import RigidEntity, RigidVisGeom
@@ -64,7 +65,8 @@ class VicoEnv:
 				 save_per_seconds=10,
 				 defer_chat=False,
 				 debug=False,
-				 dt_sim=0.01):
+				 dt_sim=0.01,
+				 batch_renderer=False):
 		if not gs._initialized:
 			gs.init(seed=seed, precision=precision, logging_level=logging_level, backend=backend)
 		fh = logging.FileHandler(os.path.join(output_dir, 'raw.log'))
@@ -92,6 +94,7 @@ class VicoEnv:
 		self.enable_collision = enable_collision
 		self.enable_decompose = enable_decompose
 		self.enable_gt_segmentation = enable_gt_segmentation
+		self.batch_renderer = batch_renderer
 		self.scene_name = scene
 		self.entity_idx_to_info = defaultdict(dict)
 		self.entity_idx_to_color = []
@@ -155,7 +158,7 @@ class VicoEnv:
 			avatar_options=gs.options.AvatarOptions(
 				enable_collision=self.enable_collision,
 			),
-			renderer=gs.renderers.Rasterizer(),
+			renderer=gs.renderers.Rasterizer() if not self.batch_renderer else gs.renderers.BatchRenderer(use_rasterizer=True),
 			vis_options=gs.options.VisOptions(
 				show_world_frame=False,
 				segmentation_level="entity",
@@ -164,16 +167,37 @@ class VicoEnv:
 			profiling_options=gs.options.ProfilingOptions(show_FPS=False),
 			show_viewer=not head_less,
 		)
-
+		if self.batch_renderer:
+			self.scene.add_light(
+				pos=(1.0, 1.0, 1.0),
+				dir=(0.0, -1.0, -1.0),
+				color=(1.0, 1.0, 1.0),
+				intensity=1.0,
+				directional=True,
+			)
+			self.scene.add_light(
+				pos=(1.0, 1.0, 1.0),
+				dir=(0.0, 1.0, -1.0),
+				color=(1.0, 1.0, 1.0),
+				intensity=1.0,
+				directional=True,
+			)
+			self.scene.add_light(
+				pos=(1.0, 1.0, 1.0),
+				dir=(1.0, 0.0, -1.0),
+				color=(1.0, 1.0, 1.0),
+				intensity=1.0,
+				directional=True,
+			)
+			self.scene.add_light(
+				pos=(1.0, 1.0, 1.0),
+				dir=(-1.0, 0.0, -1.0),
+				color=(1.0, 1.0, 1.0),
+				intensity=1.0,
+				directional=True,
+			)
 		### Load city scene
 		start_time = time.time()
-		self.global_camera = self.scene.add_camera(
-                res=(2048, 2048),
-                pos=(0.0, 0.0, 0.0),
-                lookat=(1.0, 0.0, 0.0),
-                fov = 90,
-                GUI=False,
-            )
 		if self.enable_demo_camera:
 			self.demo_camera = self.scene.add_camera(
 				res=(1024, 1024),
@@ -182,6 +206,7 @@ class VicoEnv:
 				fov=90,
 				far=16000.0,
 				GUI=False,
+				debug=True,
 			)
 			os.makedirs(os.path.join(self.output_dir, 'demo'), exist_ok=True)
 		self.terrain = self.load_city_scene(self.scene_assets_dir, no_load_scene)
@@ -222,7 +247,7 @@ class VicoEnv:
 												  config_path=os.path.join(current_directory,
 																		   ROBOT_CONFIGS[robot_type]),
 												  terrain_height_path=f"{self.scene_assets_dir}/height_field.npz",
-												  third_person_camera_resolution=128 if self.enable_third_person_cameras else None))
+												  third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None))
 				self.robot_obs[robot_idx] = self.robots[robot_idx].get_observations()
 				self.robot_control_freq.append(self.robots[robot_idx].env_cfg['control_freq'])
 			else:
@@ -242,7 +267,7 @@ class VicoEnv:
 												   frame_ratio=frame_ratio,
 												   terrain_height_path=os.path.join(gs.utils.get_assets_dir(),
 																					self.scene_assets_dir, "height_field.npz"),
-												   third_person_camera_resolution=128 if self.enable_third_person_cameras else None,
+												   third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None,
 												   enable_collision=enable_collision))
 				no_collision_entities += [self.agents[i].robot.box]
 
@@ -1003,10 +1028,17 @@ class VicoEnv:
 		return self.obs
 
 	def get_obs(self, agent_idx_list=None):
+		if self.batch_renderer:
+			self.rgbs, self.depths, self.segmentations, self.normals = self.scene.render_all_cameras(rgb=True, depth=True, segmentation=self.enable_gt_segmentation, normal=True)
+			self.rgbs = [tensor_to_array(rgb) for rgb in self.rgbs]
+			self.depths = [tensor_to_array(depth) for depth in self.depths]
+			self.segmentations = [tensor_to_array(seg) for seg in self.segmentations]
+			self.normals = [tensor_to_array(normal) for normal in self.normals]
 		if agent_idx_list is not None:
 			self.obs['agent_list_to_update'] = agent_idx_list
 		else:
 			self.obs['agent_list_to_update'] = [i for i in range(self.num_agents)]
+		
 		if self.traffic_manager is not None and self.enable_tm_debug and self.seconds % self.save_per_seconds == 0:
 			for i, avatar in enumerate(self.traffic_manager.avatars):
 				if avatar.avatar.ego_view is not None:
@@ -1014,7 +1046,10 @@ class VicoEnv:
 					Image.fromarray(third_person_rgb).save(os.path.join(self.output_dir, 'traffic_ego', avatar.name, f"rgb_avatar{str(i)}_{avatar.name}_{self.steps:06d}.png"))
 			for i, vehicle in enumerate(self.traffic_manager.vehicles):
 				if vehicle.vehicle.ego_view is not None:
-					rgb, _, _, _, _ = vehicle.vehicle.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
+					if self.batch_renderer:
+						rgb = self.rgbs[vehicle.vehicle.ego_view.idx]
+					else:
+						rgb, _, _, _, _ = vehicle.vehicle.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
 					Image.fromarray(rgb).save(os.path.join(self.output_dir, 'traffic_ego', vehicle.vehicle.name, f"rgb_vehicle{str(i)}_{vehicle.vehicle.name}_{self.steps:06d}.png"))
 
 		for i, agent in enumerate(self.agents):
@@ -1023,14 +1058,20 @@ class VicoEnv:
 				continue
 			if self.enable_third_person_cameras and self.seconds % self.save_per_seconds == 0:
 				indoor = self.agent_infos[i]['current_building'] != 'open space'
-				third_person_rgb = agent.get_third_person_camera_rgb(indoor)
+				if self.batch_renderer:
+					third_person_rgb = self.rgbs[agent.third_person_camera.idx]
+				else:
+					third_person_rgb = agent.get_third_person_camera_rgb(indoor)
 				if third_person_rgb is not None:
 					Image.fromarray(third_person_rgb).save(
 						os.path.join(self.output_dir, 'tp', self.agent_names[i], f"rgb_{self.steps:06d}.png"))
 			self.obs[i]['pose'] = self.config['agent_poses'][i]
 
 			if self.genesis_steps % self.agent_visual_obs_freq[i] == 0:
-				self.obs[i]['rgb'], self.obs[i]['depth'], self.obs[i]['segmentation'], self.obs[i]['fov'], self.obs[i]['extrinsics'] = agent.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
+				if self.batch_renderer:
+					self.obs[i]['rgb'], self.obs[i]['depth'], self.obs[i]['segmentation'], self.obs[i]['fov'], self.obs[i]['extrinsics'] = self.rgbs[agent.ego_view.idx], self.depths[agent.ego_view.idx], self.segmentations[agent.ego_view.idx], agent.ego_view.fov, agent.ego_view.extrinsics
+				else:
+					self.obs[i]['rgb'], self.obs[i]['depth'], self.obs[i]['segmentation'], self.obs[i]['fov'], self.obs[i]['extrinsics'] = agent.render_ego_view(depth=True, segmentation=self.enable_gt_segmentation)
 				if self.seconds % self.save_per_seconds == 0:
 					if self.obs[i]['rgb'] is not None:
 						Image.fromarray(self.obs[i]['rgb']).save(
@@ -1273,6 +1314,7 @@ if __name__ == '__main__':
 	parser.add_argument("--save_per_seconds", type=int, default=10)
 	parser.add_argument("--enable_third_person_cameras", action='store_true')
 	parser.add_argument("--enable_demo_camera", action='store_true')
+	parser.add_argument("--batch_renderer", action='store_true')
 	parser.add_argument("--curr_time", type=str)
 
 	### Scene configurations
@@ -1356,6 +1398,7 @@ if __name__ == '__main__':
 		save_per_seconds=args.save_per_seconds,
 		defer_chat=True,
 		debug=args.debug,
+		batch_renderer=args.batch_renderer,
 	)
 
 	agents = []
@@ -1412,10 +1455,12 @@ if __name__ == '__main__':
 		dt_sim = time.perf_counter() - lst_time
 		gs.logger.info(f"Time used: {dt_agent:.2f}s for agents, {dt_sim:.2f}s for simulation, "
 					   f"average {env.config['dt_agent']:.2f}s for agents, "
+					   f"{env.config['dt_sim']:.2f}s for simulation, "
 					   f"{env.config['dt_chat']:.2f}s for post-chatting over {env.steps} steps.")
 		if env.steps > args.max_steps:
 			break
 
 	for agent in agents:
-		agent.terminate()
+		if agent.is_alive():
+			agent.terminate()
 	env.close()

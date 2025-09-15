@@ -31,8 +31,6 @@ class TourAgent(Agent):
 
 	def _process_obs(self, obs):
 		self.s_mem.update(obs)
-		if self.debug:
-			self.s_mem.get_sg().volume_grid_builder.get_occ_map(self.pose[:3], os.path.join(self.storage_path, "semantic_memory", f"occ_map_{self.s_mem.num_frames}.png"))
 		self.obs = obs
 
 	def _act(self, obs):

@@ -1,6 +1,5 @@
 from typing import Tuple, Union
 
-import cv2
 import numpy as np
 import pickle
 import ctypes
@@ -190,10 +189,9 @@ class VolumeGridBuilder:
                 else:
                     for pos in agent_pos:
                         draw_point(pos[0], pos[1], [0, 255, 0])
-            cv2.imwrite(save_path, draw_map)
+            from PIL import Image
+            Image.fromarray(draw_map).save(save_path)
         return occ_map, x_min[0], y_min[0], x_max[0], y_max[0]
-
-        # draw_map[np.where(occ_map == 4)] = [127, 255, 255]
     
     def radius_denoise(self, min_points: int, radius: float):
         lib_builder.volume_grid_radius_denoise(self.vg_backend, min_points, radius)

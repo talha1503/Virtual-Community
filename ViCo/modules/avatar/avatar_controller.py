@@ -187,7 +187,8 @@ class AvatarController():
                 pos=(0.0, 0.0, 0.0),
                 lookat=(0.0, 0.0, 0.0),
                 fov=90,
-                GUI=False
+                GUI=False,
+                far=16000.0,
             )
 
         self.enable_collision = enable_collision

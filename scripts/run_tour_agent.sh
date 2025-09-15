@@ -1,8 +1,9 @@
 python ViCo/env.py --head_less \
 --backend gpu \
 --skip_avatar_animation \
---scene DETROIT \
+--scene NY \
 --no_load_indoor_scene \
+--no_load_outdoor_objects \
 --resolution 512 \
 --num_agents 15 \
 --config agents_num_15 \
