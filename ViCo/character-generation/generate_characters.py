@@ -163,14 +163,6 @@ class CharacterGen:
             self.transit = json.load(open(f"ViCo/assets/scenes/{args.scene}/transit.json", 'r'))
         else:
             self.transit = None
-        del self.character_name_to_skin_info["Joe Biden"]
-        del self.character_name_to_skin_info["Vladimir Putin"]
-        del self.character_name_to_skin_info["Volodymyr Zelenskyy"]
-        del self.character_name_to_skin_info["Kim Jong Un"]
-        del self.character_name_to_skin_info["Shinzo Abe"]
-        del self.character_name_to_skin_info["Qi Lu"]
-        del self.character_name_to_skin_info["Ho Chi Minh"]
-        del self.character_name_to_skin_info["Chuang Gan"]
         self.character_name_to_image_features = pickle.load(open(f"ViCo/assets/character_name_to_image_features.pkl", "rb"))
         self.scene_to_name = {
             "EL_PASO": "El Paso",
@@ -429,10 +421,11 @@ class CharacterGen:
             grounding_success = True
         else:
             mixamo_names = [name for name in self.character_name_to_skin_info.keys() if self.character_name_to_skin_info[name]["skin_file"][:6] == "mixamo"]
-            print("# Total Available Mixamo Characters:", len(mixamo_names))
+            custom_names = [name for name in self.character_name_to_skin_info.keys() if self.character_name_to_skin_info[name]["skin_file"][:6] == "custom"]
+            print(f"# Total Available Characters: {len(mixamo_names)} Mixamo + {len(custom_names)} Custom")
             random.shuffle(mixamo_names)
             if args.event:
-                character_names = mixamo_names[:13] + ["Donald Trump", "Kamala Harris"]
+                character_names = custom_names # mixamo_names[:13] + ["Liam Novak", "Yara Mbatha"]
             elif args.num_characters == 1:
                 character_names = ["James Thompson"]
             else:
@@ -446,8 +439,6 @@ class CharacterGen:
                 random.shuffle(mixamo_names)
                 selected_mixamo_names = mixamo_names[:num_mixamo]
                 celebrity_names = [name for name in self.character_name_to_skin_info.keys() if name not in mixamo_names]
-                if args.famous:
-                    celebrity_names = ["Elon Musk", "Justin Bieber", "Donald Trump", "Kamala Harris", "Feifei Li", "Taylor Swift", "Marie Curie", "Mr Beast", "Andrew Ng", "Joe Biden", "Jeff Bezos", "Jensen Huang", "Emma Watson", "Albert Einstein", "Steve Jobs", "Bruce Lee", "Mark Zuckerberg", "Bill Gates", "LeBron James", "Selena Gomez"]
                 if args.predefined_famous and args.scene in predefined_celebrity_names:
                     celebrity_names = predefined_celebrity_names[args.scene]
                 random.shuffle(celebrity_names)
@@ -537,7 +528,7 @@ class CharacterGen:
             if not args.event:
                 prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
             else:
-                event_description = "United States presidential election between nominees Donald Trump and Kamala Harris"
+                event_description = "Liam Novak and Yara Mbatha want to make friends with other characters in the scene."
                 prompt = f"You will be given a real-world scene '{self.scene_to_name[args.scene]}' and {event_description} is happening in this scene, and available places (dictionary) as well as a dictionary of characters information situated in this scene. " + '\n' + generate_instructions
             
             if args.only_copy_prompt:
@@ -812,15 +803,13 @@ class CharacterGen:
             character_scratch["curr_time"] = this_config["curr_time"]
 
             if args.event and args.event == "campaign":
-                if character_name == "Donald Trump":
+                if character_name == "Liam Novak":
                     character_scratch["innate"] = "power, achievement, security"
-                    character_scratch["learned"] = "I am a businessman and a presidential candidate, known for my real estate ventures and political career."
-                    character_scratch["currently"] = "I am here for the election campaign."
+                    character_scratch["currently"] = "I am here for making friends."
                     character_scratch["lifestyle"] = "I go to bed around midnight, wake up around 08:00, eat dinner around 18:00"
-                elif character_name == "Kamala Harris":
+                elif character_name == "Yara Mbatha":
                     character_scratch["innate"] = "universalism, benevolence, achievement"
-                    character_scratch["learned"] = "I am the Vice President of the United States and a presidential candidate, known for my work in law and politics."
-                    character_scratch["currently"] = "I am here for the election campaign."
+                    character_scratch["currently"] = "I am here for making friends."
                     character_scratch["lifestyle"] = "I go to bed around midnight, wake up around 08:00, eat dinner around 18:00"
 
             seed_knowledge = {}
@@ -845,18 +834,22 @@ class CharacterGen:
                                                                         "appearance": appearance,
                                                                         "groups": []
                                                                         }
-                                seed_knowledge_feature[other_character_name] = self.character_name_to_image_features[other_character_name] # if other_character_name in self.character_name_to_image_features else None
+                                if other_character_name in self.character_name_to_image_features:
+                                    seed_knowledge_feature[other_character_name] = self.character_name_to_image_features[other_character_name]
+                                else:
+                                    seed_knowledge_feature[other_character_name] = None
+                                    print(f"Warning: {other_character_name} not in character_name_to_image_features.")
                             seed_knowledge[other_character_name]["groups"].append(group_name)
                 seed_knowledge[group_name] = groups[group_name]
                 if args.event and args.event == "campaign":
-                    other_character_names = [other_character_name for other_character_name in other_character_names if other_character_name != "Donald Trump"]
-                    other_character_names = [other_character_name for other_character_name in other_character_names if other_character_name != "Kamala Harris"]
+                    other_character_names = [other_character_name for other_character_name in other_character_names if other_character_name != "Liam Novak"]
+                    other_character_names = [other_character_name for other_character_name in other_character_names if other_character_name != "Yara Mbatha"]
                 group_info = groups[group_name].copy()
                 group_info = {"name": group_name, **group_info}
                 character_scratch["groups"].append(group_info)
 
             if args.event and args.event == "campaign":
-                if character_name == "Donald Trump" or character_name == "Kamala Harris":
+                if character_name == "Liam Novak" or character_name == "Yara Mbatha":
                     character_scratch["groups"] = []
 
             initial_cash_values.append(characters[character_name]["initial_cash_value"])
@@ -923,7 +916,7 @@ class CharacterGen:
             seed_knowledge["transit_schedule"] = self.transit["bus"]["schedule"]
 
             if args.event and args.event == "campaign":
-                if character_name == "Donald Trump" or character_name == "Kamala Harris":
+                if character_name == "Liam Novak" or character_name == "Yara Mbatha":
                     spatial_memory = {}
                     seed_knowledge = {}
                     seed_knowledge_feature = {}
@@ -938,7 +931,7 @@ class CharacterGen:
             # print(spatial_memory[character_scratch["living_place"]])
             character_spawn_location_xy = sample_location_on_extended_bounding_box_flood_fill(obstacle_grid, spatial_memory[character_scratch["living_place"]]["bounding_box"], obstacle_grid_parameters["resolution"], obstacle_grid_parameters["min_x"], obstacle_grid_parameters["min_y"], obstacle_grid_parameters["nx"], obstacle_grid_parameters["ny"], previous_locations=previous_locations)
             hx, hy = character_spawn_location_xy[0], character_spawn_location_xy[1]
-            previous_locations.append([hx, hy])
+            previous_locations = [hx, hy]
             new_height = get_height_at(height_field, hx, hy)
             if isinstance(new_height, np.ndarray):
                 new_height = new_height.item()
@@ -983,6 +976,10 @@ class CharacterGen:
             if scene_place_metadata[transit_place]["coarse_type"] == "transit":
                 if transit_place not in new_place_metadata:
                     new_place_metadata[transit_place] = scene_place_metadata[transit_place]
+                    location_z = get_height_at(height_field, new_place_metadata[transit_place]["location"][0], new_place_metadata[transit_place]["location"][1])
+                    new_place_metadata[transit_place]["location"].append(location_z)
+                # This appended code is for solving the bug in event generation where some agents have access to all places, so known places = all places, but in this case, we still need to add the location_z.
+                if transit_place in new_place_metadata and len(new_place_metadata[transit_place]["location"]) == 2:
                     location_z = get_height_at(height_field, new_place_metadata[transit_place]["location"][0], new_place_metadata[transit_place]["location"][1])
                     new_place_metadata[transit_place]["location"].append(location_z)
         json.dump(new_place_metadata, open(f"ViCo/assets/scenes/{middle_path}/agents_num_{len(list(characters.keys()))}/place_metadata.json", "w"), indent=4)

@@ -69,7 +69,6 @@ Supported_Motions = {
 class AvatarController():
     '''
     Avatar Controller, converts high level actions into joints positions.
-    See https://docs.google.com/document/d/1FWms2r8xpw1FIl1CFG_IfuxeiMBgxrIERzHzK0hE5V0/preview for details
     '''
     full_motion_data = None
     full_motion_data_path = None
