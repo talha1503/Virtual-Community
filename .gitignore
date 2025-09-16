@@ -26,4 +26,4 @@ chat_raw*.jsonl
 assets/scenes/DETROIT
 assets/imgs/*
 !assets/imgs/teaser.png
-!assets/imgs/avatars/**
+!assets/imgs/avatars/
