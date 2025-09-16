@@ -14,4 +14,5 @@ python ViCo/env.py --head_less \
 --enable_demo_camera \
 --enable_gt_segmentation \
 --logging_level info \
---overwrite --no_load_scene
+--overwrite \
+--no_load_scene

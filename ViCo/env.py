@@ -102,8 +102,12 @@ class VicoEnv:
 
 		self.config_path = config_path
 		self.config = json.load(open(os.path.join(self.config_path, 'config.json'), 'r'))
-		if "dt_agent" not in self.config:
-			self.config["dt_agent"] = 0
+		if "sps_agent" not in self.config:
+			self.config["sps_agent"] = 0
+		if "sps_sim" not in self.config:
+			self.config["sps_sim"] = 0
+		if "sps_chat" not in self.config:
+			self.config["sps_chat"] = 0
 		if "dt_control" not in self.config:
 			self.config["dt_control"] = [1.0] * self.num_agents
 		if "dt_rgb_obs" not in self.config:
@@ -116,8 +120,6 @@ class VicoEnv:
 		self.agent_visual_obs_freq = [int(dt_visual_obs / dt_sim) for dt_visual_obs in self.config["dt_visual_obs"]]
 		self.dt_sim = dt_sim
 		self.config["dt_sim"] = dt_sim
-		if "dt_chat" not in self.config:
-			self.config["dt_chat"] = 0
 
 		if self.challenge == 'full':
 			assert self.num_agents == self.config[
@@ -917,8 +919,8 @@ class VicoEnv:
 					to_delete_id.append(idx)
 		self.events.delete(to_delete_id)
 
-		dt_chat = time.perf_counter() - start_time
-		self.config["dt_chat"] = (self.config["dt_chat"] * self.steps + dt_chat) / (self.steps + 1)
+		sps_chat = time.perf_counter() - start_time
+		self.config["sps_chat"] = (self.config["sps_chat"] * self.steps + sps_chat) / (self.steps + 1)
 
 	def check_sim_early_end(self):
 		if self.skip_avatar_animation:
@@ -1446,17 +1448,17 @@ if __name__ == '__main__':
 		agent_actions['agent_list_to_update'] = agent_list_to_update
 
 		gs.logger.info(f"current time: {env.curr_time}, ViCo steps: {env.steps}, agents actions: {agent_actions_to_print}")
-		dt_agent = time.perf_counter() - lst_time
-		env.config["dt_agent"] = (env.config["dt_agent"] * env.steps + dt_agent) / (env.steps + 1)
+		sps_agent = time.perf_counter() - lst_time
+		env.config["sps_agent"] = (env.config["sps_agent"] * env.steps + sps_agent) / (env.steps + 1)
 		lst_time = time.perf_counter()
 		obs, _, done, info = env.step(agent_actions)
 		agent_list_to_update = obs.pop('agent_list_to_update')
-
-		dt_sim = time.perf_counter() - lst_time
-		gs.logger.info(f"Time used: {dt_agent:.2f}s for agents, {dt_sim:.2f}s for simulation, "
-					   f"average {env.config['dt_agent']:.2f}s for agents, "
-					   f"{env.config['dt_sim']:.2f}s for simulation, "
-					   f"{env.config['dt_chat']:.2f}s for post-chatting over {env.steps} steps.")
+		sps_sim = time.perf_counter() - lst_time
+		env.config["sps_sim"] = (env.config["sps_sim"] * (env.steps - 1) + sps_sim) / max(env.steps, 1)
+		gs.logger.info(f"Time used: {sps_agent:.2f}s for agents, {sps_sim:.2f}s for simulation, "
+					   f"average {env.config['sps_agent']:.2f}s for agents, "
+					   f"{env.config['sps_sim']:.2f}s for simulation, "
+					   f"{env.config['sps_chat']:.2f}s for post-chatting over {env.steps} steps.")
 		if env.steps > args.max_steps:
 			break
 
