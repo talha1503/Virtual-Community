@@ -4,7 +4,7 @@ import random
 import os
 from .agent import Agent
 from .scene_graph import SceneGraph
-from ViCo.tools.utils import is_near_goal
+from tools.utils import is_near_goal
 
 class TourAgent(Agent):
 	def __init__(self, name, pose, info, sim_path, tour_spatial_memory, no_react=False, debug=False, logger=None):

@@ -38,7 +38,7 @@
 Virtual Community is an open-world platform that simulates human-robot coexistence in shared communities, featuring a physics-based multi-agent simulator and real-world 3D scenes to study embodied social intelligence at scale.
 
 <p align="center">
-    <img src="ViCo/assets/imgs/teaser.png" alt="Logo" width="190%">
+    <img src="assets/imgs/teaser.png" alt="Logo" width="190%">
 </p>
 
 <!-- TABLE OF CONTENTS -->

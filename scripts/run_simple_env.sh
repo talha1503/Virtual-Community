@@ -1,9 +1,9 @@
-CONFIG_PATH=ViCo/assets/scenes/demos/1/
-# there is an outdoor demo example: CONFIG_PATH=ViCo/assets/scenes/demos/1/
+CONFIG_PATH=assets/scenes/demos/1/
+# there is an outdoor demo example: CONFIG_PATH=assets/scenes/demos/1/
 OUTPUT_DIR=output_simple/
 STEP_LIMIT=5
 
-python ViCo/simple_env.py --output_dir ${OUTPUT_DIR} \
+python simple_env.py --output_dir ${OUTPUT_DIR} \
                           --config_path ${CONFIG_PATH} \
                           --overwrite \
                           --load_indoor_objects \

@@ -1,4 +1,4 @@
-python ViCo/env.py --head_less \
+python env.py --head_less \
 --backend gpu \
 --skip_avatar_animation \
 --scene NY \

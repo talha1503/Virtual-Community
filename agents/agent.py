@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 import numpy as np
-from ViCo.tools.utils import atomic_save, json_converter, get_bbox, get_axis_aligned_bbox
+from tools.utils import atomic_save, json_converter, get_bbox, get_axis_aligned_bbox
 
 class Agent:
 	def __init__(self, name, pose: list, info, sim_path, no_react=False, debug=False, logger=None):

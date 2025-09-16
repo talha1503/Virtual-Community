@@ -23,7 +23,7 @@ Genesis/**/*.pkl
 logs
 Genesis/genesis/assets/ViCo
 chat_raw*.jsonl
-ViCo/assets/scenes/DETROIT
-ViCo/assets/imgs
-!ViCo/assets/imgs/avatars/
-!ViCo/assets/imgs/teaser.png
+assets/scenes/DETROIT
+assets/imgs
+!assets/imgs/avatars/
+!assets/imgs/teaser.png
