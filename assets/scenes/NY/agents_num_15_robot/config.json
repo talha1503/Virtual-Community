@@ -769,23 +769,19 @@
     "robot_agent_id_list": [
         0,
         1,
-        2,
-        3,
-        4
+        2
     ],
     "robot_types": [
         "drone",
         "husky",
-        "google_robot",
-        "go2",
-        "h1"
+        "google_robot"
     ],
     "dt_control": [
         0.02,
         0.02,
         0.02,
-        0.02,
-        0.02,
+        1.0,
+        1.0,
         1.0,
         1.0,
         1.0,

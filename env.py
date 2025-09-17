@@ -117,6 +117,8 @@ class VicoEnv:
 		self.enable_robots = bool(robot_agent_id_list)
 		self.robot_agent_id_list = robot_agent_id_list or []
 		self.agent_control_freq = [int(dt_control / dt_sim) for dt_control in self.config["dt_control"]]
+		self.sec_per_step = min(self.agent_control_freq) / 100.
+		self.traffic_control_freq = int(1.0 / dt_sim)
 		self.agent_visual_obs_freq = [int(dt_visual_obs / dt_sim) for dt_visual_obs in self.config["dt_visual_obs"]]
 		self.dt_sim = dt_sim
 		self.config["dt_sim"] = dt_sim
@@ -127,9 +129,8 @@ class VicoEnv:
 
 		self.curr_time: datetime = datetime.strptime(self.config['curr_time'], "%B %d, %Y, %H:%M:%S")
 		self.steps = self.config['step']
-		self.genesis_steps = int(self.config['step'] * (1 / dt_sim))
-		self.sec_per_step = self.config['sec_per_step']
 		self.seconds = self.steps * self.sec_per_step
+		self.genesis_steps = int(self.config['step'] * (1 / dt_sim))
 		self.building_metadata = json.load(open(os.path.join(config_path, "building_metadata.json"), 'r'))
 		self.place_metadata = json.load(open(os.path.join(config_path, "place_metadata.json"), 'r'))
 		self.transit_info = json.load(open(f"assets/scenes/{self.scene_name}/transit.json", 'r'))
@@ -955,7 +956,6 @@ class VicoEnv:
 
 	def step(self, agent_actions):
 		simulate_to_genesis_step, agent_idx_to_return = self.calculate_simulation_step()
-		step_increase = int(self.genesis_steps // (1 / self.dt_sim) - self.steps)
 		agent_list_to_update = agent_actions.pop('agent_list_to_update')
 		for i, agent in enumerate(self.agents):
 			if i not in agent_list_to_update:
@@ -974,14 +974,14 @@ class VicoEnv:
 				gs.logger.info(f"At {self.genesis_steps} frames, all agents finished action, end simulation early.")
 			self.robot_only_simulation = sim_early_end
 
-		self.steps += step_increase
-		self.seconds += self.sec_per_step * step_increase
-		self.curr_time += timedelta(seconds=self.sec_per_step) * step_increase
+		self.steps += 1
+		self.seconds += self.sec_per_step
+		self.curr_time += timedelta(seconds=self.sec_per_step)
 
 		self.update_config()
 		self.get_obs(agent_idx_to_return)
 
-		if step_increase > 0:
+		if self.genesis_steps % self.traffic_control_freq:
 			if self.traffic_manager is not None:
 				self.traffic_manager.step()
 			self.traffic_manager.bus.step(self.curr_time)
