@@ -2,6 +2,11 @@ import json
 import os
 from datetime import datetime
 import numpy as np
+import traceback
+import logging
+# import torch.multiprocessing as mp
+# ctx = mp.get_context('spawn')
+import multiprocessing as mp # todo: replace with torch.multiprocessing
 from tools.utils import atomic_save, json_converter, get_bbox, get_axis_aligned_bbox
 
 class Agent:
@@ -159,3 +164,144 @@ class Agent:
 		if action['arg1'] < 0.1:
 			self.logger.warning(f"{self.name} at {self.pose} moving to {cur_goal} is too close, path found was {path}.")
 		return action
+
+
+class AgentProcess(mp.Process):
+	def __init__(self, agent_cls: type[Agent], name: str, **kwargs: dict):
+		super().__init__(daemon=True)
+		self.agent_cls = agent_cls
+		self.name = name
+		self.logging_level: str = kwargs.pop("logging_level", "INFO")
+		self.multi_process: bool = kwargs.pop("multi_process", True)
+		self.sim_path: str = kwargs.get("sim_path", "curr_sim")
+		self.kwargs = kwargs
+		self.input_queue = mp.Queue()
+		self.action_queue = mp.Queue()
+		self.utterance_queue = mp.Queue()
+		if not self.multi_process:
+			self.agent = self.create_agent()
+		else:
+			self.agent = None
+
+	def create_agent(self):
+		logger = AgentLogger(self.name, self.logging_level,
+							 os.path.join(self.sim_path.replace('curr_sim', 'logs'), f"{self.name}.log"))
+		agent = self.agent_cls(self.name, logger=logger, **self.kwargs)
+		return agent
+
+	def log_step_agent_info(self, obs_i, action):
+		obs_printable = {k: v for k, v in obs_i.items() if
+						 not isinstance(v, np.ndarray) and not isinstance(v, datetime)}
+		obs_printable.pop("gt_seg_entity_idx_to_info", None)
+		step_info = {"curr_time": obs_i["curr_time"],
+					 "obs": obs_printable,
+					 "action": action,  # todo: if ongoing, then log down the last action [which is ongoing]
+					 "curr_events": self.agent.curr_events if hasattr(self.agent, "curr_events") else None,
+					 "react_mode": self.agent.react_mode if hasattr(self.agent, "react_mode") else None,
+					 "chatting_buffer": self.agent.chatting_buffer if hasattr(self.agent, "chatting_buffer") else None,
+					 "commute_plan": self.agent.commute_plan if hasattr(self.agent, "commute_plan") else None,
+					 "commute_plan_idx": self.agent.commute_plan_idx if hasattr(self.agent, "commute_plan_idx") else None, }
+		if hasattr(self.agent, "curr_goal_description"):
+			step_info["action_desp"] = self.agent.curr_goal_description
+			step_info["action_dura"] = self.agent.curr_goal_duration
+			step_info["action_location"] = self.agent.curr_goal_address
+		elif hasattr(self.agent, "hourly_schedule") and self.agent.curr_schedule_idx < len(self.agent.hourly_schedule):
+			step_info["action_desp"] = self.agent.hourly_schedule[self.agent.curr_schedule_idx]["activity"]
+			step_info["action_location"] = self.agent.hourly_schedule[self.agent.curr_schedule_idx]["place"] if "place" in \
+																												self.agent.hourly_schedule[
+																													self.agent.curr_schedule_idx] else None
+
+		step_info_path = os.path.join(self.sim_path.replace('curr_sim', 'steps'), self.name, f"{self.agent.steps:06d}.json")
+		atomic_save(step_info_path, json.dumps(step_info, indent=2, default=json_converter))
+
+	def run(self):
+		self.agent = self.create_agent()
+		self.agent.logger.info(f"Agent {self.name} started")
+		while True:
+			input = self.input_queue.get()
+			if input["type"] == "chat":
+				content = input["content"]
+				try:
+					utterance = self.agent.chat(content)
+				except Exception as e:
+					self.agent.logger.critical(
+						f"Agent {self.name} generated an exception while generating utterance: {e} with traceback: {traceback.format_exc()}")
+					if "Stop the exp immediately" in e.args[0]:
+						break # end the agent process immediately
+					utterance = None
+				self.utterance_queue.put(utterance)
+				step_info_path = os.path.join(self.sim_path.replace('curr_sim', 'steps'), self.name,
+											  f"{self.agent.steps:06d}.json")
+				step_info = json.load(open(step_info_path, 'r'))
+				step_info["action"]["arg1"] = utterance
+				step_info["chatting_buffer"] = self.agent.chatting_buffer if hasattr(self.agent, "chatting_buffer") else None
+				atomic_save(step_info_path, json.dumps(step_info, indent=2, default=json_converter))
+			elif input["type"] == "obs":
+				obs = input["content"]
+				self.agent.logger.debug(f"Agent {self.name} received obs at {obs['curr_time']}")
+				try:
+					action = self.agent.act(obs)
+				except Exception as e:
+					self.agent.logger.critical(
+						f"Agent {self.name} generated an exception: {e} with traceback: {traceback.format_exc()}")
+					action = None
+				self.action_queue.put(action)
+				self.log_step_agent_info(obs, action)
+			else:
+				self.agent.logger.error(f"Agent {self.name} received unknown input: {input}")
+
+	def update(self, obs):
+		self.input_queue.put({"type": "obs", "content": obs})
+
+	def act(self):
+		if self.multi_process:
+			return self.action_queue.get()
+		else:
+			obs = self.input_queue.get()["content"]
+			try:
+				action = self.agent.act(obs)
+			except Exception as e:
+				self.agent.logger.error(
+					f"Agent {self.name} generated an exception: {e} with traceback: {traceback.format_exc()}")
+				action = None
+			self.log_step_agent_info(obs, action)
+			return action
+
+	def request_chat(self, content):
+		self.input_queue.put({"type": "chat", "content": content})
+
+	def get_utterance(self, steps):
+		if self.multi_process:
+			utterance = self.utterance_queue.get()
+		else:
+			content = self.input_queue.get()["content"]
+			try:
+				utterance = self.agent.chat(content)
+			except Exception as e:
+				self.agent.logger.error(
+					f"Agent {self.name} generated an exception while generating utterance: {e} with traceback: {traceback.format_exc()}")
+				utterance = None
+
+		return utterance
+	
+	def close(self):
+		if self.multi_process:
+			if self.agent.is_alive():
+				self.agent.terminate()
+
+
+class AgentLogger(logging.Logger):
+    def __init__(self, name: str, level: str, output_path: str = None):
+        super().__init__(f"Agent <{name}>")
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging._nameToLevel[level.upper()])
+        self.addHandler(console_handler)
+        if output_path:
+            file_handler = logging.FileHandler(output_path)
+            file_handler.setLevel(logging.DEBUG)
+            self.addHandler(file_handler)
+        self.formatter = logging.Formatter(
+            f"[%(asctime)s] [%(levelname)s] [Agent <{name}>] %(message)s"
+        )
+        for handler in self.handlers:
+            handler.setFormatter(self.formatter)

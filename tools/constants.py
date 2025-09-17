@@ -1,6 +1,8 @@
 import json
+import os
 
-ENV_OTHER_METADATA = json.load(open(f"assets/env_other_metadata.json", 'r'))
+ASSETS_PATH = os.path.join(os.path.dirname(__file__), "..", "assets")
+ENV_OTHER_METADATA = json.load(open(os.path.join(ASSETS_PATH, "env_other_metadata.json"), 'r'))
 
 old_scene_to_new_scene = {
     "modules/indoor_scenes/scenes/restaurant-0.json" : ('food', 0),
@@ -45,7 +47,7 @@ LIGHTS = [{
 
             ]  # DAY
 #   'intensity' : 2.5},] # NIGHT
-google_map_coarse_to_types = json.load(open("assets/places_type_basic.json", 'r'))
+google_map_coarse_to_types = json.load(open(os.path.join(ASSETS_PATH, "places_type_basic.json"), 'r'))
 
 google_map_types = [
     "accounting", "airport", "amusement_park", "aquarium", "art_gallery", "atm",

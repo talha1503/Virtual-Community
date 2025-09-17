@@ -1,6 +1,5 @@
-from .agent import Agent
+from .agent import Agent, AgentLogger, AgentProcess
 from .tour_agent import TourAgent
-from .logger import AgentLogger
 from .go2_agent import Go2TourAgent
 from .h1_agent import H1TourAgent
 from .google_robot_agent import GoogleRobotTourAgent
