@@ -89,7 +89,7 @@ class AvatarController():
         self.robot = AvatarRobot(env, skin_options, name)
         self.box = self.robot.box
 
-        motion_data_path = os.path.join(motion_data_path)
+        motion_data_path = os.path.join(get_assets_dir(), motion_data_path)
         if AvatarController.full_motion_data_path is None:
             AvatarController.full_motion_data_path = f"{motion_data_path}.full"
 

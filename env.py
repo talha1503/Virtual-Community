@@ -12,7 +12,7 @@ import tqdm
 from gymnasium import Env, spaces
 import genesis as gs
 from genesis.utils.tools import FPSTracker
-from genesis.utils.misc import tensor_to_array
+from genesis.utils.misc import tensor_to_array, get_assets_dir
 import genesis.utils.geom as geom_utils
 from genesis.options import CoacdOptions
 from genesis.engine.entities.rigid_entity import RigidEntity
@@ -20,7 +20,6 @@ import numpy as np
 import json
 import string
 from PIL import Image
-import random
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from tools.constants import LIGHTS, ENV_OTHER_METADATA
@@ -124,9 +123,10 @@ class VicoEnv:
 		self.steps = self.config['step']
 		self.seconds = self.steps * self.sec_per_step
 		self.genesis_steps = int(self.config['step'] * (1 / dt_sim))
+		self.assets_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "scenes", self.scene_name)
 		self.building_metadata = json.load(open(os.path.join(config_path, "building_metadata.json"), 'r'))
 		self.place_metadata = json.load(open(os.path.join(config_path, "place_metadata.json"), 'r'))
-		self.transit_info = json.load(open(f"assets/scenes/{self.scene_name}/transit.json", 'r'))
+		self.transit_info = json.load(open(os.path.join(self.assets_dir, "transit.json"), 'r'))
 		self.env_other_meta = ENV_OTHER_METADATA
 		self.agent_names_to_group_name = {agent_name: group_name for group_name, group in self.config['groups'].items() for agent_name in group['members']} if 'groups' in self.config else {}
 		self.events = EventSystem()
@@ -240,7 +240,7 @@ class VicoEnv:
 												  robot_type=robot_type,
 												  position=np.array(self.config['agent_poses'][i][:3],
 																	dtype=np.float64),
-												  config_path=os.path.join(current_directory,
+												  config_path=os.path.join(self.assets_dir, # todo: replace with get_assets_dir()
 																		   ROBOT_CONFIGS[robot_type]),
 												  terrain_height_path=f"{self.scene_assets_dir}/height_field.npz",
 												  third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None))
@@ -249,7 +249,7 @@ class VicoEnv:
 			else:
 				# initialize agent as avatar
 				self.agents.append(self.add_avatar(name=self.agent_names[i],
-												   motion_data_path='Genesis/genesis/assets/ViCo/avatars/motions/motion.pkl',
+												   motion_data_path='ViCo/avatars/motions/motion.pkl',
 												   skin_options={
 													   'glb_path': self.config['agent_skins'][i],
 													   'euler': (-90, 0, 90),
@@ -261,8 +261,7 @@ class VicoEnv:
 													   "GUI": False,
 												   },
 												   frame_ratio=frame_ratio,
-												   terrain_height_path=os.path.join(gs.utils.get_assets_dir(),
-																					self.scene_assets_dir, "height_field.npz"),
+												   terrain_height_path=os.path.join(self.scene_assets_dir, "height_field.npz"),
 												   third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None,
 												   enable_collision=enable_collision))
 				no_collision_entities += [self.agents[i].robot.box]
@@ -660,7 +659,7 @@ class VicoEnv:
 				max_objects=self.outdoor_objects_max_num,
 				seed=self.seed,
 				terrain_height_field_path=f"{scene_assets_dir}/height_field.npz",
-				road_info_path=f"assets/scenes/{self.scene_name}/road_data/roads.pkl",
+				road_info_path=os.path.join(self.assets_dir, "road_data", "roads.pkl"),
 			)
 			load_outdoor_objects(self, outdoor_object_context, self.transit_info)
 
