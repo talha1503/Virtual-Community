@@ -32,7 +32,8 @@ def load_default_room(env, place_name='default_room'):
 def load_indoor_room(env, place, place_name, load_indoor_objects):
 
     indoor_scene = place['scene']
-
+    if indoor_scene == "MVJWVGYKTLDAYAABAAAAAAQ8":
+        indoor_scene = "modules/indoor_scenes/scenes/dormitory-8.json"
     scene_not_found = False
     if indoor_scene.endswith('.json'):
         indoor_scene = indoor_scene.replace("modules/indoor_scenes", os.path.dirname(os.path.abspath(__file__)))
@@ -61,7 +62,7 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
             gs.logger.error(f"Error loading indoor scene for place {place_name}: {e}")
     else:
         # usd assets
-        with os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes", f"{indoor_scene}.json").open("r", encoding="utf-8") as f:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes", f"{indoor_scene}.json"), "r", encoding="utf-8") as f:
             data = json.load(f)
         
         offset = np.array(place['location'])

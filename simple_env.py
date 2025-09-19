@@ -16,7 +16,7 @@ sys.path.insert(0, current_directory)
 from modules import *
 from tools.constants import LIGHTS
 from modules.indoor_scenes.usd_scene import place_usd_scene_with_ratio
-from agents import DemoAgent
+from agents.demo_agent import DemoAgent
 
 
 class SimpleVicoEnv:
@@ -93,7 +93,7 @@ class SimpleVicoEnv:
                                load_indoor_objects=load_indoor_objects)
         for i in range(self.num_agents):
             self.agents.append(self.add_avatar(name=self.agent_names[i],
-                                               motion_data_path='Genesis/genesis/assets/ViCo/avatars/motions/motion.pkl',
+                                               motion_data_path='ViCo/avatars/motions/motion.pkl',
                                                skin_options={
                                                    'glb_path': self.config['agent_skins'][i],
                                                    'euler': (-90, 0, 90),
