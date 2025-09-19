@@ -38,7 +38,7 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
         indoor_scene = indoor_scene.replace("modules/indoor_scenes", os.path.dirname(os.path.abspath(__file__)))
         scene_not_found = not os.path.exists(indoor_scene)
     else:
-        scene_not_found = not os.path.exists(get_assets_dir() + f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd")
+        scene_not_found = not os.path.exists(os.path.join(get_assets_dir(), f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd"))
     if scene_not_found:
         gs.logger.error(f"Scene for place {place_name} is not found.")
         return None, None
@@ -78,7 +78,7 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
             'init_avatar_poses': data.get("avatar_pos", [])
         }
 
-        usd_file = get_assets_dir() + f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd/start_result_raw.usd"
+        usd_file = os.path.join(get_assets_dir(), f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd/start_result_raw.usd")
 
         load_objects = load_indoor_objects
         place_usd_scene_with_ratio(usd_file,
