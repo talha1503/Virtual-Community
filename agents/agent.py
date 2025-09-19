@@ -4,9 +4,14 @@ from datetime import datetime
 import numpy as np
 import traceback
 import logging
+import sys
 # import torch.multiprocessing as mp
 # ctx = mp.get_context('spawn')
 import multiprocessing as mp # todo: replace with torch.multiprocessing
+
+# Ensure project root and vico package are importable in spawned children
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.insert(1, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tools.utils import atomic_save, json_converter
 
 class Agent:
