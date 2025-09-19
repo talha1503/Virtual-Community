@@ -4,7 +4,7 @@ import genesis as gs
 import psutil
 import json
 import numpy as np
-import pathlib
+from genesis.utils.misc import get_assets_dir
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
 from modules.indoor_scenes.usd_scene import place_usd_scene_with_ratio
@@ -12,7 +12,7 @@ from modules.indoor_scenes.architect_scene import load_indoor_scene
 
 
 def load_default_room(env, place_name='default_room'):
-    indoor_scene = "modules/indoor_scenes/scenes/dormitory-8.json"  # a default room
+    indoor_scene = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes/dormitory-8.json")  # a default room
     
     with open(indoor_scene, 'r') as f:
         indoor_scene_place = json.load(f)
@@ -35,9 +35,10 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
 
     scene_not_found = False
     if indoor_scene.endswith('.json'):
+        indoor_scene = indoor_scene.replace("modules/indoor_scenes", os.path.dirname(os.path.abspath(__file__)))
         scene_not_found = not os.path.exists(indoor_scene)
     else:
-        scene_not_found = not os.path.exists(f"Genesis/genesis/assets/ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd")
+        scene_not_found = not os.path.exists(get_assets_dir() + f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd")
     if scene_not_found:
         gs.logger.error(f"Scene for place {place_name} is not found.")
         return None, None
@@ -60,7 +61,7 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
             gs.logger.error(f"Error loading indoor scene for place {place_name}: {e}")
     else:
         # usd assets
-        with pathlib.Path(f"./modules/indoor_scenes/scenes/{indoor_scene}.json").open("r", encoding="utf-8") as f:
+        with os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes", f"{indoor_scene}.json").open("r", encoding="utf-8") as f:
             data = json.load(f)
         
         offset = np.array(place['location'])
@@ -77,7 +78,7 @@ def load_indoor_room(env, place, place_name, load_indoor_objects):
             'init_avatar_poses': data.get("avatar_pos", [])
         }
 
-        usd_file = f"Genesis/genesis/assets/ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd/start_result_raw.usd"
+        usd_file = get_assets_dir() + f"ViCo/scene/commercial_scenes/scenes/{indoor_scene}_usd/start_result_raw.usd"
 
         load_objects = load_indoor_objects
         place_usd_scene_with_ratio(usd_file,

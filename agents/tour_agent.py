@@ -112,5 +112,3 @@ class TourAgent(Agent):
 		if action['arg1'] < 0.1:
 			self.logger.warning(f"{self.name} at {self.pose} moving to {cur_goal} is too close, path found was {path}.")
 		return action
-
-
