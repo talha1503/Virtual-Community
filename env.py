@@ -694,16 +694,16 @@ class VicoEnv:
 		if action['type'] == 'converse':
 			if agent.robot.base_state == AvatarState.SLEEPING:
 				agent.robot.base_state = AvatarState.STANDING
-			agent_pos = self.config['agent_poses'][i][:3]
+			agent_pos = self.config['agent_poses'][agent_id][:3]
 			converse_range = action['arg2'] if 'arg2' in action else 10
 			priority = random.randint(0, 100)
 			if converse_range > 10:
 				gs.logger.warning(
-					f"Agent {self.agent_names[i]} attempted to converse with range {converse_range} which is larger than 10. Ignored.")
-				self.agents[i].robot.action_status = ActionStatus.FAIL
+					f"Agent {self.agent_names[agent_id]} attempted to converse with range {converse_range} which is larger than 10. Ignored.")
+				agent.robot.action_status = ActionStatus.FAIL
 				return
 			deleted_subjects = self.events.add(type="speech", pos=agent_pos, r=converse_range, content=action['arg1'],
-											   priority=priority, subject=self.agent_names[i], predicate="is",
+											   priority=priority, subject=self.agent_names[agent_id], predicate="is",
 											   object="talk")
 			# if interleaved with other speech events, keep only the highest priority one, drop others and give it fail
 			for deleted_subject in deleted_subjects:
@@ -844,10 +844,10 @@ class VicoEnv:
 			agent.exit_bus()
 			self.agent_infos[agent_id]["current_vehicle"] = None
 		elif action['type'] == 'enter_bike':
-			if not self.enter_bike(i):
+			if not self.enter_bike(agent_id):
 				agent.robot.action_status = ActionStatus.FAIL
 		elif action['type'] == 'exit_bike':
-			if not self.exit_bike(i):
+			if not self.exit_bike(agent_id):
 				agent.robot.action_status = ActionStatus.FAIL
 		elif action['type'] == 'pick':  # arg1: hand id [0,1], arg2: position
 			pos = np.array(action['arg2'])
@@ -896,7 +896,7 @@ class VicoEnv:
 		else:
 			raise NotImplementedError(f"agent action type {action['type']} is not supported")
 
-	def post_generate_chat(self):
+	def post_generate_chat(self, agent_actions):
 		# post-generate utterances for remained speech events
 		start_time = time.perf_counter()
 		for idx, event in self.events.events.items():
@@ -955,7 +955,7 @@ class VicoEnv:
 			action = agent_actions[i]
 			self.perform_action(i, action, is_robot=i in self.robot_agent_id_list)
 		if self.defer_chat:
-			self.post_generate_chat()
+			self.post_generate_chat(agent_actions)
 		sim_early_end = False
 		self.robot_only_simulation = False
 		for _ in tqdm.tqdm(range(simulate_to_genesis_step - self.genesis_steps), desc="simulating", ):
