@@ -24,7 +24,7 @@ logs
 Genesis/genesis/assets/ViCo
 chat_raw*.jsonl
 assets/scenes/*/raw/
-assets/scenes/NY/agents_num_15_with_schedules
+assets/scenes/*/agents_num_15_with_schedules
 assets/imgs/*
 !assets/imgs/teaser.png
 !assets/imgs/avatars/
