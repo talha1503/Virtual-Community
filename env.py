@@ -595,9 +595,10 @@ class VicoEnv:
 							),
 						)
 					else:
+						building_name = building.strip('.glb')
 						self.add_entity(
 							type="structure",
-							name=building,
+							name=building_name,
 							material=gs.materials.Rigid(
 								sdf_min_res=4,
 								sdf_max_res=4,
