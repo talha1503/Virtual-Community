@@ -3,28 +3,28 @@
     "first_name": "Steve",
     "last_name": "Johnson",
     "age": 30,
-    "innate": "security, conformity, tradition",
-    "learned": "I am a software developer at Idea Nuova Inc, and I enjoy coding and playing video games.",
-    "currently": "I am working on developing a new software application.",
+    "innate": "tradition, benevolence",
+    "learned": "I am a history teacher at Satellite Academy High School, passionate about educating young minds. I enjoy visiting museums and historical sites.",
+    "currently": "I am preparing a new curriculum on the history of New York City.",
     "lifestyle": "I go to bed around midnight, wake up around 08:00, eat dinner around 18:00",
     "groups": [
         {
-            "name": "Tech Innovators Club",
-            "description": "A group of tech enthusiasts and professionals who meet to discuss the latest trends in technology and innovation.",
-            "place": "Empire State Building",
+            "name": "Art and Culture Enthusiasts",
+            "description": "A group of individuals passionate about art, culture, and history, who explore museums and galleries together.",
+            "place": "Creative Art Works",
             "members": [
-                "Bill Gates",
-                "Feifei Li",
-                "Steve Jobs",
-                "Steve Johnson"
+                "Kate Novak",
+                "Steve Johnson",
+                "Louise Roberts",
+                "Naomi Zhang"
             ],
-            "daily_activity": "discussing technology trends from 18:00 to 19:00"
+            "daily_activity": "visiting art galleries from 16:00 to 18:00"
         }
     ],
     "daily_requirement": "",
     "curr_time": "October 1, 2024, 09:00:00",
     "start_time": "October 1, 2024, 09:00:00",
-    "living_place": "Steve Johnson's room at E\u014cS NoMad Apartments",
+    "living_place": "Steve Johnson's room at Hadson Realty",
     "react_freq": 60,
     "importance_trigger_max": 250,
     "importance_trigger_curr": 250,
@@ -43,5 +43,5 @@
     "chat": null,
     "chatting_with_buffer": {},
     "chatting_end_time": null,
-    "working_place": "Idea Nuova Inc"
+    "working_place": "Satellite Academy High School"
 }

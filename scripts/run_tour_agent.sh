@@ -2,8 +2,6 @@ python env.py --head_less \
 --backend gpu \
 --skip_avatar_animation \
 --scene NY \
---no_load_indoor_scene \
---no_load_outdoor_objects \
 --resolution 512 \
 --num_agents 15 \
 --config agents_num_15 \
@@ -12,5 +10,4 @@ python env.py --head_less \
 --save_per_seconds 1 \
 --enable_gt_segmentation \
 --logging_level info \
---overwrite \
---debug
+--overwrite

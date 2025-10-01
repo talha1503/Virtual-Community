@@ -1,6 +1,6 @@
 # This script contains all commands for generating characters the scene. Some steps have dependencies on previous steps, so we recommend running them sequentially as shown below.
 
-SCENES=(DETROIT)
+SCENES=(NY)
 
 for SCENE in "${SCENES[@]}"
 do

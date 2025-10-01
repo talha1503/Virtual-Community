@@ -153,10 +153,7 @@ class CharacterGen:
         self.args = args
         self.building_metadata = json.load(open(f"assets/scenes/{args.scene}/building_metadata.json", 'r'))
         self.place_metadata = json.load(open(f"assets/scenes/{args.scene}/place_metadata.json", 'r'))
-        self.place_type_stats = json.load(open(f"assets/scenes/{args.scene}/raw/type_stats_accessible.json", 'r'))
         self.all_bboxes = json.load(open(f"assets/scenes/{args.scene}/all_loaded_building_bboxes.json", 'r'))
-        self.building_to_places = json.load(open(f"assets/scenes/{args.scene}/raw/building_to_places.json", 'r'))
-        self.places_dict = json.load(open(f"assets/scenes/{args.scene}/raw/places_full.json", 'r'))
         self.character_name_to_skin_info = json.load(open(f"assets/character2skin.json", 'r'))
         self.coarse_indoor_scene = json.load(open("modules/indoor_scenes/coarse_type_to_indoor_scene.json", 'r'))
         if os.path.exists(f"assets/scenes/{args.scene}/transit.json"):
@@ -463,9 +460,10 @@ class CharacterGen:
             characters_initial_information_verbalized += repr(characters_initial_information)
 
             places_information_verbalized = "Places: \n"
-            if args.use_max_120:
+            if self.args.use_max_120:
                 required_places_per_type = {}
-                for coarse_type, count in self.place_type_stats.items():
+                place_type_stats = json.load(open(f"assets/scenes/{self.args.scene}/raw/type_stats_accessible.json", 'r'))
+                for coarse_type, count in place_type_stats.items():
                     required_places_per_type[coarse_type] = min(20, count)
                 places_by_type = {}
                 for building in self.building_metadata:
