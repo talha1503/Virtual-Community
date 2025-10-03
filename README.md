@@ -23,11 +23,12 @@
     <a href="#">Bao Chi Dang</a>,
     <a href="#">Zhehuan Chen</a>,
     <a href="#">Daksha Ladia</a>,
+    <a href="#">Quang Vinh Dang</a>,
     <a href="#">Jiageng Liu</a>,
     <a href="https://people.csail.mit.edu/ganchuang/">Chuang Gan</a>
   </p>
   <p align="center">
-    <a href="https://virtual-community-ai.github.io/paper.pdf">
+    <a href="https://arxiv.org/pdf/2508.14893">
       <img src='https://img.shields.io/badge/Paper-PDF-red?style=flat&logo=arXiv&logoColor=red' alt='Paper PDF'>
     </a>
     <a href='https://virtual-community-ai.github.io/' style='padding-left: 0.5rem;'>
@@ -91,7 +92,7 @@ Assets include:
 - `avatars` folder: contains the human avatars' skin and motion.
 - `cars` folder: contains the vehicle models including car, bus, bike, etc.
 
-If you want to use indoor scenes from GRUTopia, please follow their instructions [here](https://github.com/OpenRobotLab/GRUtopia?tab=readme-ov-file#%EF%B8%8F-assets) to download the commercial_scenes.zip, and unzip it under `Genesis/genesis/assets/ViCo/`.
+If you want to use indoor scenes from GRUTopia (otherwise use `--no_load_indoor_scene` flag), please follow their instructions [here](https://github.com/OpenRobotLab/GRUtopia?tab=readme-ov-file#%EF%B8%8F-assets) to download the commercial_scenes.zip, and unzip it under `Genesis/genesis/assets/ViCo/scene/`.
 
 After this step, the directory structure should be:
 
