@@ -99,11 +99,12 @@ After this step, the directory structure should be:
 ```
 Genesis/genesis/assets/ViCo/
 ├── scene/
+├──── v1/
+├──── commercial_scenes/ (optional)
 ├── robots/
 ├── objects/
 ├── avatars/
-├── cars/
-└── commercial_scenes/ (optional)
+└── cars/
 ```
 
 ### Run the Simulation
