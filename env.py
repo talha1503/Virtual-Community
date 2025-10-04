@@ -240,8 +240,7 @@ class VicoEnv:
 												  robot_type=robot_type,
 												  position=np.array(self.config['agent_poses'][i][:3],
 																	dtype=np.float64),
-												  config_path=os.path.join(self.assets_dir, "scenes", self.scene_name, # todo: replace with get_assets_dir()
-																		   ROBOT_CONFIGS[robot_type]),
+												  config_path=os.path.join(self.assets_dir, "robot_cfgs", ROBOT_CONFIGS[robot_type]),
 												  terrain_height_path=f"{self.scene_assets_dir}/height_field.npz",
 												  third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None))
 				self.robot_obs[robot_idx] = self.robots[robot_idx].get_observations()

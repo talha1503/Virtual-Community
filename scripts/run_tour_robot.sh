@@ -11,8 +11,7 @@ python env.py --head_less \
 --max_seconds 500 \
 --save_per_seconds 1 \
 --enable_collision \
---enable_demo_camera \
+--enable_third_person_cameras \
 --enable_gt_segmentation \
 --logging_level info \
---overwrite \
---no_load_scene
+--overwrite

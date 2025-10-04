@@ -123,7 +123,7 @@ class TrafficManager:
             simple_avatar = self.simple_avatars[i]
             self.add_avatar(
                 vehicle=self.env.add_avatar(name=f"auto_avatar_{i}",
-                    motion_data_path='Genesis/genesis/assets/ViCo/avatars/motions/motion.pkl',
+                    motion_data_path='ViCo/avatars/motions/motion.pkl',
                     skin_options={
                         'glb_path': self.env.config['agent_skins'][0],
                         'euler': (-90, 0, 90),

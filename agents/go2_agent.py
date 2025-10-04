@@ -5,7 +5,7 @@ import pickle
 from scipy.spatial.transform import Rotation
 import genesis as gs
 
-from . import TourAgent
+from .tour_agent import TourAgent
 from .agent_utils import get_robot_policy
 from .robot_agent import RobotAgent
 
