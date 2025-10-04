@@ -48,7 +48,7 @@
             771.2782287597656,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+        "scene": "indoor_scenes/accomodation-2.json",
         "name": "Elizabeth Mensah's room at MACY 31 Self Serviced Apartments",
         "bounding_box": [
             28.11411635540542,
@@ -73,7 +73,7 @@
             938.0584306716919,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -143.94234710886053,
             -61.93701148753711,
@@ -96,7 +96,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -120,7 +120,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -144,7 +144,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -169,7 +169,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -195,7 +195,7 @@
             745.3537521362305,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -221,7 +221,7 @@
             757.8211059570312,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             147.0463166282184,
             -242.17888894798878,
@@ -246,7 +246,7 @@
             789.7968215942383,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -97.13081879761769,
             -208.591050198152,
@@ -270,7 +270,7 @@
             769.8535232543945,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+        "scene": "indoor_scenes/store-Fresh-Beverages.json",
         "bounding_box": [
             -52.94042068798431,
             -226.06583904509267,
@@ -294,7 +294,7 @@
             1186.2614402770996,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+        "scene": "indoor_scenes/store-Beverages-DM.json",
         "bounding_box": [
             -78.07142163349155,
             186.41713195475742,
@@ -320,7 +320,7 @@
             1234.9851837158203,
             -4
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -40.40801239013672,
             234.98516845703125,

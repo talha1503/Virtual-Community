@@ -1,11 +1,11 @@
 {
     "name": "store-Fresh-DM",
+    "type": "glb",
     "width": 21,
     "height": 18,
     "left": -1.5,
     "top": -5.5,
     "objects": [
-
         {
             "name": "Dairy & Meat",
             "filename": "grocery_assets/2b777f898a3d4ee9bf124390f0440b31.glb",

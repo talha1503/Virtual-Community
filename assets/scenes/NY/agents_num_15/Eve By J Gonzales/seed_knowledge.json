@@ -47,7 +47,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "name": "Eve By J Gonzales's room at Living Quest Real Estate",
         "bounding_box": [
             250.59391528632548,
@@ -76,7 +76,7 @@
             1185.5973510742188,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -260.8166563312855,
             183.44499501605367,
@@ -100,7 +100,7 @@
             773.8320693969727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             262.6656755214034,
             -226.16792474163978,
@@ -124,7 +124,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -148,7 +148,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -171,7 +171,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -196,7 +196,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -221,7 +221,7 @@
             986.3369770050049,
             -28
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -246,7 +246,7 @@
             888.8156204223633,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -271,7 +271,7 @@
             732.4054336547852,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -287.5071770169319,
             -267.59578067723425,

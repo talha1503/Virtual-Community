@@ -47,7 +47,7 @@
             786.0063781738281,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+        "scene": "indoor_scenes/accomodation-2.json",
         "name": "Morten Lindqvist's room at Life Hotel New York",
         "bounding_box": [
             97.03073501586915,
@@ -72,7 +72,7 @@
             786.0063781738281,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+        "scene": "indoor_scenes/accomodation-2.json",
         "bounding_box": [
             97.03073501586915,
             -213.9936218261719,
@@ -96,7 +96,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -119,7 +119,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -143,7 +143,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -168,7 +168,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -193,7 +193,7 @@
             786.0063781738281,
             -8
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             97.03073501586915,
             -213.9936218261719,
@@ -218,7 +218,7 @@
             732.4054336547852,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -287.5071770169319,
             -267.59578067723425,
@@ -243,7 +243,7 @@
             888.8156204223633,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -268,7 +268,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,

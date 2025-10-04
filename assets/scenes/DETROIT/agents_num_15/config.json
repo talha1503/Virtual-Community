@@ -530,7 +530,7 @@
     "stores": {
         "Beverages and DM Store": {
             "building": "The Detroit Club",
-            "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+            "scene": "indoor_scenes/store-Beverages-DM.json",
             "type": "store-Beverages-DM",
             "goods": [
                 {
@@ -547,7 +547,7 @@
         },
         "Beverages and Snacks Store": {
             "building": "625 Shelby Street",
-            "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+            "scene": "indoor_scenes/store-Beverages-Snacks.json",
             "type": "store-Beverages-Snacks",
             "goods": [
                 {
@@ -564,7 +564,7 @@
         },
         "Fresh and Beverages Store": {
             "building": "Ally Detroit Center",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+            "scene": "indoor_scenes/store-Fresh-Beverages.json",
             "type": "store-Fresh-Beverages",
             "goods": [
                 {
@@ -581,7 +581,7 @@
         },
         "Fresh and DM Store": {
             "building": "First State Bank",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+            "scene": "indoor_scenes/store-Fresh-DM.json",
             "type": "store-Fresh-DM",
             "goods": [
                 {
@@ -598,7 +598,7 @@
         },
         "Fresh and Snacks Store": {
             "building": "Farwell Building",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+            "scene": "indoor_scenes/store-Fresh-Snacks.json",
             "type": "store-Fresh-Snacks",
             "goods": [
                 {
@@ -615,7 +615,7 @@
         },
         "Snacks and DM Store": {
             "building": "The Albert",
-            "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json",
+            "scene": "indoor_scenes/store-Snacks-DM.json",
             "type": "store-Snacks-DM",
             "goods": [
                 {

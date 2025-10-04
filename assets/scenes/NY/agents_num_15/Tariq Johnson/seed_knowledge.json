@@ -38,7 +38,7 @@
             897.8083534240723,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+        "scene": "indoor_scenes/accomodation-8.json",
         "name": "Tariq Johnson's room at Courtyard New York Manhattan/Chelsea",
         "bounding_box": [
             -256.65606460389506,
@@ -63,7 +63,7 @@
             897.8083534240723,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+        "scene": "indoor_scenes/accomodation-8.json",
         "bounding_box": [
             -256.65606460389506,
             -102.19801263504948,
@@ -88,7 +88,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -112,7 +112,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -135,7 +135,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -159,7 +159,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -184,7 +184,7 @@
             895.734016418457,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -100.95115106399811,
             -103.09984511953616,
@@ -208,7 +208,7 @@
             961.4153165817261,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -225.53198188896442,
             -38.939596226366234,
@@ -232,7 +232,7 @@
             769.8535232543945,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+        "scene": "indoor_scenes/store-Fresh-Beverages.json",
         "bounding_box": [
             -52.94042068798431,
             -226.06583904509267,
@@ -256,7 +256,7 @@
             1186.2614402770996,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+        "scene": "indoor_scenes/store-Beverages-DM.json",
         "bounding_box": [
             -78.07142163349155,
             186.41713195475742,
@@ -282,7 +282,7 @@
             1234.9851837158203,
             -4
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -40.40801239013672,
             234.98516845703125,

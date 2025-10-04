@@ -18,7 +18,7 @@ import genesis as gs
 
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
-from tools.constants import google_map_coarse_to_types
+from tools.constants import google_map_coarse_to_types, ASSETS_PATH
 from tools.utils import *
 
 # wonderful_colors = [
@@ -49,7 +49,7 @@ def stitch_images_horizontally(image1, image2):
     return combined_image
 
 def overlay_locations_desp_on_image():
-    global_cam_parameters = json.load(open(f"assets/scenes/{args.scene}/global_cam_parameters.json", 'r'))
+    global_cam_parameters = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "global_cam_parameters.json"), 'r'))
     annotated_image = Image.open(image_path).convert("RGB")
     draw = ImageDraw.Draw(annotated_image)
     coarse_types = list(google_map_coarse_to_types.keys())
@@ -106,7 +106,7 @@ def overlay_locations_desp_on_image():
 
     legend_image = generate_places_legend(places_by_coarse_type, type_to_color, coarse_type_to_letter)
     annotated_image = stitch_images_horizontally(annotated_image, legend_image)
-    annotated_image.save(f"assets/scenes/{args.scene}/global_annotated.png")
+    annotated_image.save(os.path.join(ASSETS_PATH, "scenes", args.scene, "global_annotated.png"))
 
 def generate_places_legend(places_by_coarse_type, type_to_color, coarse_type_to_letter):
     sorted_ctypes = sorted(places_by_coarse_type.keys())
@@ -165,16 +165,16 @@ def generate_places_legend(places_by_coarse_type, type_to_color, coarse_type_to_
 
 def get_building_to_places():
 
-    with open(f"assets/scenes/{args.scene}/raw/inaccessible_buildings.json", 'r') as f:
+    with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "inaccessible_buildings.json"), 'r') as f:
         inaccessible_buildings = json.load(f)
 
-    with open(f"assets/scenes/{args.scene}/raw/building_to_places.json", 'r') as f:
+    with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "building_to_places.json"), 'r') as f:
         building_to_places = json.load(f)
 
-    with open(f"assets/scenes/{args.scene}/place_metadata.json", 'r') as f:
+    with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "place_metadata.json"), 'r') as f:
         place_metadata = json.load(f)
 
-    with open(f"assets/scenes/{args.scene}/building_metadata.json", 'r') as f:
+    with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "building_metadata.json"), 'r') as f:
         building_metadata = json.load(f)
 
     return place_metadata, building_metadata, inaccessible_buildings, building_to_places
@@ -187,18 +187,18 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print("args:", args)
     random.seed(args.seed)
-    coarse_indoor_scene = json.load(open("modules/indoor_scenes/coarse_type_to_indoor_scene.json", 'r'))
+    coarse_indoor_scene = json.load(open(os.path.join(ASSETS_PATH, "coarse_type_to_indoor_scene.json"), 'r'))
     # Check necessary files are existed
-    if os.path.exists(f"assets/scenes/{args.scene}/raw/building_to_osm_tags.json"):
+    if os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "building_to_osm_tags.json")):
         print("Necessary file check passed: building_to_osm_tags.json")
     else:
-        print(f"Necessary file not exist: assets/scenes/{args.scene}/raw/building_to_osm_tags.json")
+        print(f"Necessary file not exist: {os.path.join(ASSETS_PATH, 'scenes', args.scene, 'raw', 'building_to_osm_tags.json')}")
         exit()
 
-    if os.path.exists(f"assets/scenes/{args.scene}/raw/center.txt"):
+    if os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "center.txt")):
         print("Necessary file check passed: center.txt")
     else:
-        print(f"Necessary file not exist: assets/scenes/{args.scene}/raw/center.txt")
+        print(f"Necessary file not exist: {os.path.join(ASSETS_PATH, 'scenes', args.scene, 'raw', 'center.txt')}")
         exit()
 
     final_folder_mapping = {"newyork": "NY", "elpaso": "EL_PASO_ok"}

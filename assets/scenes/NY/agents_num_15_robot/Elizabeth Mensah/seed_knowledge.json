@@ -38,7 +38,7 @@
             958.9692373275757,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Elizabeth Mensah's room at The Magellan",
         "bounding_box": [
             111.49943564050403,
@@ -63,7 +63,7 @@
             796.5592193603516,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             75.2679071004987,
             -203.44077901289347,
@@ -87,7 +87,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -112,7 +112,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -154,7 +154,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -181,7 +181,7 @@
             1011.0326929092407,
             -8
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             49.00880813598632,
             11.032692909240737,
@@ -206,7 +206,7 @@
             786.0063781738281,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             97.03073501586915,
             -213.9936218261719,
@@ -232,7 +232,7 @@
             1073.8670864105225,
             -28
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -74.38545227050781,
             79.51829528808594,
@@ -257,7 +257,7 @@
             748.8459930419922,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -281,7 +281,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,

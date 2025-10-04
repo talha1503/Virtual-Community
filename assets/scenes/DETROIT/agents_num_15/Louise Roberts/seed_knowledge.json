@@ -45,7 +45,7 @@
             1206.29248046875,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+        "scene": "indoor_scenes/accomodation-0.json",
         "name": "Louise Roberts's room at Bedell Bldg",
         "bounding_box": [
             -52.798121473519146,
@@ -70,7 +70,7 @@
             826.4625930786133,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+        "scene": "indoor_scenes/accomodation-2.json",
         "bounding_box": [
             -222.23328233824537,
             -173.53733347707367,
@@ -92,7 +92,7 @@
             780.0391006469727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -63.44363021850586,
             -219.96089935302737,
@@ -118,7 +118,7 @@
             917.9287872314453,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             220.536376953125,
             -71.7525634765625,
@@ -146,7 +146,7 @@
             1090.8484153747559,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             13.404423713684064,
             89.62395858764651,
@@ -169,7 +169,7 @@
             1038.2136731147766,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "bounding_box": [
             -176.821044921875,
             38.51941680908203,
@@ -194,7 +194,7 @@
             1178.3803787231445,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -158.82032012939456,
             178.32506561279297,
@@ -218,7 +218,7 @@
             1159.4660568237305,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -67.97072425319332,
             159.47525695658913,
@@ -243,7 +243,7 @@
             1190.8524017333984,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -43.80291938915393,
             190.8512689026288,
@@ -269,7 +269,7 @@
             1178.3803787231445,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             -158.82032012939456,
             178.32506561279297,
@@ -294,7 +294,7 @@
             823.1520156860352,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+        "scene": "indoor_scenes/store-Fresh-Beverages.json",
         "bounding_box": [
             257.60919189453125,
             -176.90774536132812,
@@ -319,7 +319,7 @@
             1033.1299982070923,
             -4
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -93.46975666202655,
             33.18000534615047,

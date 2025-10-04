@@ -47,7 +47,7 @@
             760.3578414916992,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "name": "Kate Novak's room at Hyatt Herald Square New York",
         "bounding_box": [
             39.670225788872,
@@ -72,7 +72,7 @@
             760.3578414916992,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "bounding_box": [
             39.670225788872,
             -239.64214411723827,
@@ -96,7 +96,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -120,7 +120,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -143,7 +143,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -168,7 +168,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -193,7 +193,7 @@
             986.3369770050049,
             -28
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -218,7 +218,7 @@
             760.3578414916992,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             39.670225788872,
             -239.64214411723827,
@@ -245,7 +245,7 @@
             893.3489532470703,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -221.02334594726562,
             -108.4853515625,
@@ -269,7 +269,7 @@
             1186.2614402770996,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+        "scene": "indoor_scenes/store-Beverages-DM.json",
         "bounding_box": [
             -78.07142163349155,
             186.41713195475742,
@@ -294,7 +294,7 @@
             732.4054336547852,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -287.5071770169319,
             -267.59578067723425,

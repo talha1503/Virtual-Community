@@ -39,7 +39,7 @@
             774.1234664916992,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+        "scene": "indoor_scenes/accomodation-8.json",
         "name": "Brian Carter's room at Furnished Quarters",
         "bounding_box": [
             125.50192449735654,
@@ -64,7 +64,7 @@
             722.7256774902344,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "bounding_box": [
             -274.94458683373756,
             -276.87225050135913,
@@ -88,7 +88,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -113,7 +113,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -155,7 +155,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -180,7 +180,7 @@
             760.3578414916992,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             39.670225788872,
             -239.64214411723827,
@@ -204,7 +204,7 @@
             851.8866348266602,
             -12
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             175.86998845377235,
             -149.79616787928182,
@@ -228,7 +228,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -253,7 +253,7 @@
             748.8459930419922,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -278,7 +278,7 @@
             855.8725738525391,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json",
+        "scene": "indoor_scenes/store-Snacks-DM.json",
         "bounding_box": [
             -198.72824691925817,
             -141.62327576145356,
@@ -304,7 +304,7 @@
             803.6043243408203,
             -4
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -259.029740431504,
             -196.3960782716385,

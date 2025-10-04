@@ -47,7 +47,7 @@
             898.8839225769043,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "name": "Kamala Harris's room at Hotel Stanford",
         "bounding_box": [
             57.64106750488281,
@@ -72,7 +72,7 @@
             898.8839225769043,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "bounding_box": [
             57.64106750488281,
             -101.11607742309569,
@@ -97,7 +97,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -122,7 +122,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -163,7 +163,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -189,7 +189,7 @@
             888.8156204223633,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -215,7 +215,7 @@
             745.3537521362305,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -240,7 +240,7 @@
             923.6691150665283,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             36.13547134399414,
             -72.20059204101562,
@@ -265,7 +265,7 @@
             748.8459930419922,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -289,7 +289,7 @@
             718.1015777587891,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -103.89900501407351,
             -281.8984248322162,
@@ -315,7 +315,7 @@
             803.6043243408203,
             -4
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -259.029740431504,
             -196.3960782716385,

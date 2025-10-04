@@ -1,6 +1,6 @@
 {
     "sim_name": "Simple_agent_num_2",
-    "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+    "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
     "scene_offset": [0.0, 0.0, 0.6],
     "agent_names": [
         "Alex Jefferson",

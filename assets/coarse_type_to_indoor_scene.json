@@ -1,36 +1,36 @@
 {
     "accommodation": [
-        "modules/indoor_scenes/scenes/dormitory-0.json",
-        "modules/indoor_scenes/scenes/dormitory-1.json",
-        "modules/indoor_scenes/scenes/dormitory-2.json",
-        "modules/indoor_scenes/scenes/dormitory-3.json",
-        "modules/indoor_scenes/scenes/dormitory-4.json",
-        "modules/indoor_scenes/scenes/dormitory-5.json",
-        "modules/indoor_scenes/scenes/dormitory-6.json",
-        "modules/indoor_scenes/scenes/dormitory-8.json"
+        "indoor_scenes/accomodation-0.json",
+        "indoor_scenes/accomodation-1.json",
+        "indoor_scenes/accomodation-2.json",
+        "indoor_scenes/accomodation-3.json",
+        "indoor_scenes/accomodation-4.json",
+        "indoor_scenes/accomodation-5.json",
+        "indoor_scenes/accomodation-6.json",
+        "indoor_scenes/accomodation-8.json"
     ],
     "stores": [
-        "modules/indoor_scenes/scenes/store-Beverages-DM.json",
-        "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
-        "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
-        "modules/indoor_scenes/scenes/store-Fresh-DM.json",
-        "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
-        "modules/indoor_scenes/scenes/store-Snacks-DM.json"
+        "indoor_scenes/store-Beverages-DM.json",
+        "indoor_scenes/store-Beverages-Snacks.json",
+        "indoor_scenes/store-Fresh-Beverages.json",
+        "indoor_scenes/store-Fresh-DM.json",
+        "indoor_scenes/store-Fresh-Snacks.json",
+        "indoor_scenes/store-Snacks-DM.json"
     ],
     "food": [
-        "MV5M25QKTKJZ2AABAAAAAAI8",
-        "MWHLEPQKTIFZIAABAAAAAAA8"
+        "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
+        "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     ],
     "office": [
-        "MV7J6NIKTKJZ2AABAAAAAAA8",
-        "MVSGSAIKTKJ66AABAAAAAEA8"
+        "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
+        "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
     ],
     "library": [
-        "MV4AFHQKTKJZ2AABAAAAAEA8",
-        "MVJWVGYKTLDAYAABAAAAAAQ8"
+        "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
+        "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
     ],
     "entertainment": [
-        "MV4AFHQKTKJZ2AABAAAAAEA8",
-        "MVJWVGYKTLDAYAABAAAAAAQ8"
+        "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
+        "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
     ]
 }

@@ -48,7 +48,7 @@
             771.2782287597656,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "name": "Sophie Carlsen's room at MACY 31 Self Serviced Apartments",
         "bounding_box": [
             28.11411635540542,
@@ -73,7 +73,7 @@
             938.0584306716919,
             -4
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             -143.94234710886053,
             -61.93701148753711,
@@ -98,7 +98,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -123,7 +123,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -164,7 +164,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -189,7 +189,7 @@
             760.3578414916992,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             39.670225788872,
             -239.64214411723827,
@@ -214,7 +214,7 @@
             789.7968215942383,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -97.13081879761769,
             -208.591050198152,
@@ -240,7 +240,7 @@
             888.8156204223633,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -264,7 +264,7 @@
             718.1015777587891,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -103.89900501407351,
             -281.8984248322162,
@@ -289,7 +289,7 @@
             748.8459930419922,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -313,7 +313,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,

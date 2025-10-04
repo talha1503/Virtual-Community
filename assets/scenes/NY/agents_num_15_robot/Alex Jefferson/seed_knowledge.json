@@ -47,7 +47,7 @@
             847.310863494873,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "name": "Alex Jefferson's room at E\u014cS NoMad Apartments",
         "bounding_box": [
             -146.10708771234118,
@@ -72,7 +72,7 @@
             891.3699760437012,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             71.13457569765015,
             -108.6300244026106,
@@ -114,7 +114,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -138,7 +138,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -163,7 +163,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -187,7 +187,7 @@
             851.8866348266602,
             -12
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             175.86998845377235,
             -149.79616787928182,
@@ -212,7 +212,7 @@
             923.6691150665283,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             36.13547134399414,
             -72.20059204101562,
@@ -237,7 +237,7 @@
             786.0063781738281,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             97.03073501586915,
             -213.9936218261719,
@@ -261,7 +261,7 @@
             796.5592193603516,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             75.2679071004987,
             -203.44077901289347,
@@ -285,7 +285,7 @@
             718.1015777587891,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -103.89900501407351,
             -281.8984248322162,
@@ -310,7 +310,7 @@
             772.2764205932617,
             -8
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -168.850384604267,
             -227.72575575950134,

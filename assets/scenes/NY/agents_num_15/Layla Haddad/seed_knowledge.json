@@ -38,7 +38,7 @@
             898.8839225769043,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "name": "Layla Haddad's room at Hotel Stanford",
         "bounding_box": [
             57.64106750488281,
@@ -63,7 +63,7 @@
             898.8839225769043,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "bounding_box": [
             57.64106750488281,
             -101.11607742309569,
@@ -88,7 +88,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -112,7 +112,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -135,7 +135,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -159,7 +159,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -185,7 +185,7 @@
             888.8156204223633,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -211,7 +211,7 @@
             1073.8670864105225,
             -28
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -74.38545227050781,
             79.51829528808594,
@@ -236,7 +236,7 @@
             888.8156204223633,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             104.22343444824219,
             -109.94708251953125,
@@ -261,7 +261,7 @@
             891.3699760437012,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json",
+        "scene": "indoor_scenes/store-Snacks-DM.json",
         "bounding_box": [
             71.13457569765015,
             -108.6300244026106,

@@ -26,7 +26,7 @@
                     953.4135026931763,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -62,7 +62,7 @@
                     777.2981643676758,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "Hotel at The Detroit Club",
@@ -77,7 +77,7 @@
                     777.2981643676758,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json"
+                "scene": "indoor_scenes/accomodation-5.json"
             },
             {
                 "name": "Beverages and DM Store",
@@ -93,7 +93,7 @@
                     777.2981643676758,
                     -20
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json"
+                "scene": "indoor_scenes/store-Beverages-DM.json"
             }
         ],
         "outdoor_xy": [
@@ -126,7 +126,7 @@
                     826.4625930786133,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             }
         ],
         "outdoor_xy": [
@@ -160,7 +160,7 @@
                     755.760139465332,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json"
+                "scene": "indoor_scenes/store-Beverages-Snacks.json"
             }
         ],
         "outdoor_xy": [
@@ -193,7 +193,7 @@
                     750.5899505615234,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "Buhl Building",
@@ -206,7 +206,7 @@
                     750.5899505615234,
                     -8
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -244,7 +244,7 @@
                     823.1520156860352,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Fresh and Beverages Store",
@@ -260,7 +260,7 @@
                     823.1520156860352,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json"
+                "scene": "indoor_scenes/store-Fresh-Beverages.json"
             }
         ],
         "outdoor_xy": [
@@ -293,7 +293,7 @@
                     969.3572273254395,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Hotel Indigo Detroit Downtown, an IHG Hotel",
@@ -308,7 +308,7 @@
                     969.3572273254395,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             },
             {
                 "building": "Hotel Indigo",
@@ -323,7 +323,7 @@
                     969.3572273254395,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+                "scene": "indoor_scenes/accomodation-8.json",
                 "name": "Malik Okoro's room at Hotel Indigo Detroit Downtown, an IHG Hotel"
             }
         ],
@@ -467,7 +467,7 @@
                     1038.2136731147766,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "The Westin Book Cadillac Detroit",
@@ -481,7 +481,7 @@
                     1038.2136731147766,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json"
+                "scene": "indoor_scenes/accomodation-5.json"
             },
             {
                 "building": "The Westin Book Cadillac Detroit",
@@ -495,7 +495,7 @@
                     1038.2136731147766,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+                "scene": "indoor_scenes/accomodation-5.json",
                 "name": "Kenji Watanabe's room at The Westin Book Cadillac Detroit"
             },
             {
@@ -510,7 +510,7 @@
                     1038.2136731147766,
                     -16
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+                "scene": "indoor_scenes/accomodation-5.json",
                 "name": "Marco Ruiz's room at The Westin Book Cadillac Detroit"
             },
             {
@@ -525,7 +525,7 @@
                     1038.2136731147766,
                     -20
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+                "scene": "indoor_scenes/accomodation-5.json",
                 "name": "Marcus Yuen's room at The Westin Book Cadillac Detroit"
             },
             {
@@ -540,7 +540,7 @@
                     1038.2136731147766,
                     -24
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+                "scene": "indoor_scenes/accomodation-5.json",
                 "name": "Morten Lindqvist's room at The Westin Book Cadillac Detroit"
             }
         ],
@@ -575,7 +575,7 @@
                     957.0423936843872,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json"
+                "scene": "indoor_scenes/store-Fresh-DM.json"
             }
         ],
         "outdoor_xy": [
@@ -609,7 +609,7 @@
                     980.4919891357422,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -643,7 +643,7 @@
                     978.9336638450623,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -677,7 +677,7 @@
                     1033.1299982070923,
                     -4
                 ],
-                "scene": "MVJWVGYKTLDAYAABAAAAAAQ8"
+                "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
             },
             {
                 "name": "Griswold Capitol Park",
@@ -691,7 +691,7 @@
                     1033.1299982070923,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "building": "Griswold Capitol Park",
@@ -705,7 +705,7 @@
                     1033.1299982070923,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+                "scene": "indoor_scenes/accomodation-0.json",
                 "name": "Adam Pierce's room at Griswold Capitol Park"
             }
         ],
@@ -740,7 +740,7 @@
                     964.1176795959473,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -775,7 +775,7 @@
                     988.4745365381241,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -809,7 +809,7 @@
                     988.1624467968941,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -844,7 +844,7 @@
                     917.9287872314453,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -877,7 +877,7 @@
                     1034.3864555358887,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "Cadillac Tower",
@@ -890,7 +890,7 @@
                     1034.3864555358887,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             }
         ],
         "outdoor_xy": [
@@ -924,7 +924,7 @@
                     1178.3803787231445,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Fresh and Snacks Store",
@@ -941,7 +941,7 @@
                     1178.3803787231445,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json"
+                "scene": "indoor_scenes/store-Fresh-Snacks.json"
             }
         ],
         "outdoor_xy": [
@@ -974,7 +974,7 @@
                     1132.5894584655762,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             },
             {
                 "name": "Eat\u00f3ri Market",
@@ -992,7 +992,7 @@
                     1132.5894584655762,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1025,7 +1025,7 @@
                     1159.4660568237305,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "Snacks and DM Store",
@@ -1041,7 +1041,7 @@
                     1159.4660568237305,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json"
+                "scene": "indoor_scenes/store-Snacks-DM.json"
             },
             {
                 "name": "The Albert",
@@ -1054,7 +1054,7 @@
                     1159.4660568237305,
                     -16
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             },
             {
                 "building": "The Albert",
@@ -1067,7 +1067,7 @@
                     1159.4660568237305,
                     -16
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+                "scene": "indoor_scenes/accomodation-1.json",
                 "name": "Alex Jefferson's room at The Albert"
             }
         ],
@@ -1105,7 +1105,7 @@
                     1090.8484153747559,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1139,7 +1139,7 @@
                     1190.8524017333984,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1174,7 +1174,7 @@
                     1128.797939300537,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1206,7 +1206,7 @@
                     1254.0712203979492,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1237,7 +1237,7 @@
                     1146.5972290039062,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1268,7 +1268,7 @@
                     745.9589385986328,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1299,7 +1299,7 @@
                     729.9953460693359,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1330,7 +1330,7 @@
                     863.841064453125,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1361,7 +1361,7 @@
                     1243.5814895629883,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             },
             {
                 "building": "Louis Kamper Apts",
@@ -1374,7 +1374,7 @@
                     1243.5814895629883,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+                "scene": "indoor_scenes/accomodation-1.json",
                 "name": "Emily Johnson's room at Louis Kamper Apts"
             },
             {
@@ -1388,7 +1388,7 @@
                     1243.5814895629883,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+                "scene": "indoor_scenes/accomodation-1.json",
                 "name": "Zara Williams's room at Louis Kamper Apts"
             }
         ],
@@ -1420,7 +1420,7 @@
                     879.8981018066406,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1451,7 +1451,7 @@
                     781.8255462646484,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1482,7 +1482,7 @@
                     1070.605749130249,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json"
+                "scene": "indoor_scenes/accomodation-3.json"
             },
             {
                 "building": "Capitol Park Building",
@@ -1495,7 +1495,7 @@
                     1070.605749130249,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+                "scene": "indoor_scenes/accomodation-3.json",
                 "name": "Chad Thompson's room at Capitol Park Building"
             }
         ],
@@ -1527,7 +1527,7 @@
                     1267.0031204223633,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             },
             {
                 "building": "Julian C. Madison Building",
@@ -1540,7 +1540,7 @@
                     1267.0031204223633,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+                "scene": "indoor_scenes/accomodation-4.json",
                 "name": "Elizabeth Mensah's room at Julian C. Madison Building"
             }
         ],
@@ -1572,7 +1572,7 @@
                     1206.577980041504,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1603,7 +1603,7 @@
                     904.9141731262207,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1634,7 +1634,7 @@
                     735.5724411010742,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1665,7 +1665,7 @@
                     780.0391006469727,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1696,7 +1696,7 @@
                     737.3645401000977,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1727,7 +1727,7 @@
                     1150.635269165039,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1759,7 +1759,7 @@
                     1242.951416015625,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1790,7 +1790,7 @@
                     940.8342533111572,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             },
             {
                 "building": "Security Trust Lofts",
@@ -1803,7 +1803,7 @@
                     940.8342533111572,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+                "scene": "indoor_scenes/accomodation-4.json",
                 "name": "Kate Novak's room at Security Trust Lofts"
             }
         ],
@@ -1835,7 +1835,7 @@
                     1176.8706283569336,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             },
             {
                 "building": "Fowler Building",
@@ -1848,7 +1848,7 @@
                     1176.8706283569336,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+                "scene": "indoor_scenes/accomodation-6.json",
                 "name": "Olivia Adams's room at Fowler Building"
             }
         ],
@@ -1880,7 +1880,7 @@
                     1162.3433990478516,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1911,7 +1911,7 @@
                     1206.29248046875,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "building": "Bedell Bldg",
@@ -1924,7 +1924,7 @@
                     1206.29248046875,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+                "scene": "indoor_scenes/accomodation-0.json",
                 "name": "Louise Roberts's room at Bedell Bldg"
             }
         ],
@@ -1956,7 +1956,7 @@
                     1216.2952270507812,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -1987,7 +1987,7 @@
                     1261.3353271484375,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             },
             {
                 "building": "28 Grand",
@@ -2000,7 +2000,7 @@
                     1261.3353271484375,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+                "scene": "indoor_scenes/accomodation-6.json",
                 "name": "Steve Johnson's room at 28 Grand"
             }
         ],

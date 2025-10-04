@@ -47,7 +47,7 @@
             946.3306083679199,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Pika Hayes's room at NYC Apartment",
         "bounding_box": [
             -195.2102504497904,
@@ -73,7 +73,7 @@
             808.3782043457031,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -204.01870088507104,
             -191.62353860340792,
@@ -115,7 +115,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -139,7 +139,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -164,7 +164,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -190,7 +190,7 @@
             800.5044860839844,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             271.6311340332031,
             -201.03997802734375,
@@ -215,7 +215,7 @@
             900.8429832458496,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -27.54410112536783,
             -99.15599757288734,
@@ -240,7 +240,7 @@
             984.4237949848175,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -180.2966191519855,
             -15.589110427342241,
@@ -265,7 +265,7 @@
             855.8725738525391,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json",
+        "scene": "indoor_scenes/store-Snacks-DM.json",
         "bounding_box": [
             -198.72824691925817,
             -141.62327576145356,
@@ -289,7 +289,7 @@
             796.5592193603516,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             75.2679071004987,
             -203.44077901289347,
@@ -314,7 +314,7 @@
             772.2764205932617,
             -8
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -168.850384604267,
             -227.72575575950134,

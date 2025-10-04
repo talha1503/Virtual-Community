@@ -47,7 +47,7 @@
             886.0820426940918,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+        "scene": "indoor_scenes/accomodation-8.json",
         "name": "Shannon Steves's room at National at 888 6th Avenue",
         "bounding_box": [
             -31.736120387710447,
@@ -72,7 +72,7 @@
             1006.8787288665771,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "bounding_box": [
             242.64107513427734,
             6.878728866577162,
@@ -95,7 +95,7 @@
             745.3537521362305,
             -8
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8",
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -119,7 +119,7 @@
             767.3263397216797,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -287.273216746148,
             -232.6736473645091,
@@ -143,7 +143,7 @@
             986.3369770050049,
             -8
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -87.99254708130022,
             -3.0164706221076525,
@@ -168,7 +168,7 @@
             839.4018936157227,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             161.20028394285737,
             -160.59810476944108,
@@ -194,7 +194,7 @@
             745.3537521362305,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             166.78116607666013,
             -254.64624786376953,
@@ -220,7 +220,7 @@
             724.9438629150391,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -189.6179827598148,
             -275.0561403259667,
@@ -245,7 +245,7 @@
             900.8429832458496,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -27.54410112536783,
             -99.15599757288734,
@@ -269,7 +269,7 @@
             769.8535232543945,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+        "scene": "indoor_scenes/store-Fresh-Beverages.json",
         "bounding_box": [
             -52.94042068798431,
             -226.06583904509267,
@@ -294,7 +294,7 @@
             838.8580017089844,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             221.82428741455078,
             -161.1419982910156,

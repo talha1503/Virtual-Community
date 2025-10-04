@@ -27,7 +27,7 @@
                     1186.2614402770996,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Beverages and DM Store",
@@ -42,7 +42,7 @@
                     1186.2614402770996,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json"
+                "scene": "indoor_scenes/store-Beverages-DM.json"
             }
         ],
         "outdoor_xy": [
@@ -75,7 +75,7 @@
                     722.7256774902344,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -109,7 +109,7 @@
                     714.0645141601562,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -142,7 +142,7 @@
                     732.4054336547852,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "name": "Beverages and Snacks Store",
@@ -158,7 +158,7 @@
                     732.4054336547852,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json"
+                "scene": "indoor_scenes/store-Beverages-Snacks.json"
             }
         ],
         "outdoor_xy": [
@@ -196,7 +196,7 @@
                     729.8294067382812,
                     -8
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -229,7 +229,7 @@
                     719.4098663330078,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             }
         ],
         "outdoor_xy": [
@@ -264,7 +264,7 @@
                     745.3537521362305,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "name": "Idea Nuova Inc",
@@ -278,7 +278,7 @@
                     745.3537521362305,
                     -8
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -311,7 +311,7 @@
                     767.3263397216797,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -346,7 +346,7 @@
                     772.2764205932617,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             },
             {
                 "name": "Big Screen Plaza",
@@ -362,7 +362,7 @@
                     772.2764205932617,
                     -8
                 ],
-                "scene": "MVJWVGYKTLDAYAABAAAAAAQ8"
+                "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
             },
             {
                 "name": "L'Amico",
@@ -378,7 +378,7 @@
                     772.2764205932617,
                     -12
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "building": "Eventi",
@@ -395,7 +395,7 @@
                     772.2764205932617,
                     -16
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+                "scene": "indoor_scenes/accomodation-8.json",
                 "name": "Freya Novak's room at Kimpton Hotel Eventi"
             }
         ],
@@ -431,7 +431,7 @@
                     724.9438629150391,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -464,7 +464,7 @@
                     769.8535232543945,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             },
             {
                 "name": "Fresh and Beverages Store",
@@ -479,7 +479,7 @@
                     769.8535232543945,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json"
+                "scene": "indoor_scenes/store-Fresh-Beverages.json"
             },
             {
                 "building": "1235 Broadway",
@@ -494,7 +494,7 @@
                     769.8535232543945,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+                "scene": "indoor_scenes/accomodation-2.json",
                 "name": "Zara Williams's room at Justin Management"
             }
         ],
@@ -529,7 +529,7 @@
                     771.2782287597656,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             },
             {
                 "building": "The Grand Hotel",
@@ -545,7 +545,7 @@
                     771.2782287597656,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+                "scene": "indoor_scenes/accomodation-2.json",
                 "name": "Elizabeth Mensah's room at MACY 31 Self Serviced Apartments"
             }
         ],
@@ -579,7 +579,7 @@
                     760.3578414916992,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             },
             {
                 "name": "Up on 20 Rooftop Lounge",
@@ -595,7 +595,7 @@
                     760.3578414916992,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "building": "Hyatt Herald Square New York",
@@ -610,7 +610,7 @@
                     760.3578414916992,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+                "scene": "indoor_scenes/accomodation-6.json",
                 "name": "Kate Novak's room at Hyatt Herald Square New York"
             }
         ],
@@ -644,7 +644,7 @@
                     786.0063781738281,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             },
             {
                 "name": "Ayza Wine & Chocolate Bar",
@@ -660,7 +660,7 @@
                     786.0063781738281,
                     -8
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             },
             {
                 "building": "Life Hotel",
@@ -675,7 +675,7 @@
                     786.0063781738281,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+                "scene": "indoor_scenes/accomodation-2.json",
                 "name": "Morten Lindqvist's room at Life Hotel New York"
             }
         ],
@@ -710,7 +710,7 @@
                     774.1234664916992,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             },
             {
                 "building": "Tower 31",
@@ -726,7 +726,7 @@
                     774.1234664916992,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json",
+                "scene": "indoor_scenes/accomodation-2.json",
                 "name": "Louise Roberts's room at Furnished Quarters"
             }
         ],
@@ -762,7 +762,7 @@
                     757.8211059570312,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -795,7 +795,7 @@
                     773.8320693969727,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -828,7 +828,7 @@
                     748.8459930419922,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             },
             {
                 "building": "315 5th Avenue",
@@ -843,7 +843,7 @@
                     748.8459930419922,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+                "scene": "indoor_scenes/accomodation-6.json",
                 "name": "Eve By J Gonzales's room at Living Quest Real Estate"
             }
         ],
@@ -879,7 +879,7 @@
                     803.6043243408203,
                     -4
                 ],
-                "scene": "MV4AFHQKTKJZ2AABAAAAAEA8"
+                "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json"
             },
             {
                 "name": "TrampoLEAN\u00ae",
@@ -895,7 +895,7 @@
                     803.6043243408203,
                     -8
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -929,7 +929,7 @@
                     808.3782043457031,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -962,7 +962,7 @@
                     847.310863494873,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json"
+                "scene": "indoor_scenes/accomodation-3.json"
             },
             {
                 "building": "EOS",
@@ -977,7 +977,7 @@
                     847.310863494873,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+                "scene": "indoor_scenes/accomodation-3.json",
                 "name": "Brian Carter's room at E\u014cS NoMad Apartments"
             }
         ],
@@ -1012,7 +1012,7 @@
                     789.7968215942383,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1045,7 +1045,7 @@
                     830.3444671630859,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1079,7 +1079,7 @@
                     839.4018936157227,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1113,7 +1113,7 @@
                     784.7608261108398,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1148,7 +1148,7 @@
                     800.5044860839844,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1185,7 +1185,7 @@
                     1185.5973510742188,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1218,7 +1218,7 @@
                     855.8725738525391,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             }
         ],
         "outdoor_xy": [
@@ -1252,7 +1252,7 @@
                     895.734016418457,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1286,7 +1286,7 @@
                     859.9275741577148,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             }
         ],
         "outdoor_xy": [
@@ -1321,7 +1321,7 @@
                     888.8156204223633,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Fresh and DM Store",
@@ -1337,7 +1337,7 @@
                     888.8156204223633,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json"
+                "scene": "indoor_scenes/store-Fresh-DM.json"
             }
         ],
         "outdoor_xy": [
@@ -1371,7 +1371,7 @@
                     866.1845169067383,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Broadway 32 St Realty Corporation",
@@ -1386,7 +1386,7 @@
                     866.1845169067383,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -1419,7 +1419,7 @@
                     852.2810897827148,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json"
+                "scene": "indoor_scenes/accomodation-3.json"
             },
             {
                 "building": "The Hotel @ 5th Avenue",
@@ -1434,7 +1434,7 @@
                     852.2810897827148,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+                "scene": "indoor_scenes/accomodation-3.json",
                 "name": "Naomi Zhang's room at The Hotel at Fifth Avenue"
             }
         ],
@@ -1468,7 +1468,7 @@
                     851.8866348266602,
                     -12
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -1502,7 +1502,7 @@
                     838.8580017089844,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json"
+                "scene": "indoor_scenes/store-Fresh-Snacks.json"
             }
         ],
         "outdoor_xy": [
@@ -1535,7 +1535,7 @@
                     897.8083534240723,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             },
             {
                 "building": "Courtyard Marriot",
@@ -1550,7 +1550,7 @@
                     897.8083534240723,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+                "scene": "indoor_scenes/accomodation-8.json",
                 "name": "Tariq Johnson's room at Courtyard New York Manhattan/Chelsea"
             }
         ],
@@ -1587,7 +1587,7 @@
                     893.3489532470703,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "31 Penn Plaza",
@@ -1602,7 +1602,7 @@
                     893.3489532470703,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "building": "132 West 31st Street",
@@ -1617,7 +1617,7 @@
                     893.3489532470703,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+                "scene": "indoor_scenes/accomodation-0.json",
                 "name": "Leonard Park's room at 31 Penn Plaza"
             }
         ],
@@ -1651,7 +1651,7 @@
                     877.6904830932617,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             }
         ],
         "outdoor_xy": [
@@ -1684,7 +1684,7 @@
                     938.0584306716919,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [
@@ -1717,7 +1717,7 @@
                     886.3680534362793,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-5.json"
+                "scene": "indoor_scenes/accomodation-5.json"
             }
         ],
         "outdoor_xy": [
@@ -1751,7 +1751,7 @@
                     900.8429832458496,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Turnkey Office Space",
@@ -1766,7 +1766,7 @@
                     900.8429832458496,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+                "scene": "indoor_scenes/accomodation-6.json"
             }
         ],
         "outdoor_xy": [
@@ -1799,7 +1799,7 @@
                     886.0820426940918,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             },
             {
                 "building": "888 6th Avenue",
@@ -1814,7 +1814,7 @@
                     886.0820426940918,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+                "scene": "indoor_scenes/accomodation-8.json",
                 "name": "Shannon Steves's room at National at 888 6th Avenue"
             }
         ],
@@ -1848,7 +1848,7 @@
                     846.3019790649414,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+                "scene": "indoor_scenes/accomodation-8.json"
             }
         ],
         "outdoor_xy": [
@@ -1882,7 +1882,7 @@
                     923.6691150665283,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "Martinique New York on Broadway, Curio Collection by Hilton",
@@ -1896,7 +1896,7 @@
                     923.6691150665283,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             }
         ],
         "outdoor_xy": [
@@ -1929,7 +1929,7 @@
                     898.8839225769043,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             },
             {
                 "building": "Hotel Stanford",
@@ -1944,7 +1944,7 @@
                     898.8839225769043,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+                "scene": "indoor_scenes/accomodation-4.json",
                 "name": "Layla Haddad's room at Hotel Stanford"
             }
         ],
@@ -1978,7 +1978,7 @@
                     891.3699760437012,
                     -4
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             },
             {
                 "name": "Thunder Group Inc",
@@ -1993,7 +1993,7 @@
                     891.3699760437012,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             },
             {
                 "name": "Snacks and DM Store",
@@ -2009,7 +2009,7 @@
                     891.3699760437012,
                     -12
                 ],
-                "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json"
+                "scene": "indoor_scenes/store-Snacks-DM.json"
             }
         ],
         "outdoor_xy": [
@@ -2043,7 +2043,7 @@
                     922.1136102676392,
                     -12
                 ],
-                "scene": "MVJWVGYKTLDAYAABAAAAAAQ8"
+                "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
             },
             {
                 "name": "United Hospital Fund-Ny Library",
@@ -2058,7 +2058,7 @@
                     922.1136102676392,
                     -20
                 ],
-                "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+                "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
             },
             {
                 "name": "STATE Grill and Bar",
@@ -2075,7 +2075,7 @@
                     922.1136102676392,
                     -44
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -2108,7 +2108,7 @@
                     1006.8787288665771,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -2142,7 +2142,7 @@
                     925.9900131225586,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -2175,7 +2175,7 @@
                     958.9692373275757,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "building": "The Magellan",
@@ -2190,7 +2190,7 @@
                     958.9692373275757,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+                "scene": "indoor_scenes/accomodation-0.json",
                 "name": "James Thompson's room at The Magellan"
             }
         ],
@@ -2224,7 +2224,7 @@
                     946.3306083679199,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+                "scene": "indoor_scenes/accomodation-1.json"
             }
         ],
         "outdoor_xy": [
@@ -2257,7 +2257,7 @@
                     961.4153165817261,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -2290,7 +2290,7 @@
                     986.3369770050049,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+                "scene": "indoor_scenes/accomodation-0.json"
             },
             {
                 "name": "Creative Art Works",
@@ -2305,7 +2305,7 @@
                     986.3369770050049,
                     -8
                 ],
-                "scene": "MV4AFHQKTKJZ2AABAAAAAEA8"
+                "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json"
             },
             {
                 "name": "Ikbal's Halal Food",
@@ -2321,7 +2321,7 @@
                     986.3369770050049,
                     -28
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "building": "Manhattan Mall",
@@ -2336,7 +2336,7 @@
                     986.3369770050049,
                     -16
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+                "scene": "indoor_scenes/accomodation-0.json",
                 "name": "Steve Johnson's room at Hadson Realty"
             }
         ],
@@ -2370,7 +2370,7 @@
                     939.7389278411865,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -2514,7 +2514,7 @@
                     970.2845416069031,
                     -4
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+                "scene": "indoor_scenes/accomodation-4.json"
             }
         ],
         "outdoor_xy": [
@@ -2547,7 +2547,7 @@
                     1030.51058447361,
                     -8
                 ],
-                "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+                "scene": "indoor_scenes/accomodation-2.json"
             },
             {
                 "name": "COSTAS - AREPA BAR",
@@ -2563,7 +2563,7 @@
                     1030.51058447361,
                     -12
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -2598,7 +2598,7 @@
                     1073.8670864105225,
                     -28
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -2632,7 +2632,7 @@
                     984.4237949848175,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -2666,7 +2666,7 @@
                     1049.5880527496338,
                     -4
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -2702,7 +2702,7 @@
                     1011.0326929092407,
                     -8
                 ],
-                "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+                "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
             },
             {
                 "name": "GoFit Systems",
@@ -2718,7 +2718,7 @@
                     1011.0326929092407,
                     -16
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -2753,7 +2753,7 @@
                     1097.7129821777344,
                     -4
                 ],
-                "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+                "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
             }
         ],
         "outdoor_xy": [
@@ -2787,7 +2787,7 @@
                     1091.5392627716064,
                     -4
                 ],
-                "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+                "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
             }
         ],
         "outdoor_xy": [
@@ -2822,7 +2822,7 @@
                     1234.9851837158203,
                     -4
                 ],
-                "scene": "MV4AFHQKTKJZ2AABAAAAAEA8"
+                "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json"
             }
         ],
         "outdoor_xy": [

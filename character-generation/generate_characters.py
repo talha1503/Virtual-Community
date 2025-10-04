@@ -23,7 +23,7 @@ sys.path.insert(0, current_directory)
 from tools.generator import Generator
 from tools.utils import *
 
-from tools.constants import google_map_coarse_to_types, ENV_OTHER_METADATA
+from tools.constants import google_map_coarse_to_types, ENV_OTHER_METADATA, ASSETS_PATH
 from tools.annotate_scene import update_buildings
 
 
@@ -151,16 +151,16 @@ def find_place_index_in_building(building_meta, place_name):
 class CharacterGen:
     def __init__(self, args) -> None:
         self.args = args
-        self.building_metadata = json.load(open(f"assets/scenes/{args.scene}/building_metadata.json", 'r'))
-        self.place_metadata = json.load(open(f"assets/scenes/{args.scene}/place_metadata.json", 'r'))
-        self.all_bboxes = json.load(open(f"assets/scenes/{args.scene}/all_loaded_building_bboxes.json", 'r'))
-        self.character_name_to_skin_info = json.load(open(f"assets/character2skin.json", 'r'))
-        self.coarse_indoor_scene = json.load(open("modules/indoor_scenes/coarse_type_to_indoor_scene.json", 'r'))
-        if os.path.exists(f"assets/scenes/{args.scene}/transit.json"):
+        self.building_metadata = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "building_metadata.json"), 'r'))
+        self.place_metadata = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "place_metadata.json"), 'r'))
+        self.all_bboxes = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "all_loaded_building_bboxes.json"), 'r'))
+        self.character_name_to_skin_info = json.load(open(os.path.join(ASSETS_PATH, "character2skin.json"), 'r'))
+        self.coarse_indoor_scene = json.load(open(os.path.join(ASSETS_PATH, "coarse_type_to_indoor_scene.json"), 'r'))
+        if os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "transit.json")):
             self.transit = json.load(open(f"assets/scenes/{args.scene}/transit.json", 'r'))
         else:
             self.transit = None
-        self.character_name_to_image_features = pickle.load(open(f"assets/character_name_to_image_features.pkl", "rb"))
+        self.character_name_to_image_features = pickle.load(open(os.path.join(ASSETS_PATH, "character_name_to_image_features.pkl"), "rb"))
         self.scene_to_name = {
             "EL_PASO": "El Paso",
             "FORT_WORTH": "Fort Worth",
@@ -187,32 +187,24 @@ class CharacterGen:
             self.assign_scene_to_place_metadata()
         else:
             # counting number of places of types first
-            number_of_stores_before_selection = 0
-            number_of_accomodation_options = 0
-            number_of_food_options = 0
-            number_of_entertainment_options = 0
+            cnt_types = {}
             for place in self.place_metadata:
-                if self.place_metadata[place]["coarse_type"] == "stores":
-                    number_of_stores_before_selection += 1
-                if self.place_metadata[place]["coarse_type"] == "accommodation":
-                    number_of_accomodation_options += 1
-                if self.place_metadata[place]["coarse_type"] == "food":
-                    number_of_food_options += 1
-                if self.place_metadata[place]["coarse_type"] == "entertainment":
-                    number_of_entertainment_options += 1
-            if number_of_stores_before_selection < 6 or number_of_accomodation_options < 1 or number_of_food_options < 3 or number_of_entertainment_options < 1:
-                print(f"Not enough places for stores or accommodation or food or entertainment. The minimum requirements are: stores: 6, accommodation: 1, food: 3, entertainment: 1. Number of stores: {number_of_stores_before_selection}, accommodation: {number_of_accomodation_options}, food: {number_of_food_options}, entertainment: {number_of_entertainment_options}.")
+                cnt_types[self.place_metadata[place]["coarse_type"]] += 1
+            if cnt_types["stores"] < 6 or cnt_types["accommodation"] < 1 or cnt_types["food"] < 3 or cnt_types["entertainment"] < 1:
+                print(f"Not enough places for stores or accommodation or food or entertainment. The minimum requirements are: stores: 6, accommodation: 1, food: 3, entertainment: 1. Number of stores: {cnt_types['stores']}, accommodation: {cnt_types['accommodation']}, food: {cnt_types['food']}, entertainment: {cnt_types['entertainment']}.")
                 exit()
             self.assign_scene_to_place_metadata()
             self.choose_6_stores()
 
     def assign_scene_to_place_metadata(self):
         for place in self.place_metadata:
-            if "scene" not in self.place_metadata[place]:
-                if self.place_metadata[place]["building"] != "open space":
-                    self.place_metadata[place]["scene"] = random.sample(self.coarse_indoor_scene[self.place_metadata[place]['coarse_type']], 1)[0]
-                else:
-                    self.place_metadata[place]["scene"] = None
+            if "scene" in self.place_metadata[place]:
+                print(f"Place {place} has pre-assigned scene {self.place_metadata[place]['scene']}. Skipping assignment.")
+                continue
+            if self.place_metadata[place]["building"] != "open space":
+                self.place_metadata[place]["scene"] = random.sample(self.coarse_indoor_scene[self.place_metadata[place]['coarse_type']], 1)[0]
+            else:
+                self.place_metadata[place]["scene"] = None
 
     def choose_6_stores(self):
         print("Number of places before choosing stores:", len(self.place_metadata))

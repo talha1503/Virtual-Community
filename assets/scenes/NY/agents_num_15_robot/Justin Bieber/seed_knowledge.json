@@ -46,7 +46,7 @@
             923.6691150665283,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "name": "Justin Bieber's room at Martinique New York on Broadway, Curio Collection by Hilton",
         "bounding_box": [
             36.13547134399414,
@@ -70,7 +70,7 @@
             923.6691150665283,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "bounding_box": [
             36.13547134399414,
             -72.20059204101562,
@@ -95,7 +95,7 @@
             1091.5392627716064,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             86.1720604405572,
             94.01040019106586,
@@ -120,7 +120,7 @@
             922.1136102676392,
             -12
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             209.90191650390625,
             -77.88565826416016,
@@ -161,7 +161,7 @@
             748.8459930419922,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "bounding_box": [
             250.59391528632548,
             -251.15399789636342,
@@ -186,7 +186,7 @@
             923.6691150665283,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             36.13547134399414,
             -72.20059204101562,
@@ -211,7 +211,7 @@
             925.9900131225586,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -16.37906958257632,
             -73.98823632736743,
@@ -236,7 +236,7 @@
             789.7968215942383,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             -97.13081879761769,
             -208.591050198152,
@@ -260,7 +260,7 @@
             718.1015777587891,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -103.89900501407351,
             -281.8984248322162,
@@ -285,7 +285,7 @@
             789.6072845458984,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+        "scene": "indoor_scenes/store-Fresh-Beverages.json",
         "bounding_box": [
             -66.87062072753906,
             -210.01803588867188,
@@ -311,7 +311,7 @@
             803.6043243408203,
             -4
         ],
-        "scene": "MV4AFHQKTKJZ2AABAAAAAEA8",
+        "scene": "indoor_scenes/MV4AFHQKTKJZ2AABAAAAAEA8.json",
         "bounding_box": [
             -259.029740431504,
             -196.3960782716385,

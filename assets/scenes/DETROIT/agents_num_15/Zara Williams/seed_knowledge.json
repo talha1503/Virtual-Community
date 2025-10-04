@@ -36,7 +36,7 @@
             1243.5814895629883,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Zara Williams's room at Louis Kamper Apts",
         "bounding_box": [
             -195.83339695590124,
@@ -63,7 +63,7 @@
             917.9287872314453,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             220.536376953125,
             -71.7525634765625,
@@ -85,7 +85,7 @@
             780.0391006469727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -63.44363021850586,
             -219.96089935302737,
@@ -113,7 +113,7 @@
             1090.8484153747559,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             13.404423713684064,
             89.62395858764651,
@@ -136,7 +136,7 @@
             1038.2136731147766,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "bounding_box": [
             -176.821044921875,
             38.51941680908203,
@@ -165,7 +165,7 @@
             823.1520156860352,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8",
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json",
         "bounding_box": [
             257.60919189453125,
             -176.90774536132812,
@@ -189,7 +189,7 @@
             1034.3864555358887,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             260.91877746582037,
             34.386455535888686,
@@ -214,7 +214,7 @@
             957.0423936843872,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             -19.339146579609995,
             -42.783374503439596,
@@ -239,7 +239,7 @@
             755.760139465332,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -38.37111470429018,
             -244.27061775169207,
@@ -264,7 +264,7 @@
             1033.1299982070923,
             -4
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -93.46975666202655,
             33.18000534615047,

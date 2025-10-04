@@ -45,7 +45,7 @@
             1261.3353271484375,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "name": "Steve Johnson's room at 28 Grand",
         "bounding_box": [
             -124.54118544160983,
@@ -68,7 +68,7 @@
             780.0391006469727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -63.44363021850586,
             -219.96089935302737,
@@ -94,7 +94,7 @@
             917.9287872314453,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             220.536376953125,
             -71.7525634765625,
@@ -122,7 +122,7 @@
             1090.8484153747559,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             13.404423713684064,
             89.62395858764651,
@@ -145,7 +145,7 @@
             1038.2136731147766,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "bounding_box": [
             -176.821044921875,
             38.51941680908203,
@@ -168,7 +168,7 @@
             1242.951416015625,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             -150.99171475376204,
             242.39216471447136,
@@ -193,7 +193,7 @@
             964.1176795959473,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             125.0729634144782,
             -35.90463662175216,
@@ -218,7 +218,7 @@
             755.760139465332,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+        "scene": "indoor_scenes/store-Beverages-Snacks.json",
         "bounding_box": [
             -38.37111470429018,
             -244.27061775169207,
@@ -243,7 +243,7 @@
             777.2981643676758,
             -20
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+        "scene": "indoor_scenes/store-Beverages-DM.json",
         "bounding_box": [
             -217.88290791109895,
             -223.2923461719123,
@@ -268,7 +268,7 @@
             1033.1299982070923,
             -4
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -93.46975666202655,
             33.18000534615047,

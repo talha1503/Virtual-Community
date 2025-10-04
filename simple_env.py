@@ -15,7 +15,6 @@ sys.path.insert(0, current_directory)
 
 from modules import *
 from tools.constants import LIGHTS
-from modules.indoor_scenes.usd_scene import place_usd_scene_with_ratio
 from agents.demo_agent import DemoAgent
 
 
@@ -144,9 +143,7 @@ class SimpleVicoEnv:
                 ),
             )
         else:
-            # usd assets
-            usd_file = f"Genesis/genesis/assets/ViCo/scene/commercial_scenes/scenes/{scene_path}_usd/start_result_raw.usd"
-            place_usd_scene_with_ratio(usd_file, self, global_pos=offset, load_objects=load_indoor_objects)
+            load_indoor_room(self, scene_path, offset, "demo", load_indoor_objects)
 
     def add_avatar(
             self,

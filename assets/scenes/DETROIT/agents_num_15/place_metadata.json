@@ -12,7 +12,7 @@
             969.3572273254395,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json",
+        "scene": "indoor_scenes/accomodation-8.json",
         "name": "Malik Okoro's room at Hotel Indigo Detroit Downtown, an IHG Hotel"
     },
     "Bohemia at The Detroit Club": {
@@ -31,7 +31,7 @@
             777.2981643676758,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Kenji Watanabe's room at The Westin Book Cadillac Detroit": {
         "building": "The Westin Book Cadillac Detroit",
@@ -45,7 +45,7 @@
             1038.2136731147766,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "name": "Kenji Watanabe's room at The Westin Book Cadillac Detroit"
     },
     "Bad Luck Bar": {
@@ -61,7 +61,7 @@
             1159.4660568237305,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Olivia Adams's room at Fowler Building": {
         "building": "Fowler Building",
@@ -74,7 +74,7 @@
             1176.8706283569336,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "name": "Olivia Adams's room at Fowler Building"
     },
     "The Hudson Cafe": {
@@ -91,7 +91,7 @@
             1190.8524017333984,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Fresh and DM Store": {
         "building": "First State Bank",
@@ -107,7 +107,7 @@
             957.0423936843872,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json"
+        "scene": "indoor_scenes/store-Fresh-DM.json"
     },
     "Morten Lindqvist's room at The Westin Book Cadillac Detroit": {
         "building": "The Westin Book Cadillac Detroit",
@@ -121,7 +121,7 @@
             1038.2136731147766,
             -24
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "name": "Morten Lindqvist's room at The Westin Book Cadillac Detroit"
     },
     "Marcus Yuen's room at The Westin Book Cadillac Detroit": {
@@ -136,7 +136,7 @@
             1038.2136731147766,
             -20
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "name": "Marcus Yuen's room at The Westin Book Cadillac Detroit"
     },
     "Emily Johnson's room at Louis Kamper Apts": {
@@ -150,7 +150,7 @@
             1243.5814895629883,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Emily Johnson's room at Louis Kamper Apts"
     },
     "Adam Pierce's room at Griswold Capitol Park": {
@@ -165,7 +165,7 @@
             1033.1299982070923,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+        "scene": "indoor_scenes/accomodation-0.json",
         "name": "Adam Pierce's room at Griswold Capitol Park"
     },
     "The Albert": {
@@ -179,7 +179,7 @@
             1159.4660568237305,
             -16
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+        "scene": "indoor_scenes/accomodation-1.json"
     },
     "Griswold Capitol Park": {
         "building": "Griswold Capitol Park",
@@ -193,7 +193,7 @@
             1033.1299982070923,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+        "scene": "indoor_scenes/accomodation-0.json"
     },
     "American Coney Island": {
         "building": "114 West Lafayette Boulevard",
@@ -209,7 +209,7 @@
             980.4919891357422,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Julian C. Madison Building": {
         "building": "Julian C. Madison Building",
@@ -222,7 +222,7 @@
             1267.0031204223633,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+        "scene": "indoor_scenes/accomodation-4.json"
     },
     "Fowler Building": {
         "building": "Fowler Building",
@@ -235,7 +235,7 @@
             1176.8706283569336,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+        "scene": "indoor_scenes/accomodation-6.json"
     },
     "Comerica / Detroit Trust Company": {
         "building": "Comerica / Detroit Trust Company",
@@ -248,7 +248,7 @@
             780.0391006469727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8"
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json"
     },
     "Snacks and DM Store": {
         "building": "The Albert",
@@ -264,7 +264,7 @@
             1159.4660568237305,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json"
+        "scene": "indoor_scenes/store-Snacks-DM.json"
     },
     "BrisaBar": {
         "building": "Brisabar",
@@ -280,7 +280,7 @@
             964.1176795959473,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "The Westin Book Cadillac Detroit": {
         "building": "The Westin Book Cadillac Detroit",
@@ -294,7 +294,7 @@
             1038.2136731147766,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json"
+        "scene": "indoor_scenes/accomodation-5.json"
     },
     "CrossFit in the D": {
         "building": "Griswold Capitol Park",
@@ -310,7 +310,7 @@
             1033.1299982070923,
             -4
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8"
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json"
     },
     "Steve Johnson's room at 28 Grand": {
         "building": "28 Grand",
@@ -323,7 +323,7 @@
             1261.3353271484375,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json",
+        "scene": "indoor_scenes/accomodation-6.json",
         "name": "Steve Johnson's room at 28 Grand"
     },
     "Buhl Bar": {
@@ -339,7 +339,7 @@
             750.5899505615234,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "True Market": {
         "building": "One Campus Martius",
@@ -356,7 +356,7 @@
             1128.797939300537,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "Roasting Plant Coffee": {
         "building": "First National Bank Building",
@@ -373,7 +373,7 @@
             917.9287872314453,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Elizabeth Mensah's room at Julian C. Madison Building": {
         "building": "Julian C. Madison Building",
@@ -386,7 +386,7 @@
             1267.0031204223633,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "name": "Elizabeth Mensah's room at Julian C. Madison Building"
     },
     "Beverages and DM Store": {
@@ -403,7 +403,7 @@
             777.2981643676758,
             -20
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json"
+        "scene": "indoor_scenes/store-Beverages-DM.json"
     },
     "Alex Jefferson's room at The Albert": {
         "building": "The Albert",
@@ -416,7 +416,7 @@
             1159.4660568237305,
             -16
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Alex Jefferson's room at The Albert"
     },
     "Plum Market \u2013 Ally Detroit Center": {
@@ -437,7 +437,7 @@
             823.1520156860352,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "Bedell Bldg": {
         "building": "Bedell Bldg",
@@ -450,7 +450,7 @@
             1206.29248046875,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json"
+        "scene": "indoor_scenes/accomodation-0.json"
     },
     "Louise Roberts's room at Bedell Bldg": {
         "building": "Bedell Bldg",
@@ -463,7 +463,7 @@
             1206.29248046875,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+        "scene": "indoor_scenes/accomodation-0.json",
         "name": "Louise Roberts's room at Bedell Bldg"
     },
     "Louis Kamper Apts": {
@@ -477,7 +477,7 @@
             1243.5814895629883,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json"
+        "scene": "indoor_scenes/accomodation-1.json"
     },
     "Federal Reserve Building": {
         "building": "Federal Reserve Building",
@@ -490,7 +490,7 @@
             879.8981018066406,
             -4
         ],
-        "scene": "MV7J6NIKTKJZ2AABAAAAAAA8"
+        "scene": "indoor_scenes/MV7J6NIKTKJZ2AABAAAAAAA8.json"
     },
     "The Fountain Detroit": {
         "building": "Campus Martius Fountain",
@@ -507,7 +507,7 @@
             988.4745365381241,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "Leila": {
         "building": "Farwell Building",
@@ -523,7 +523,7 @@
             1178.3803787231445,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "The Press/321": {
         "building": "Detroit Free Press Building",
@@ -538,7 +538,7 @@
             826.4625930786133,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-2.json"
+        "scene": "indoor_scenes/accomodation-2.json"
     },
     "Fresh and Beverages Store": {
         "building": "Ally Detroit Center",
@@ -554,7 +554,7 @@
             823.1520156860352,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json"
+        "scene": "indoor_scenes/store-Fresh-Beverages.json"
     },
     "Spkr Box": {
         "building": "Spkr Box",
@@ -568,7 +568,7 @@
             1242.951416015625,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Zara Williams's room at Louis Kamper Apts": {
         "building": "Louis Kamper Apts",
@@ -581,7 +581,7 @@
             1243.5814895629883,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-1.json",
+        "scene": "indoor_scenes/accomodation-1.json",
         "name": "Zara Williams's room at Louis Kamper Apts"
     },
     "Security Trust Lofts": {
@@ -595,7 +595,7 @@
             940.8342533111572,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json"
+        "scene": "indoor_scenes/accomodation-4.json"
     },
     "Kate Novak's room at Security Trust Lofts": {
         "building": "Security Trust Lofts",
@@ -608,7 +608,7 @@
             940.8342533111572,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-4.json",
+        "scene": "indoor_scenes/accomodation-4.json",
         "name": "Kate Novak's room at Security Trust Lofts"
     },
     "Avalon Caf\u00e9 and Bakery": {
@@ -628,7 +628,7 @@
             1090.8484153747559,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Eat\u00f3ri Market": {
         "building": "Malcomson Building",
@@ -646,7 +646,7 @@
             1132.5894584655762,
             -8
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "Beverages and Snacks Store": {
         "building": "625 Shelby Street",
@@ -662,7 +662,7 @@
             755.760139465332,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json"
+        "scene": "indoor_scenes/store-Beverages-Snacks.json"
     },
     "Hotel Indigo Detroit Downtown, an IHG Hotel": {
         "building": "Hotel Indigo",
@@ -677,7 +677,7 @@
             969.3572273254395,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-8.json"
+        "scene": "indoor_scenes/accomodation-8.json"
     },
     "Cadillac Lodge": {
         "building": "Cadillac Tower",
@@ -692,7 +692,7 @@
             1034.3864555358887,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Chad Thompson's room at Capitol Park Building": {
         "building": "Capitol Park Building",
@@ -705,7 +705,7 @@
             1070.605749130249,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json",
+        "scene": "indoor_scenes/accomodation-3.json",
         "name": "Chad Thompson's room at Capitol Park Building"
     },
     "The Greening of Detroit - Lafayette Greens": {
@@ -736,7 +736,7 @@
             1038.2136731147766,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Starbucks": {
         "building": "One Kennedy Square",
@@ -753,7 +753,7 @@
             953.4135026931763,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8"
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json"
     },
     "Fresh and Snacks Store": {
         "building": "Farwell Building",
@@ -770,7 +770,7 @@
             1178.3803787231445,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json"
+        "scene": "indoor_scenes/store-Fresh-Snacks.json"
     },
     "Capitol Park Building": {
         "building": "Capitol Park Building",
@@ -783,7 +783,7 @@
             1070.605749130249,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-3.json"
+        "scene": "indoor_scenes/accomodation-3.json"
     },
     "Trolley Room Detroit.": {
         "building": "Hotel Indigo",
@@ -798,7 +798,7 @@
             969.3572273254395,
             -4
         ],
-        "scene": "MWHLEPQKTIFZIAABAAAAAAA8"
+        "scene": "indoor_scenes/MWHLEPQKTIFZIAABAAAAAAA8.json"
     },
     "Marco Ruiz's room at The Westin Book Cadillac Detroit": {
         "building": "The Westin Book Cadillac Detroit",
@@ -812,7 +812,7 @@
             1038.2136731147766,
             -16
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "name": "Marco Ruiz's room at The Westin Book Cadillac Detroit"
     },
     "28 Grand": {
@@ -826,7 +826,7 @@
             1261.3353271484375,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-6.json"
+        "scene": "indoor_scenes/accomodation-6.json"
     },
     "Cadillac Square Bus Stop": {
         "building": "open space",

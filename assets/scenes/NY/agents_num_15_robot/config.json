@@ -620,7 +620,7 @@
     "stores": {
         "Beverages and DM Store": {
             "building": "Macy's",
-            "scene": "modules/indoor_scenes/scenes/store-Beverages-DM.json",
+            "scene": "indoor_scenes/store-Beverages-DM.json",
             "type": "store-Beverages-DM",
             "goods": [
                 {
@@ -637,7 +637,7 @@
         },
         "Beverages and Snacks Store": {
             "building": "45W West 29th Street #201",
-            "scene": "modules/indoor_scenes/scenes/store-Beverages-Snacks.json",
+            "scene": "indoor_scenes/store-Beverages-Snacks.json",
             "type": "store-Beverages-Snacks",
             "goods": [
                 {
@@ -654,7 +654,7 @@
         },
         "Fresh and Beverages Store": {
             "building": "47 West 30th Street",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-Beverages.json",
+            "scene": "indoor_scenes/store-Fresh-Beverages.json",
             "type": "store-Fresh-Beverages",
             "goods": [
                 {
@@ -671,7 +671,7 @@
         },
         "Fresh and DM Store": {
             "building": "25 West 31st Street 4th floor",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+            "scene": "indoor_scenes/store-Fresh-DM.json",
             "type": "store-Fresh-DM",
             "goods": [
                 {
@@ -688,7 +688,7 @@
         },
         "Fresh and Snacks Store": {
             "building": "315 5th Avenue",
-            "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+            "scene": "indoor_scenes/store-Fresh-Snacks.json",
             "type": "store-Fresh-Snacks",
             "goods": [
                 {
@@ -705,7 +705,7 @@
         },
         "Snacks and DM Store": {
             "building": "1261 Flushing Avenue",
-            "scene": "modules/indoor_scenes/scenes/store-Snacks-DM.json",
+            "scene": "indoor_scenes/store-Snacks-DM.json",
             "type": "store-Snacks-DM",
             "goods": [
                 {

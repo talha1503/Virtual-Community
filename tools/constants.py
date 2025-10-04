@@ -1,24 +1,8 @@
 import json
 import os
 
-ASSETS_PATH = os.path.join(os.path.dirname(__file__), "..", "assets")
+ASSETS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets")
 ENV_OTHER_METADATA = json.load(open(os.path.join(ASSETS_PATH, "env_other_metadata.json"), 'r'))
-
-old_scene_to_new_scene = {
-    "modules/indoor_scenes/scenes/restaurant-0.json" : ('food', 0),
-    "modules/indoor_scenes/scenes/restaurant-1.json" : ('food', 1),
-    "modules/indoor_scenes/scenes/restaurant-2.json" : ('food', 0),
-    "modules/indoor_scenes/scenes/restaurant-3.json" : ('food', 1),
-    "modules/indoor_scenes/scenes/office-1.json" : ('office', 0),
-    "modules/indoor_scenes/scenes/office-0.json" : ('office', 1),
-    "modules/indoor_scenes/scenes/office-2.json" : ('office', 0),
-    "modules/indoor_scenes/scenes/office-3.json" : ('office', 1),
-    "modules/indoor_scenes/scenes/office-4.json" : ('office', 0),
-    "modules/indoor_scenes/scenes/office-5.json" : ('office', 1),
-    "modules/indoor_scenes/scenes/bookstore-0.json" : ('entertainment', 0),
-    "modules/indoor_scenes/scenes/gamestore-0.json" : ('entertainment', 0),
-    "modules/indoor_scenes/scenes/hospital-0.json" : ('hospital', 0)
-}
 
 LIGHTS = [{
                 'type': 'directional',

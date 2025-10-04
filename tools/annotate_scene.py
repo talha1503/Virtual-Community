@@ -26,7 +26,7 @@ from genesis.options import CoacdOptions
 
 current_directory = os.getcwd()
 sys.path.insert(0, current_directory)
-from tools.constants import google_map_type_to_coarse, google_map_coarse_to_types, coarse_types_priority
+from tools.constants import google_map_type_to_coarse, google_map_coarse_to_types, coarse_types_priority, ASSETS_PATH
 from tools.utils import *
 
 def flatten(places):
@@ -975,18 +975,18 @@ if __name__ == '__main__':
 	scene_assets_dir = f"ViCo/scene/v1/{args.scene}"
 
 	if not args.only_update_bbox:
-		coarse_indoor_scene = json.load(open("modules/indoor_scenes/coarse_type_to_indoor_scene.json", 'r'))
+		coarse_indoor_scene = json.load(open(os.path.join(ASSETS_PATH, "coarse_type_to_indoor_scene.json"), 'r'))
 		# Check necessary files are existed
-		if os.path.exists(f"assets/scenes/{args.scene}/raw/building_to_osm_tags.json"):
+		if os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "building_to_osm_tags.json")):
 			print("Necessary file check passed: building_to_osm_tags.json")
 		else:
-			print(f"Necessary file not exist: assets/scenes/{args.scene}/raw/building_to_osm_tags.json")
+			print(f"Necessary file not exist: {os.path.join(ASSETS_PATH, 'scenes', args.scene, 'raw', 'building_to_osm_tags.json')}")
 			exit()
 
-		if os.path.exists(f"assets/scenes/{args.scene}/raw/center.txt"):
+		if os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "center.txt")):
 			print("Necessary file check passed: center.txt")
 		else:
-			print(f"Necessary file not exist: assets/scenes/{args.scene}/raw/center.txt")
+			print(f"Necessary file not exist: {os.path.join(ASSETS_PATH, 'scenes', args.scene, 'raw', 'center.txt')}")
 			exit()
 
 		# if os.path.exists(f"assets/scenes/{args.scene}/orthographic_scale_800.png"):
@@ -1013,7 +1013,7 @@ if __name__ == '__main__':
 		# Load height field as LinearNDInterpolatorExt
 		height_field = load_height_field(height_field_path)
 
-		if not os.path.exists(os.path.join(f"assets/scenes/{args.scene}/global.png")):
+		if not os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "global.png")):
 			print(f"start loading scenes and take a global image of the scene from the perspective camera in Genesis")
 			if not gs._initialized:
 				gs.init(seed=0, precision="32", logging_level="info", backend=gs.gpu)
@@ -1072,7 +1072,7 @@ if __name__ == '__main__':
 			gs_scene.reset()
 
 			global_rgb, _, _, _ = global_cam.render()
-			Image.fromarray(global_rgb).save(os.path.join(f"assets/scenes/{args.scene}/global.png"))
+			Image.fromarray(global_rgb).save(os.path.join(ASSETS_PATH, "scenes", args.scene, "global.png"))
 			# Image.fromarray(global_depth).save(os.path.join(f"assets/scenes/{args.scene}/global_depth.png"))
 			print("Saved global image to asset folder.")
 
@@ -1080,15 +1080,15 @@ if __name__ == '__main__':
 			global_cam_parameters["camera_res"] = global_cam.res
 			global_cam_parameters["camera_fov"] = global_cam.fov
 			global_cam_parameters["camera_extrinsics"] = global_cam.extrinsics.tolist()
-			with open(f"assets/scenes/{args.scene}/global_cam_parameters.json", "w") as f:
+			with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "global_cam_parameters.json"), "w") as f:
 				json.dump(global_cam_parameters, f)
 			print("Saved global camera parameters to asset folder")
 		else:
 			print("Exists: global.png, skipping...")
-			global_cam_parameters = json.load(open(f"assets/scenes/{args.scene}/global_cam_parameters.json", 'r'))
+			global_cam_parameters = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "global_cam_parameters.json"), 'r'))
 
 		# Search places
-		if not args.search_original_places and os.path.exists(f"assets/scenes/{args.scene}/raw/places_full.json"):
+		if not args.search_original_places and os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "places_full.json")):
 			print("Exists: places_full.json, skipping...")
 			# # Back up first and only filtering
 			# shutil.copy2(f"assets/scenes/{args.scene}/raw/places_full.json", f"assets/scenes/{args.scene}/raw/places_full_old.json")
@@ -1101,10 +1101,10 @@ if __name__ == '__main__':
 			# with open(f"assets/scenes/{args.scene}/raw/places_full.json", 'w') as file:
 			#     json.dump(filtered_places_dict, file, indent=4)
 		else:
-			if not os.path.exists(f"assets/scenes/{args.scene}/raw/places_enu_original.json") or args.search_original_places:
+			if not os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "places_enu_original.json")) or args.search_original_places:
 				print("Start searching places...")
 				scene_range_meta = {}
-				with open(f'assets/scenes/{args.scene}/raw/center.txt') as f:
+				with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "center.txt")) as f:
 					scene_range_meta["lat"], scene_range_meta["lng"] = map(float, f.read().strip().split(' '))
 					scene_range_meta["rad"] = 400.0
 				scene_range_meta["rad"] = scene_range_meta["rad"] * math.sqrt(2)
@@ -1139,11 +1139,11 @@ if __name__ == '__main__':
 							this_bounding_box = irregular_to_regular_bbox(this_bounding_box)
 						this_bounding_box = bbox_corners_to_center_repr(this_bounding_box)
 						all_loaded_building_bboxes.append(this_bounding_box)
-			json.dump(all_loaded_building_bboxes, open(f"assets/scenes/{args.scene}/all_loaded_building_bboxes.json", 'w'), separators=(",", ":"))
+			json.dump(all_loaded_building_bboxes, open(os.path.join(ASSETS_PATH, "scenes", args.scene, "all_loaded_building_bboxes.json"), 'w'), separators=(",", ":"))
 			print("Generated bounding boxes of all loaded buildings.")
 
 			# Compute the obstacle grid and its parameters
-			if not os.path.exists(f"assets/scenes/{args.scene}/obstacle_grid.pkl"):
+			if not os.path.exists(os.path.join(ASSETS_PATH, "scenes", args.scene, "obstacle_grid.pkl")):
 				obstacle_grid_parameters = {
 					"bbox_extension": 1.0,
 					"resolution": 0.5,
@@ -1170,21 +1170,21 @@ if __name__ == '__main__':
 					"grid": obstacle_grid,
 					"parameters": obstacle_grid_parameters
 				}
-				pickle.dump(obstacle_grid_save, open(f"assets/scenes/{args.scene}/obstacle_grid.pkl", 'wb'))
+				pickle.dump(obstacle_grid_save, open(os.path.join(ASSETS_PATH, "scenes", args.scene, "obstacle_grid.pkl"), 'wb'))
 			else:
 				print("Obstacle grid already exists, skipping generation.")
-				obstacle_grid_save = pickle.load(open(f"assets/scenes/{args.scene}/obstacle_grid.pkl", 'rb'))
+				obstacle_grid_save = pickle.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "obstacle_grid.pkl"), 'rb'))
 				obstacle_grid = obstacle_grid_save["grid"]
 				obstacle_grid_parameters = obstacle_grid_save["parameters"]
 				print("Loaded obstacle grid.")
 		
-			image_path = f"assets/scenes/{args.scene}/global.png"
+			image_path = os.path.join(ASSETS_PATH, "scenes", args.scene, "global.png")
 			if not os.path.exists(image_path):
 				white_global_image = Image.new("RGB", (2000, 2000), "white")
 				white_global_image.save(image_path)
-			with open(f"assets/scenes/{args.scene}/raw/places_full.json", 'r') as file:
+			with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "places_full.json"), 'r') as file:
 				places_dict = json.load(file)
-			with open(f"assets/scenes/{args.scene}/raw/building_to_osm_tags.json", 'r') as file:
+			with open(os.path.join(ASSETS_PATH, "scenes", args.scene, "raw", "building_to_osm_tags.json"), 'r') as file:
 				building_to_osm_tags = json.load(file)
 			place_metadata, building_metadata, inaccessible_buildings, building_to_places = get_building_to_places()
 			# overlay_locations_desp_on_image()
@@ -1196,8 +1196,8 @@ if __name__ == '__main__':
 
 		# Check alignment between place metadata and building metadata
 		metadata_alignment_error_flag = False
-		place_metadata = json.load(open(f"assets/scenes/{args.scene}/place_metadata.json", 'r'))
-		building_metadata = json.load(open(f"assets/scenes/{args.scene}/building_metadata.json", 'r'))
+		place_metadata = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "place_metadata.json"), 'r'))
+		building_metadata = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "building_metadata.json"), 'r'))
 		# first check if every place in place_metadata is in building_metadata
 		for place in place_metadata:
 			if place_metadata[place]["building"] not in building_metadata:
@@ -1225,7 +1225,7 @@ if __name__ == '__main__':
 	# if not os.path.exists(f"assets/scenes/{args.scene}/building_metadata.json"):
 	# 	print(f"Building metadata not found for scene {args.scene}.")
 	# 	exit()
-	# building_metadata = json.load(open(f"assets/scenes/{args.scene}/building_metadata.json", 'r'))
+	# building_metadata = json.load(open(os.path.join(ASSETS_PATH, "scenes", args.scene, "building_metadata.json"), 'r'))
 	# scene_assets_dir = f"ViCo/scene/v1/{args.scene}"
 	# for building in building_metadata:
 	# 	# If encounter 'ValueError: string is not a file' error, change the '/' in the glb name after 'buildings_' to '_' should generally fix the problem.
@@ -1239,5 +1239,5 @@ if __name__ == '__main__':
 	# 		mesh.apply_transform(rotation_matrix)
 	# 		obb = mesh.bounding_box_oriented
 	# 		building_metadata[building]["bounding_box"] = obb.vertices.tolist()
-	# json.dump(building_metadata, open(f"assets/scenes/{args.scene}/building_metadata.json", 'w'), indent=4)
+	# json.dump(building_metadata, open(os.path.join(ASSETS_PATH, "scenes", args.scene, "building_metadata.json"), 'w'), indent=4)
 	# print("Updated bounding boxes in building metadata.")

@@ -22,7 +22,7 @@ import string
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from tools.constants import LIGHTS, ENV_OTHER_METADATA
+from tools.constants import ASSETS_PATH, LIGHTS, ENV_OTHER_METADATA
 from tools.utils import *
 from modules import *
 
@@ -76,9 +76,8 @@ class VicoEnv:
 		self.defer_chat = defer_chat
 		self.debug = debug
 		self.enable_indoor_scene = enable_indoor_scene
-		self.assets_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
 		if self.enable_indoor_scene:
-			self.coarse_indoor_scene = json.load(open(os.path.join(self.assets_dir, "coarse_type_to_indoor_scene.json"), 'r'))
+			self.coarse_indoor_scene = json.load(open(os.path.join(ASSETS_PATH, "coarse_type_to_indoor_scene.json"), 'r'))
 		self.active_places_info = {}
 		self.active_places_agents = defaultdict(list)
 		self.enable_outdoor_objects = enable_outdoor_objects
@@ -126,7 +125,7 @@ class VicoEnv:
 		self.genesis_steps = int(self.config['step'] * (1 / dt_sim))
 		self.building_metadata = json.load(open(os.path.join(config_path, "building_metadata.json"), 'r'))
 		self.place_metadata = json.load(open(os.path.join(config_path, "place_metadata.json"), 'r'))
-		self.transit_info = json.load(open(os.path.join(self.assets_dir, "scenes", self.scene_name, "transit.json"), 'r'))
+		self.transit_info = json.load(open(os.path.join(ASSETS_PATH, "scenes", self.scene_name, "transit.json"), 'r'))
 		self.env_other_meta = ENV_OTHER_METADATA
 		self.agent_names_to_group_name = {agent_name: group_name for group_name, group in self.config['groups'].items() for agent_name in group['members']} if 'groups' in self.config else {}
 		self.events = EventSystem()
@@ -240,7 +239,7 @@ class VicoEnv:
 												  robot_type=robot_type,
 												  position=np.array(self.config['agent_poses'][i][:3],
 																	dtype=np.float64),
-												  config_path=os.path.join(self.assets_dir, "robot_cfgs", ROBOT_CONFIGS[robot_type]),
+												  config_path=os.path.join(ASSETS_PATH, "robot_cfgs", ROBOT_CONFIGS[robot_type]),
 												  terrain_height_path=f"{self.scene_assets_dir}/height_field.npz",
 												  third_person_camera_resolution=self.resolution if self.enable_third_person_cameras else None))
 				self.robot_obs[robot_idx] = self.robots[robot_idx].get_observations()
@@ -659,7 +658,7 @@ class VicoEnv:
 				max_objects=self.outdoor_objects_max_num,
 				seed=self.seed,
 				terrain_height_field_path=f"{scene_assets_dir}/height_field.npz",
-				road_info_path=os.path.join(self.assets_dir, "scenes", self.scene_name, "road_data", "roads.pkl"),
+				road_info_path=os.path.join(ASSETS_PATH, "scenes", self.scene_name, "road_data", "roads.pkl"),
 			)
 			load_outdoor_objects(self, outdoor_object_context, self.transit_info)
 
@@ -1158,7 +1157,7 @@ class VicoEnv:
 			place['location'] = [1500, 1500, -50]
 			return
 		self.active_places_info[place_name], self.place_cameras[place_name] = \
-				load_indoor_room(self, place, place_name, self.enable_indoor_objects)
+				load_indoor_room(self, place['scene'], place['location'], place_name, self.enable_indoor_objects)
 
 	@property
 	def entities(self):

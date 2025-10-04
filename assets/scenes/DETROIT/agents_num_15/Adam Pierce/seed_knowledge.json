@@ -37,7 +37,7 @@
             1033.1299982070923,
             -12
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-0.json",
+        "scene": "indoor_scenes/accomodation-0.json",
         "name": "Adam Pierce's room at Griswold Capitol Park",
         "bounding_box": [
             -93.46975666202655,
@@ -64,7 +64,7 @@
             953.4135026931763,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             50.798590714339895,
             -43.34372912216753,
@@ -90,7 +90,7 @@
             917.9287872314453,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             220.536376953125,
             -71.7525634765625,
@@ -112,7 +112,7 @@
             780.0391006469727,
             -4
         ],
-        "scene": "MVSGSAIKTKJ66AABAAAAAEA8",
+        "scene": "indoor_scenes/MVSGSAIKTKJ66AABAAAAAEA8.json",
         "bounding_box": [
             -63.44363021850586,
             -219.96089935302737,
@@ -140,7 +140,7 @@
             1090.8484153747559,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             13.404423713684064,
             89.62395858764651,
@@ -163,7 +163,7 @@
             1038.2136731147766,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/dormitory-5.json",
+        "scene": "indoor_scenes/accomodation-5.json",
         "bounding_box": [
             -176.821044921875,
             38.51941680908203,
@@ -187,7 +187,7 @@
             750.5899505615234,
             -4
         ],
-        "scene": "MV5M25QKTKJZ2AABAAAAAAI8",
+        "scene": "indoor_scenes/MV5M25QKTKJZ2AABAAAAAAI8.json",
         "bounding_box": [
             91.36088958171578,
             -248.48791431768487,
@@ -212,7 +212,7 @@
             957.0423936843872,
             -4
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-DM.json",
+        "scene": "indoor_scenes/store-Fresh-DM.json",
         "bounding_box": [
             -19.339146579609995,
             -42.783374503439596,
@@ -238,7 +238,7 @@
             1178.3803787231445,
             -8
         ],
-        "scene": "modules/indoor_scenes/scenes/store-Fresh-Snacks.json",
+        "scene": "indoor_scenes/store-Fresh-Snacks.json",
         "bounding_box": [
             -158.82032012939456,
             178.32506561279297,
@@ -263,7 +263,7 @@
             1033.1299982070923,
             -4
         ],
-        "scene": "MVJWVGYKTLDAYAABAAAAAAQ8",
+        "scene": "indoor_scenes/MVJWVGYKTLDAYAABAAAAAAQ8.json",
         "bounding_box": [
             -93.46975666202655,
             33.18000534615047,
