@@ -63,6 +63,8 @@ class VicoEnv:
 			gs.init(seed=seed, precision=precision, logging_level=logging_level, backend=backend)
 		fh = logging.FileHandler(os.path.join(output_dir, 'raw.log'))
 		fh.setLevel(logging.DEBUG)
+		formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+		fh.setFormatter(formatter)
 		gs.logger._logger.addHandler(fh)
 		self.resolution = resolution
 		self.challenge = challenge
@@ -1145,7 +1147,7 @@ class VicoEnv:
 			return
 
 		if place_name in self.active_places_info:
-			gs.logger.info(f"Place {place_name} is already loaded. Skipping loading.")
+			gs.logger.info(f"Place {place_name} is already loaded or tried to load. Skipping loading.")
 			return
 
 		gs.logger.info(f"Loading indoor scene for place {place_name}")
