@@ -880,7 +880,7 @@ class VicoEnv:
 				gs.logger.warning(f"Agent {self.agent_names[agent_id]} cannot pick at {pos} because no entity is found.")
 				agent.robot.action_status = ActionStatus.FAIL
 				return
-			self.agent_infos[agent_id]["held_objects"][action['arg1']] = self.entities[entity_idx]["name"]
+			self.agent_infos[agent_id]["held_objects"][action['arg1']] = self.entity_idx_to_info[entity_idx]["name"]
 			agent.pick(action['arg1'], self.entities[entity_idx])
 		elif action['type'] == 'put':  # arg1: hand id [0,1]
 			agent.put(action['arg1'], action.get('arg2', None))
