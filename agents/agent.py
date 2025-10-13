@@ -18,22 +18,27 @@ class Agent:
 	def __init__(self, name, pose: list, info, sim_path, no_react=False, debug=False, logger=None):
 		self.name = name
 		self.pose = pose
-		if info is not None:
-			self.cash = info['cash']
-			self.held_objects = info['held_objects']
 		self.storage_path = f"{sim_path}/{name}"
-		self.scratch = json.load(open(f"{self.storage_path}/scratch.json", "r"))
+		self.scratch = json.load(open(os.path.join(self.storage_path, "scratch.json"), "r"))
 		self.curr_time: datetime = datetime.strptime(self.scratch['curr_time'], "%B %d, %Y, %H:%M:%S") if self.scratch['curr_time'] is not None else None
-		self.seed_knowledge = json.load(open(f"{self.storage_path}/seed_knowledge.json", "r"))
-		self.logger = logger
+		self.seed_knowledge = json.load(open(os.path.join(self.storage_path, "seed_knowledge.json"), "r"))
+		if logger:
+			self.logger = logger
+		else:
+			self.logger = AgentLogger(self.name, "INFO", os.path.join(self.storage_path, "logs.log"))
+		
 		self.no_react = no_react
 		self.debug = debug
 		self.WALK_SPEED = 1.0 # m/s
 		self.BIKE_SPEED = 3.0 # m/s
-		self.current_vehicle = None
-		self.current_place = None
+		self.current_vehicle = self.scratch['current_vehicle'] if 'current_vehicle' in self.scratch else None
+		self.current_place = self.scratch['current_place'] if 'current_place' in self.scratch else None
 		self.action_status = None
 		self.held_objects = [None, None]
+		self.cash = 0
+		if info is not None:
+			self.cash = info['cash']
+			self.held_objects = info['held_objects']
 		self.last_path = None
 		self.steps = 0
 		self.obs = None
@@ -45,9 +50,6 @@ class Agent:
 		self.current_vehicle = self.scratch['current_vehicle'] if 'current_vehicle' in self.scratch else None
 		self.current_place = self.scratch['current_place'] if 'current_place' in self.scratch else None
 		self.action_status = None
-
-	def load_from_checkpoint(self, checkpoint):
-		pass
 
 	def act(self, obs):
 		self.steps = obs['steps']

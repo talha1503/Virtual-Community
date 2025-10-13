@@ -853,7 +853,20 @@ class VicoEnv:
 			if not self.exit_bike(agent_id):
 				agent.robot.action_status = ActionStatus.FAIL
 		elif action['type'] == 'pick':  # arg1: hand id [0,1], arg2: position
-			pos = np.array(action['arg2'])
+			if type(action['arg2']) == list:
+				if len(action['arg2']) == 3:
+					pos = np.array(action['arg2'])
+				else:
+					gs.logger.warning(f"Action {action['type']} arg2 must be a list of 3 elements, but got {len(action['arg2'])}. Fall back to no react.")
+					agent.robot.action_status = ActionStatus.FAIL
+					return
+				pos = np.array(action['arg2'])
+			elif type(action['arg2']) == np.ndarray:
+				pos = action['arg2']
+			else:
+				gs.logger.warning(f"Action {action['type']} arg2 must be a list of 3 elements or a numpy array, but got {type(action['arg2'])}. Fall back to no react.")
+				agent.robot.action_status = ActionStatus.FAIL
+				return
 			min_volume, entity_idx = 1e10, None
 			for j, e in self.entity_idx_to_info.items():
 				if "bbox" in e:
@@ -869,7 +882,7 @@ class VicoEnv:
 				gs.logger.warning(f"Agent {self.agent_names[agent_id]} cannot pick at {pos} because no entity is found.")
 				agent.robot.action_status = ActionStatus.FAIL
 				return
-			self.agent_infos[agent_id]["held_objects"][action['arg1']] = self.entities[entity_idx]["name"]
+			self.agent_infos[agent_id]["held_objects"][action['arg1']] = self.entity_idx_to_info[entity_idx]["name"]
 			agent.pick(action['arg1'], self.entities[entity_idx])
 		elif action['type'] == 'put':  # arg1: hand id [0,1]
 			agent.put(action['arg1'], action.get('arg2', None))
